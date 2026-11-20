@@ -35,6 +35,10 @@ python3 -m http.server 8000 --bind 127.0.0.1
 
 Then visit `http://localhost:8000/specimen/`. Stop the server with Ctrl-C.
 
+Use **Appearance** in the navigation to choose Auto (system), Light, or Dark.
+The setting is shared across pages served from the same origin. When opening
+HTML files directly, browsers may store the setting separately for each file.
+
 Please review:
 
 1. Is the broad, softly rectangular O the right starting character?

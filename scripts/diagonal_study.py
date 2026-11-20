@@ -17,7 +17,7 @@ from fontTools.pens.svgPathPen import SVGPathPen
 from ufoLib2 import Font
 from grid_token_study import STUDY, CONFIG, polygon, reverse, shapes
 from font_license import apply_ufo_license, write_licensed_html
-from web import NAV_CSS, primary_nav
+from web import appearance_head, primary_nav
 
 OUT=STUDY/'diagonals'
 PARAMS=OUT/'parameters.json'
@@ -91,11 +91,11 @@ def proof():
         cards+=f'<article><h2>{label}</h2><p class="note">{note}</p><div class="sample hero" style="font-family:{key}">QY</div><div class="sample" style="font-family:{key};font-size:64px">HOQY</div>{samples}{grid}</article>'
         detail+=f'<section><h2>{label}</h2><div class="sample" style="font-family:{key};font-size:320px">OQHY</div></section>'
     nav=primary_nav('../../../','diagonals')
-    style=css+NAV_CSS+'''body{margin:30px;background:#faf8f2;color:#172426;font:16px/1.5 system-ui}h1{font-size:30px}h2{font-size:17px;font-weight:600}.intro{max-width:1100px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.cards article,section{border-top:1px solid #bbc9c0;padding-top:12px}.sample{font-weight:700;white-space:pre;letter-spacing:0;font-kerning:none;font-synthesis:none;line-height:1.4;margin:14px 0;overflow:auto}.hero{font-size:180px}.note{min-height:48px;font-size:13px;color:#586d67}a{color:inherit}#status{color:#23695c}@media(max-width:1100px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.cards{grid-template-columns:1fr}}'''
+    style=css+'''body{margin:30px;background:var(--paper);color:var(--text);font:16px/1.5 system-ui}h1{font-size:30px}h2{font-size:17px;font-weight:600}.intro{max-width:1100px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.cards article,section{border-top:1px solid var(--border);padding-top:12px}.sample{font-weight:700;white-space:pre;letter-spacing:0;font-kerning:none;font-synthesis:none;line-height:1.4;margin:14px 0;overflow:auto}.hero{font-size:180px}.note{min-height:48px;font-size:13px;color:var(--muted)}a{color:inherit}#status{color:var(--accent)}@media(max-width:1100px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.cards{grid-template-columns:1fr}}'''
     intro=nav+'''<h1>Confinium Mono / optical diagonal thickness</h1><p class="intro">Reference versus 128 / 144 / 160 units, measured perpendicular to the diagonal. Q tails and Y arms remain at 45°. The Q bowl, counter, other glyphs and 800-unit advances are unchanged. Grid stems remain 160 units.</p><p class="intro">Q keeps its tail centreline, −120 depth and horizontal cut. Added width extends right of the active box but stays inside the cell. Y keeps its outer silhouette and lower stem; its inner edges move to change thickness. No junction taper yet: compare thickness before tuning the join.</p><p><a href="detail.html">Enlarged O/Q/H/Y proofs</a> · <a href="../q-tail/">Previous tail comparison</a> · <a href="../specimen/">Grid- and token-driven study</a></p>'''
     loader='''<script>Promise.all(['reference','diag128','diag144','diag160'].map(f=>document.fonts.load('700 180px '+f,'OQHY'))).then(r=>document.querySelector('#status').textContent=r.every(f=>f.length)?'All four comparison fonts loaded':'FONT FAILURE')</script>'''
     for filename,body in [('index.html','<div class="cards">'+cards+'</div>'),('detail.html',detail)]:
-        write_licensed_html(OUT/filename, '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Confinium Mono / optical diagonal study</title><style>'+style+'</style>'+intro+'<p id="status">Loading…</p>'+body+loader+'</html>')
+        write_licensed_html(OUT/filename, '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Confinium Mono / optical diagonal study</title>'+appearance_head('../../../')+'<style>'+style+'</style>'+intro+'<p id="status">Loading…</p>'+body+loader+'</html>')
     with tempfile.TemporaryDirectory(prefix='confinium-diagonals-') as profile:
         for page,size in [('index','1600,1100'),('detail','1400,2500')]:
             run=subprocess.run(['chromium','--headless','--disable-gpu','--no-first-run',f'--user-data-dir={profile}','--virtual-time-budget=3000',f'--window-size={size}',f'--screenshot={OUT / (page+".png")}', '--dump-dom',(OUT/(page+'.html')).as_uri()],check=True,capture_output=True,text=True)

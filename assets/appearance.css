@@ -1,0 +1,43 @@
+:root {
+  color-scheme: light dark;
+  /* Preserve the warm light palette; use cooler Tokyo Night tones in dark mode. */
+  --paper: light-dark(#faf8f2, #1a1b26);
+  --panel: light-dark(#f4f1e8, #222436);
+  --surface: light-dark(#fffdf8, #292e42);
+  --text: light-dark(#172426, #c0caf5);
+  --secondary: light-dark(#3d4f4b, #a9b1d6);
+  --muted: light-dark(#586d67, #9aa5ce);
+  --border: light-dark(#bbc9c0, #555e80);
+  --accent: light-dark(#23695c, #7aa2f7);
+  background: var(--paper);
+  color: var(--text);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  font: 14px/1.4 system-ui, sans-serif;
+}
+.site-nav .brand { font-weight: 700; color: var(--text); margin-right: auto; }
+.site-nav a { color: var(--muted); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+.site-nav a:hover, .site-nav a.active { color: var(--text); }
+.site-nav a.active { font-weight: 600; border-bottom-color: var(--accent); }
+.site-nav .theme-control { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); white-space: nowrap;
+  font: inherit; text-transform: none; letter-spacing: normal; margin: 0;
+}
+.site-nav .theme-control select {
+  width: auto;
+  font: inherit;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px;
+}
+.site-nav .theme-control select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

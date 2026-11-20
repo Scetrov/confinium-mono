@@ -7,15 +7,10 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 
-NAV_CSS = (
-    '.site-nav{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;'
-    'padding-bottom:14px;margin-bottom:24px;border-bottom:1px solid #bbc9c0;'
-    'font:14px/1.4 system-ui,sans-serif}'
-    '.site-nav .brand{font-weight:700;color:#172426;text-decoration:none;margin-right:auto}'
-    '.site-nav a{color:#586d67;text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}'
-    '.site-nav a:hover{color:#172426}'
-    '.site-nav a.active{color:#172426;font-weight:600;border-bottom-color:#23695c}'
-)
+def appearance_head(root_rel: str) -> str:
+    """Load the shared theme before rendering any page content."""
+    return (f'<script src="{root_rel}assets/appearance.js"></script>'
+            f'<link rel="stylesheet" href="{root_rel}assets/appearance.css">')
 
 
 def primary_nav(root_rel: str, active: str) -> str:
@@ -64,9 +59,9 @@ def build_explorer() -> None:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Confinium Mono — Type Explorer</title>
+{appearance_head('')}
 <style>
 {css_fonts}
-{NAV_CSS}
 *{{box-sizing:border-box}}
 body{{margin:32px auto;max-width:1240px;padding:0 24px;background:var(--paper);color:var(--text);font:16px/1.5 system-ui,sans-serif}}
 h1{{margin:0 0 8px;font-size:34px;letter-spacing:-.01em}}
@@ -96,32 +91,15 @@ button.chip:hover{{border-color:var(--accent)}}
 .step a{{font-size:13px;color:var(--accent);font-weight:600;text-decoration:none}}
 .step a:hover{{text-decoration:underline}}
 #status{{font-size:13px;color:var(--accent);margin:0 0 14px}}
-:root{{
-  color-scheme:light;
-  --paper:light-dark(#faf8f2,#172022);
-  --panel:light-dark(#f4f1e8,#202b2d);
-  --text:light-dark(#172426,#f3f1e9);
-  --secondary:light-dark(#3d4f4b,#cbd5d1);
-  --muted:light-dark(#586d67,#b0c0bc);
-  --border:light-dark(#bbc9c0,#62736f);
-  --accent:light-dark(#23695c,#91d6c4);
-  --ink:var(--text);
-}}
-@media (prefers-color-scheme:dark){{:root:not([data-theme="light"]){{color-scheme:dark}}}}
-:root[data-theme="dark"]{{color-scheme:dark}}
+:root{{--ink:var(--text)}}
 [data-ink="red"]{{--ink:light-dark(#a52736,#ff8f98)}}
 [data-ink="orange"]{{--ink:light-dark(#9a4114,#ffad79)}}
 [data-ink="yellow"]{{--ink:light-dark(#775900,#f8d66c)}}
 [data-ink="green"]{{--ink:light-dark(#21633c,#8dd8a5)}}
 [data-ink="blue"]{{--ink:light-dark(#2059a0,#92bfff)}}
 [data-ink="purple"]{{--ink:light-dark(#703f9e,#caa7fa)}}
-.site-nav{{border-color:var(--border)}}
-.site-nav a{{color:var(--muted)}}
-.site-nav .brand,.site-nav a:hover,.site-nav a.active{{color:var(--text)}}
-.site-nav a.active{{border-color:var(--accent)}}
 .specimen,.wf-text,.glyph-btn{{color:var(--ink)}}
 .appearance{{display:flex;flex-wrap:wrap;align-items:end;gap:12px 20px;margin:0 0 24px}}
-.appearance select{{min-width:9rem}}
 .appearance input[type=color]{{display:block;width:4rem;height:2.2rem;cursor:pointer}}
 .specimen:focus-visible{{outline:2px solid var(--accent);outline-offset:3px}}
 </style>
@@ -172,14 +150,6 @@ button.chip:hover{{border-color:var(--accent)}}
 </section>
 
 <section class="appearance" aria-label="Preview appearance">
-  <div>
-    <label for="themeSel">Appearance</label>
-    <select id="themeSel">
-      <option value="auto">Auto (system)</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
-  </div>
   <div>
     <label for="inkSel">Typeface colour</label>
     <select id="inkSel">
@@ -233,6 +203,11 @@ button.chip:hover{{border-color:var(--accent)}}
       <p>Tested 128 / 144 / 160 normal units; promoted Q = 128 and Y = 144 to the Grid-Token baseline.</p>
       <a href="studies/grid-token-bold/diagonals/index.html">Open Diagonals Study →</a>
     </article>
+    <article class="step">
+      <h3>5. ASCII Punctuation</h3>
+      <p>All 32 ASCII punctuation and operator glyphs in an isolated Grid Bold study.</p>
+      <a href="studies/grid-token-bold/punctuation/index.html">Open Punctuation Study →</a>
+    </article>
   </div>
   <p style="margin-top:14px;font-size:14px"><a href="process.html" style="color:var(--accent);font-weight:600">Read full design process, curve corrections &amp; sketches →</a></p>
 </section>
@@ -248,25 +223,22 @@ const weightVal = document.getElementById('weightVal');
 const metaLine = document.getElementById('metaLine');
 const glyphBar = document.getElementById('glyphBar');
 const wfTexts = document.querySelectorAll('.wf-text');
-const themeSel = document.getElementById('themeSel');
 const inkSel = document.getElementById('inkSel');
 const customInk = document.getElementById('customInk');
 const root = document.documentElement;
 
-function applyAppearance() {{
-  root.dataset.theme = themeSel.value;
+function applyInk() {{
   root.dataset.ink = inkSel.value;
   if (inkSel.value === 'custom') root.style.setProperty('--ink', customInk.value);
   else root.style.removeProperty('--ink');
 }}
 
-themeSel.addEventListener('change', applyAppearance);
-inkSel.addEventListener('change', applyAppearance);
+inkSel.addEventListener('change', applyInk);
 customInk.addEventListener('input', () => {{
   inkSel.value = 'custom';
-  applyAppearance();
+  applyInk();
 }});
-applyAppearance();
+applyInk();
 
 function renderGlyphBar(chars, fam, wght) {{
   glyphBar.innerHTML = '';
@@ -352,14 +324,14 @@ def build_process() -> None:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Confinium Mono — Design Process</title>
+{appearance_head('')}
 <style>
-{NAV_CSS}
-body{{margin:32px auto;max-width:980px;padding:0 24px;background:#faf8f2;color:#172426;font:16px/1.6 system-ui,sans-serif}}
+body{{margin:32px auto;max-width:980px;padding:0 24px;background:var(--paper);color:var(--text);font:16px/1.6 system-ui,sans-serif}}
 h1{{margin:0 0 8px;font-size:34px}}
-h2{{margin:28px 0 8px;font-size:20px;border-top:1px solid #bbc9c0;padding-top:16px}}
-p,li{{max-width:820px;color:#2c3d3a}}
-a{{color:#23695c}}
-.tag{{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border:1px solid #bbc9c0;background:#f4f1e8;color:#586d67;margin-left:8px;vertical-align:middle}}
+h2{{margin:28px 0 8px;font-size:20px;border-top:1px solid var(--border);padding-top:16px}}
+p,li{{max-width:820px;color:var(--secondary)}}
+a{{color:var(--accent)}}
+.tag{{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border:1px solid var(--border);background:var(--panel);color:var(--muted);margin-left:8px;vertical-align:middle}}
 </style>
 {nav}
 <h1>Design Process</h1>
@@ -396,6 +368,12 @@ a{{color:#23695c}}
 <ul>
   <li><a href="studies/grid-token-bold/diagonals/index.html">Optical Diagonals Comparison (128 / 144 / 160)</a> · <a href="studies/grid-token-bold/diagonals/detail.html">Enlarged O/Q/H/Y Detail</a></li>
   <li>Grid Overlays: <a href="studies/grid-token-bold/diagonals/grid-128.svg">128</a> · <a href="studies/grid-token-bold/diagonals/grid-144.svg">144</a> · <a href="studies/grid-token-bold/diagonals/grid-160.svg">160</a></li>
+</ul>
+
+<h2>6. ASCII Punctuation <span class="tag">Grid Bold · 32 additions</span></h2>
+<p>Added all printable ASCII punctuation and operators in a separate Grid Bold build. The study proofs them in code and paths at 12, 16, and 28 px without changing the baseline.</p>
+<ul>
+  <li><a href="studies/grid-token-bold/punctuation/index.html">Open Punctuation Study</a></li>
 </ul>
 </html>
 '''

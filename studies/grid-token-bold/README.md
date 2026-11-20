@@ -18,6 +18,8 @@ fonts: these HTML pages deliberately snapshot a build rather than hot-load it.
 - `specimen/index.html`: equal-cap-height comparison with the previous pilot,
   three grid- and token-driven variants, repeated groups and 14 / 18 / 32 px samples.
 - `specimen/detail.html`: enlarged C/E/S/G for inspecting joins and fillets.
+- [Punctuation study](punctuation/index.html): isolated Grid Bold expansion with
+  all 32 ASCII punctuation and operator characters.
 - `specimen/grid-{Grid,Open,Dense}.svg`: all nine drawings on the 80-unit grid.
   Cyan lines are 1u; orange outlines mark the active box and centre axis.
 - `verification/chromium.png`, `verification/detail.png`: captured browser proofs.

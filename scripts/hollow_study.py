@@ -15,7 +15,7 @@ from fontTools.pens.recordingPen import RecordingPen
 from ufoLib2 import Font
 from grid_token_study import STUDY
 from font_license import apply_ufo_license, write_licensed_html
-from web import NAV_CSS, primary_nav
+from web import appearance_head, primary_nav
 
 OUT = STUDY / 'hollow'
 SOURCE = OUT / 'ConfiniumMono-GridToken-Hollow.ufo'
@@ -122,14 +122,14 @@ def proof():
         '<!doctype html><html lang="en"><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
         '<title>Confinium Mono / Hollow Display Study</title>'
-        f'<style>{css}{NAV_CSS}'
-        'body{margin:32px;background:#faf8f2;color:#172426;font:16px/1.5 system-ui}'
-        'h1{font-size:30px;margin:0 0 8px}h2{font-size:16px;font-weight:600;color:#586d67}'
-        'section{border-top:1px solid #bbc9c0;padding:14px 0 24px}'
+        f"{appearance_head('../../../')}<style>{css}"
+        'body{margin:32px;background:var(--paper);color:var(--text);font:16px/1.5 system-ui}'
+        'h1{font-size:30px;margin:0 0 8px}h2{font-size:16px;font-weight:600;color:var(--muted)}'
+        'section{border-top:1px solid var(--border);padding:14px 0 24px}'
         '.hero{font-size:clamp(48px,8vw,112px);font-weight:700;font-synthesis:none;letter-spacing:0;font-kerning:none;white-space:pre;line-height:1.25;margin:10px 0}'
         '.sample{font-size:64px;font-weight:700;font-synthesis:none;letter-spacing:0;font-kerning:none;white-space:pre;line-height:1.35;margin:12px 0;overflow:auto}'
         '.sizes{font-weight:700;font-synthesis:none;letter-spacing:0;font-kerning:none;line-height:1.4}.sizes div{margin:6px 0}'
-        '#status{color:#23695c}</style>'
+        '#status{color:var(--accent)}</style>'
         f'{nav}<h1>Confinium Mono / Hollow Display</h1>'
         f'<p>Isolated wireframe display study ({WALL}-unit wall inset from the 160-unit Grid baseline). Intended for sci-fi HUDs, headers, and display titling (24 px+).</p>'
         '<p id="status">Loading…</p>'
