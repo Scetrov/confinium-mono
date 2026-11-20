@@ -68,34 +68,62 @@ def build_explorer() -> None:
 {css_fonts}
 {NAV_CSS}
 *{{box-sizing:border-box}}
-body{{margin:32px auto;max-width:1240px;padding:0 24px;background:#faf8f2;color:#172426;font:16px/1.5 system-ui,sans-serif}}
+body{{margin:32px auto;max-width:1240px;padding:0 24px;background:var(--paper);color:var(--text);font:16px/1.5 system-ui,sans-serif}}
 h1{{margin:0 0 8px;font-size:34px;letter-spacing:-.01em}}
-.lead{{max-width:860px;color:#3d4f4b;margin:0 0 22px}}
-.controls{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:18px;border:1px solid #bbc9c0;background:#f4f1e8;margin-bottom:24px}}
-label{{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#586d67;margin-bottom:6px}}
-select,input[type=text],input[type=range]{{width:100%;font:inherit;color:#172426}}
-select,input[type=text]{{padding:7px 10px;border:1px solid #bbc9c0;background:#faf8f2}}
+.lead{{max-width:860px;color:var(--secondary);margin:0 0 22px}}
+.controls{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:18px;border:1px solid var(--border);background:var(--panel);margin-bottom:24px}}
+label{{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}}
+select,input[type=text],input[type=range]{{width:100%;font:inherit;color:var(--text)}}
+select,input[type=text]{{padding:7px 10px;border:1px solid var(--border);background:var(--paper)}}
 .presets{{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}}
-button.chip{{background:#faf8f2;border:1px solid #bbc9c0;padding:4px 10px;font:13px/1.3 system-ui,sans-serif;color:#172426;cursor:pointer}}
-button.chip:hover{{border-color:#23695c}}
-.stage{{border-top:1px solid #bbc9c0;padding:22px 0}}
+button.chip{{background:var(--paper);border:1px solid var(--border);padding:4px 10px;font:13px/1.3 system-ui,sans-serif;color:var(--text);cursor:pointer}}
+button.chip:hover{{border-color:var(--accent)}}
+.stage{{border-top:1px solid var(--border);padding:22px 0}}
 .specimen{{font-family:exp_grid;font-weight:700;font-size:96px;line-height:1.25;letter-spacing:0;font-kerning:none;font-synthesis:none;white-space:pre-wrap;word-break:break-word;outline:none;min-height:1.3em}}
-.meta{{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:13px;color:#586d67;margin-top:10px}}
-.waterfall{{border-top:1px solid #bbc9c0;padding:18px 0;display:grid;gap:10px}}
+.meta{{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:13px;color:var(--muted);margin-top:10px}}
+.waterfall{{border-top:1px solid var(--border);padding:18px 0;display:grid;gap:10px}}
 .wf-row{{display:grid;grid-template-columns:64px 1fr;align-items:baseline;gap:12px}}
-.wf-size{{font-size:12px;color:#586d67}}
+.wf-size{{font-size:12px;color:var(--muted)}}
 .wf-text{{font-family:exp_grid;font-weight:700;font-kerning:none;font-synthesis:none;letter-spacing:0;overflow:auto;white-space:pre}}
 .glyph-bar{{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}}
-.glyph-btn{{font-family:exp_grid;font-weight:700;font-size:28px;width:48px;height:48px;border:1px solid #bbc9c0;background:#faf8f2;color:#172426;cursor:pointer;display:grid;place-items:center}}
-.glyph-btn:hover{{border-color:#23695c;background:#f4f1e8}}
-.timeline{{border-top:1px solid #bbc9c0;padding-top:22px;margin-top:12px}}
+.glyph-btn{{font-family:exp_grid;font-weight:700;font-size:28px;width:48px;height:48px;border:1px solid var(--border);background:var(--paper);cursor:pointer;display:grid;place-items:center}}
+.glyph-btn:hover{{border-color:var(--accent);background:var(--panel)}}
+.timeline{{border-top:1px solid var(--border);padding-top:22px;margin-top:12px}}
 .steps{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:12px}}
-.step{{border:1px solid #bbc9c0;padding:14px;background:#f4f1e8}}
+.step{{border:1px solid var(--border);padding:14px;background:var(--panel)}}
 .step h3{{margin:0 0 6px;font-size:15px}}
-.step p{{margin:0 0 8px;font-size:13px;color:#3d4f4b}}
-.step a{{font-size:13px;color:#23695c;font-weight:600;text-decoration:none}}
+.step p{{margin:0 0 8px;font-size:13px;color:var(--secondary)}}
+.step a{{font-size:13px;color:var(--accent);font-weight:600;text-decoration:none}}
 .step a:hover{{text-decoration:underline}}
-#status{{font-size:13px;color:#23695c;margin:0 0 14px}}
+#status{{font-size:13px;color:var(--accent);margin:0 0 14px}}
+:root{{
+  color-scheme:light;
+  --paper:light-dark(#faf8f2,#172022);
+  --panel:light-dark(#f4f1e8,#202b2d);
+  --text:light-dark(#172426,#f3f1e9);
+  --secondary:light-dark(#3d4f4b,#cbd5d1);
+  --muted:light-dark(#586d67,#b0c0bc);
+  --border:light-dark(#bbc9c0,#62736f);
+  --accent:light-dark(#23695c,#91d6c4);
+  --ink:var(--text);
+}}
+@media (prefers-color-scheme:dark){{:root:not([data-theme="light"]){{color-scheme:dark}}}}
+:root[data-theme="dark"]{{color-scheme:dark}}
+[data-ink="red"]{{--ink:light-dark(#a52736,#ff8f98)}}
+[data-ink="orange"]{{--ink:light-dark(#9a4114,#ffad79)}}
+[data-ink="yellow"]{{--ink:light-dark(#775900,#f8d66c)}}
+[data-ink="green"]{{--ink:light-dark(#21633c,#8dd8a5)}}
+[data-ink="blue"]{{--ink:light-dark(#2059a0,#92bfff)}}
+[data-ink="purple"]{{--ink:light-dark(#703f9e,#caa7fa)}}
+.site-nav{{border-color:var(--border)}}
+.site-nav a{{color:var(--muted)}}
+.site-nav .brand,.site-nav a:hover,.site-nav a.active{{color:var(--text)}}
+.site-nav a.active{{border-color:var(--accent)}}
+.specimen,.wf-text,.glyph-btn{{color:var(--ink)}}
+.appearance{{display:flex;flex-wrap:wrap;align-items:end;gap:12px 20px;margin:0 0 24px}}
+.appearance select{{min-width:9rem}}
+.appearance input[type=color]{{display:block;width:4rem;height:2.2rem;cursor:pointer}}
+.specimen:focus-visible{{outline:2px solid var(--accent);outline-offset:3px}}
 </style>
 {nav}
 <h1>Confinium Mono Explorer</h1>
@@ -143,6 +171,34 @@ button.chip:hover{{border-color:#23695c}}
   </div>
 </section>
 
+<section class="appearance" aria-label="Preview appearance">
+  <div>
+    <label for="themeSel">Appearance</label>
+    <select id="themeSel">
+      <option value="auto">Auto (system)</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+  <div>
+    <label for="inkSel">Typeface colour</label>
+    <select id="inkSel">
+      <option value="default">Default (neutral)</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="yellow">Yellow</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+      <option value="custom">Custom</option>
+    </select>
+  </div>
+  <div>
+    <label for="customInk">Custom colour</label>
+    <input id="customInk" type="color" value="#23695c">
+  </div>
+</section>
+
 <section class="stage">
   <div id="specimen" class="specimen" contenteditable="true" spellcheck="false">HO0QCESGY</div>
 </section>
@@ -178,7 +234,7 @@ button.chip:hover{{border-color:#23695c}}
       <a href="studies/grid-token-bold/diagonals/index.html">Open Diagonals Study →</a>
     </article>
   </div>
-  <p style="margin-top:14px;font-size:14px"><a href="process.html" style="color:#23695c;font-weight:600">Read full design process, curve corrections &amp; sketches →</a></p>
+  <p style="margin-top:14px;font-size:14px"><a href="process.html" style="color:var(--accent);font-weight:600">Read full design process, curve corrections &amp; sketches →</a></p>
 </section>
 
 <script>
@@ -192,6 +248,25 @@ const weightVal = document.getElementById('weightVal');
 const metaLine = document.getElementById('metaLine');
 const glyphBar = document.getElementById('glyphBar');
 const wfTexts = document.querySelectorAll('.wf-text');
+const themeSel = document.getElementById('themeSel');
+const inkSel = document.getElementById('inkSel');
+const customInk = document.getElementById('customInk');
+const root = document.documentElement;
+
+function applyAppearance() {{
+  root.dataset.theme = themeSel.value;
+  root.dataset.ink = inkSel.value;
+  if (inkSel.value === 'custom') root.style.setProperty('--ink', customInk.value);
+  else root.style.removeProperty('--ink');
+}}
+
+themeSel.addEventListener('change', applyAppearance);
+inkSel.addEventListener('change', applyAppearance);
+customInk.addEventListener('input', () => {{
+  inkSel.value = 'custom';
+  applyAppearance();
+}});
+applyAppearance();
 
 function renderGlyphBar(chars, fam, wght) {{
   glyphBar.innerHTML = '';
