@@ -1,5 +1,9 @@
 """Static website generator for Confinium Mono: root explorer, design process, and shared primary nav."""
 import base64
+from html import escape
+import json
+import unicodedata
+from fontTools.ttLib import TTFont
 from pathlib import Path
 from font_license import write_licensed_html
 import subprocess
@@ -16,22 +20,31 @@ def appearance_head(root_rel: str) -> str:
 def primary_nav(root_rel: str, active: str) -> str:
     """Return shared primary navigation HTML with relative links from root_rel."""
     links = [
-        ('explorer', 'Explorer', f'{root_rel}index.html'),
+        ('cyrillic', 'Cyrillic', f'{root_rel}studies/grid-token-bold/cyrillic/index.html'),
+        ('european', 'European Latin', f'{root_rel}studies/grid-token-bold/european-latin/index.html'),
+        ('mixed-text', 'Mixed Text · ASCII', f'{root_rel}studies/grid-token-bold/mixed-text/index.html'),
         ('grid-token', 'Grid & Token Bold', f'{root_rel}studies/grid-token-bold/specimen/index.html'),
         ('hollow', 'Hollow Display', f'{root_rel}studies/grid-token-bold/hollow/index.html'),
         ('diagonals', 'Optical Diagonals', f'{root_rel}studies/grid-token-bold/diagonals/index.html'),
         ('q-tail', 'Q-Tail Direction', f'{root_rel}studies/grid-token-bold/q-tail/index.html'),
+        ('alphabet', 'Lowercase Alphabet', f'{root_rel}studies/grid-token-bold/lowercase-alphabet/index.html'),
+        ('lowercase', 'Lowercase Foundations', f'{root_rel}studies/grid-token-bold/lowercase/index.html'),
+        ('punctuation', 'ASCII Punctuation', f'{root_rel}studies/grid-token-bold/punctuation/index.html'),
         ('pilot', 'Variable Pilot', f'{root_rel}specimen/index.html'),
         ('process', 'Design Process', f'{root_rel}process.html'),
     ]
-    items = ''.join(
-        f'<a href="{href}" class="{"active" if key == active else ""}">{label}</a>'
-        for key, label, href in links
-    )
+    def link(key, label, href):
+        state = ' class="active" aria-current="page"' if active == key else ''
+        return f'<a href="{href}"{state}>{label}</a>'
+
+    explorer = link('explorer', 'Explorer', f'{root_rel}index.html')
+    items = ''.join(link(*item) for item in links)
+    section = ' class="active"' if active != 'explorer' else ''
     return (
-        f'<nav class="site-nav" aria-label="Primary">'
+        '<nav class="site-nav" aria-label="Primary">'
         f'<a class="brand" href="{root_rel}index.html">Confinium Mono</a>'
-        f'{items}</nav>'
+        f'<div class="nav-center">{explorer}<details><summary{section}>Studies</summary>'
+        f'<div class="study-links">{items}</div></details></div></nav>'
     )
 
 
@@ -39,16 +52,71 @@ def _b64(path: Path) -> str:
     return base64.b64encode(path.read_bytes()).decode()
 
 
+# Alphabet membership is deliberately many-to-many (Å is Latin, Nordic,
+# Swedish, Finnish, Danish and Norwegian). These are letters, not locales.
+ALPHABETS = {
+    'Icelandic': 'aábdðeéfghiíjklmnoóprstuúvxyýþæö',
+    'Faroese': 'aáb dð e f g h ií j k l m n oó p r s t uú v yý æ ø'.replace(' ', ''),
+    'Danish': 'abcdefghijklmnopqrstuvwxyzæøå',
+    'Norwegian': 'abcdefghijklmnopqrstuvwxyzæøå',
+    'Swedish': 'abcdefghijklmnopqrstuvwxyzåäö',
+    'Finnish': 'abcdefghijklmnopqrstuvwxyzåäöšž',
+    'Northern Sámi': 'aábcčdđefghijklmnŋoprsštŧuvzž',
+    'Russian': 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+    'Ukrainian': 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя',
+    'Belarusian': 'абвгдеёжзійклмнопрстуўфхцчшыьэюя',
+}
+NORDIC = {'Icelandic', 'Faroese', 'Danish', 'Norwegian', 'Swedish', 'Finnish', 'Northern Sámi'}
+
+
+def character_data(fonts):
+    """Map each embedded face to its actual Unicode inventory (not glyph names)."""
+    faces, entries = {}, {}
+    for key, _, path, _ in fonts:
+        with TTFont(path) as font:
+            codes = sorted(font.getBestCmap())
+        faces['exp_' + key] = codes
+        for cp in codes:
+            ch = chr(cp)
+            kind = unicodedata.category(ch)[0]
+            title = unicodedata.name(ch, 'UNNAMED')
+            if kind == 'L':
+                group = 'Cyrillic' if 'CYRILLIC' in title else ('Basic Latin' if cp < 128 else 'Extended Latin')
+            else:
+                group = {'N': 'Figures', 'M': 'Combining marks', 'Z': 'Spaces'}.get(kind, 'Punctuation & symbols')
+            groups = [group]
+            if group in ('Basic Latin', 'Extended Latin'):
+                groups.append('Latin')
+            if kind == 'L':
+                groups.append('Uppercase' if ch.isupper() else 'Lowercase')
+                languages = [lang for lang, alphabet in ALPHABETS.items()
+                             if ch in alphabet or ch in alphabet.upper()]
+                if NORDIC.intersection(languages):
+                    groups.append('Nordic')
+                groups.extend(languages)
+            if kind == 'P':
+                groups.append('Punctuation')
+            if kind == 'S':
+                groups.append('Symbols')
+            if unicodedata.category(ch) == 'Sc':
+                groups.append('Currency')
+            entries[cp] = [title, groups]
+    return {'faces': faces, 'entries': entries}
+
+
 def build_explorer() -> None:
     """Generate root index.html interactive explorer."""
     study = ROOT / 'studies/grid-token-bold'
     fonts = [
-        ('grid', 'Grid Bold (Q 128 / Y 144)', study / 'fonts/ConfiniumMono-GridToken-Grid.ttf', '700'),
-        ('open', 'Open Bold (bar 136 / fillet 40)', study / 'fonts/ConfiniumMono-GridToken-Open.ttf', '700'),
-        ('dense', 'Dense Bold (bar 144 / fillet 24)', study / 'fonts/ConfiniumMono-GridToken-Dense.ttf', '700'),
-        ('hollow', 'Hollow Display (28-unit wall)', study / 'hollow/ConfiniumMono-GridToken-Hollow.ttf', '700'),
-        ('pilot', 'Variable Pilot (100–700)', ROOT / 'fonts/ConfiniumMono[wght].ttf', '100 700'),
+        (style.lower(), style + ' Bold', study / f'full-family/fonts/ConfiniumMono-Full{style}.ttf', '700')
+        for style in ('Grid', 'Open', 'Dense', 'Hollow')
+    ] + [
+        ('variable', 'Confinium Mono Variable', ROOT / 'studies/variable-repertoire/fonts/ConfiniumMono-VariableRepertoire[wght].ttf', '100 700'),
     ]
+    data = character_data(fonts)
+    inventory = json.dumps(data, separators=(',', ':'))
+    groups = sorted({group for _, memberships in data['entries'].values() for group in memberships})
+    category_options = ''.join(f'<option>{escape(group)}</option>' for group in groups)
     css_fonts = ''.join(
         f'@font-face{{font-family:exp_{key};src:url(data:font/ttf;base64,{_b64(path)});font-weight:{wght}}}'
         for key, _, path, wght in fonts
@@ -68,8 +136,8 @@ h1{{margin:0 0 8px;font-size:34px;letter-spacing:-.01em}}
 .lead{{max-width:860px;color:var(--secondary);margin:0 0 22px}}
 .controls{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:18px;border:1px solid var(--border);background:var(--panel);margin-bottom:24px}}
 label{{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}}
-select,input[type=text],input[type=range]{{width:100%;font:inherit;color:var(--text)}}
-select,input[type=text]{{padding:7px 10px;border:1px solid var(--border);background:var(--paper)}}
+select,input[type=search],input[type=text],input[type=range]{{width:100%;font:inherit;color:var(--text)}}
+select,input[type=search],input[type=text]{{padding:7px 10px;border:1px solid var(--border);background:var(--paper)}}
 .presets{{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}}
 button.chip{{background:var(--paper);border:1px solid var(--border);padding:4px 10px;font:13px/1.3 system-ui,sans-serif;color:var(--text);cursor:pointer}}
 button.chip:hover{{border-color:var(--accent)}}
@@ -80,8 +148,10 @@ button.chip:hover{{border-color:var(--accent)}}
 .wf-row{{display:grid;grid-template-columns:64px 1fr;align-items:baseline;gap:12px}}
 .wf-size{{font-size:12px;color:var(--muted)}}
 .wf-text{{font-family:exp_grid;font-weight:700;font-kerning:none;font-synthesis:none;letter-spacing:0;overflow:auto;white-space:pre}}
-.glyph-bar{{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}}
-.glyph-btn{{font-family:exp_grid;font-weight:700;font-size:28px;width:48px;height:48px;border:1px solid var(--border);background:var(--paper);cursor:pointer;display:grid;place-items:center}}
+.character-sheet{{border-top:1px solid var(--border);padding:20px 0}}
+.sheet-controls{{display:flex;flex-wrap:wrap;align-items:end;gap:12px}}
+.glyph-bar{{display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));gap:4px;max-height:24rem;overflow:auto;padding:3px}}
+.glyph-btn{{font-family:exp_grid;font-weight:700;font-size:28px;width:100%;height:48px;border:1px solid var(--border);background:var(--paper);cursor:pointer;display:grid;place-items:center}}
 .glyph-btn:hover{{border-color:var(--accent);background:var(--panel)}}
 .timeline{{border-top:1px solid var(--border);padding-top:22px;margin-top:12px}}
 .steps{{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:12px}}
@@ -105,20 +175,19 @@ button.chip:hover{{border-color:var(--accent)}}
 </style>
 {nav}
 <h1>Confinium Mono Explorer</h1>
-<p class="lead">Original geometric monospace typeface under active development. Switch between the promoted 800-unit grid- and token-driven Bold variants (Q 128 / Y 144) and the 697-unit mixed-case variable pilot (100–700). All glyph previews use embedded Confinium Mono binaries.</p>
+<p class="lead">Original geometric monospace typeface under active development. Explore European Latin, Cyrillic, figures and symbols in Grid, Open, Dense and Hollow. Confinium Mono Variable covers the same characters at weights 100–700. All glyph previews use embedded Confinium Mono binaries.</p>
 <p id="status">Loading fonts…</p>
 
 <section class="controls" aria-label="Explorer controls">
   <div>
-    <label for="familySel">Study / Style</label>
+    <label for="familySel">Typeface</label>
     <select id="familySel">
-      <option value="exp_grid" data-wght="700" data-glyphs="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 140 · Fillet 32 · Q 128 / Y 144">Grid-Token Grid Bold (Baseline)</option>
-      <option value="exp_open" data-wght="700" data-glyphs="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 136 · Fillet 40 · Q 128 / Y 144">Grid-Token Open Bold</option>
-      <option value="exp_dense" data-wght="700" data-glyphs="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 144 · Fillet 24 · Q 128 / Y 144">Grid-Token Dense Bold</option>
-      <option value="exp_hollow" data-wght="700" data-glyphs="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" data-meta="Advance 800 · Cap 800 · Display Wireframe · 28-unit wall inset from Grid">Grid-Token Hollow Display</option>
-      <option value="exp_pilot" data-wght="700" data-glyphs="HO0Qgyces" data-meta="Advance 697 · Cap 700 · x-height 500 · Variable wght 100–700">Variable Pilot (100–700)</option>
+      <option value="exp_grid" selected data-wght="700" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 140 · Fillet 32 · Q 128 / Y 144">Confinium Mono Grid Bold</option>
+      <option value="exp_open" data-wght="700" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 136 · Fillet 40 · Q 128 / Y 144">Confinium Mono Open Bold</option>
+      <option value="exp_dense" data-wght="700" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 144 · Fillet 24 · Q 128 / Y 144">Confinium Mono Dense Bold</option>
+      <option value="exp_hollow" data-wght="700" data-meta="Advance 800 · Cap 800 · Display Wireframe · 28-unit wall inset from Grid">Confinium Mono Hollow Display</option>
+      <option value="exp_variable" data-wght="700" data-meta="Advance 800 · Cap 800 · x-height 560 · Full Grid Bold master · Variable wght 100–700">Confinium Mono Variable</option>
     </select>
-    <div class="glyph-bar" id="glyphBar" aria-label="Insert glyph"></div>
   </div>
   <div>
     <label for="sampleInput">Sample text (editable below too)</label>
@@ -171,6 +240,17 @@ button.chip:hover{{border-color:var(--accent)}}
 
 <section class="stage">
   <div id="specimen" class="specimen" contenteditable="true" spellcheck="false">HO0QCESGY</div>
+</section>
+
+<section class="character-sheet" aria-labelledby="sheetHeading">
+  <h2 id="sheetHeading">Character sheet</h2>
+  <p>Every typeface covers the entire sheet. Choose a character to append it to your sample.</p>
+  <div class="sheet-controls">
+    <label>Category <select id="sheetCategory"><option>All characters</option>{category_options}</select></label>
+    <label>Filter characters <input type="search" id="sheetQuery" placeholder="e.g. Þ, breve, U+0416"></label>
+  </div>
+  <p id="sheetCount" role="status"></p>
+  <div class="glyph-bar" id="glyphBar" role="group" aria-label="Insert character"></div>
 </section>
 
 <section class="waterfall" aria-label="Size waterfall">
@@ -240,23 +320,35 @@ customInk.addEventListener('input', () => {{
 }});
 applyInk();
 
-function renderGlyphBar(chars, fam, wght) {{
-  glyphBar.innerHTML = '';
-  for (const ch of chars) {{
+const inventory = {inventory};
+const category = document.getElementById('sheetCategory');
+const query = document.getElementById('sheetQuery');
+function renderGlyphBar(fam, wght) {{
+  const codes = inventory.faces[fam];
+  const filter = query.value.trim().toUpperCase();
+  const fragment = document.createDocumentFragment();
+  for (const cp of codes) {{
+    const ch = String.fromCodePoint(cp), [title, groups] = inventory.entries[cp];
+    const code = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
+    if (category.value !== 'All characters' && !groups.includes(category.value)) continue;
+    if ([...query.value].length === 1 ? ch !== query.value :
+        filter && !title.includes(filter) && !code.startsWith(filter)) continue;
     const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'glyph-btn';
-    btn.style.fontFamily = fam;
-    btn.style.fontWeight = wght;
-    btn.textContent = ch;
-    btn.title = 'Insert ' + ch;
-    btn.onclick = () => {{
-      sampleInput.value += ch;
-      syncText(sampleInput.value);
-    }};
-    glyphBar.appendChild(btn);
+    btn.type = 'button'; btn.className = 'glyph-btn';
+    btn.style.fontFamily = fam; btn.style.fontWeight = wght;
+    btn.textContent = groups.includes('Spaces') ? (cp === 32 ? 'SP' : 'NB') : groups.includes('Combining marks') ? 'o' + ch : ch;
+    btn.title = code + ' · ' + title;
+    btn.setAttribute('aria-label', 'Insert ' + btn.title);
+    btn.onclick = () => syncText(sampleInput.value + ch);
+    fragment.appendChild(btn);
   }}
+  const count = fragment.childElementCount;
+  document.getElementById('sheetCount').textContent = count ? count + ' of ' + codes.length + ' characters' : 'No characters match this category and search. Try clearing the search.';
+  glyphBar.replaceChildren(fragment);
+  glyphBar.scrollTop = 0;
 }}
+category.addEventListener('change', applyStyle);
+query.addEventListener('input', applyStyle);
 
 function syncText(text) {{
   if (specimen.textContent !== text) specimen.textContent = text;
@@ -267,7 +359,7 @@ function syncText(text) {{
 function applyStyle() {{
   const opt = familySel.selectedOptions[0];
   const fam = opt.value;
-  const isVar = fam === 'exp_pilot';
+  const isVar = fam === 'exp_variable';
   weightRange.disabled = !isVar;
   if (!isVar) {{
     weightRange.value = 700;
@@ -281,15 +373,10 @@ function applyStyle() {{
     el.style.fontWeight = wght;
   }});
   metaLine.textContent = opt.dataset.meta;
-  renderGlyphBar(opt.dataset.glyphs, fam, wght);
+  renderGlyphBar(fam, wght);
 }}
 
-familySel.addEventListener('change', () => {{
-  const opt = familySel.selectedOptions[0];
-  if (opt.value === 'exp_pilot' && sampleInput.value === 'HO0QCESGY') syncText('HO0Qgyces');
-  if (opt.value !== 'exp_pilot' && sampleInput.value === 'HO0Qgyces') syncText('HO0QCESGY');
-  applyStyle();
-}});
+familySel.addEventListener('change', applyStyle);
 sampleInput.addEventListener('input', e => syncText(e.target.value));
 specimen.addEventListener('input', () => syncText(specimen.textContent));
 sizeRange.addEventListener('input', e => {{
@@ -308,7 +395,7 @@ document.querySelectorAll('.size-chip').forEach(b => b.onclick = () => {{
 }});
 
 applyStyle();
-Promise.all(['exp_grid','exp_open','exp_dense','exp_hollow','exp_pilot'].map(f => document.fonts.load('700 48px ' + f, 'HO0Q')))
+Promise.all(['exp_grid','exp_open','exp_dense','exp_hollow','exp_variable'].map(f => document.fonts.load('700 48px ' + f, 'HO0Q')))
   .then(r => document.getElementById('status').textContent = r.every(x => x.length) ? 'All explorer fonts loaded' : 'FONT LOAD FAILURE');
 </script>
 </html>

@@ -216,7 +216,7 @@ pre{{font:700 60px/1.32 punctuation;font-synthesis:none;margin:4px 0;overflow:au
 .tok-property{{color:light-dark(#205c84,#97cbf1)}} .tok-operator{{color:light-dark(#743d78,#e0a8eb)}}
 a{{color:inherit}}
 </style>
-{primary_nav('../../../', '')}
+{primary_nav('../../../', 'punctuation')}
 <h1>Confinium Mono / Punctuation Study</h1>
 <p>Grid Bold · 32 ASCII punctuation and operator glyphs · 800-unit advance. Lowercase is not included.</p>
 <p><a href="../specimen/index.html">Grid Bold baseline</a> · <a href="fonts/{BINARY.name}">Study TTF</a> · <a href="coverage.json">Coverage</a></p>
