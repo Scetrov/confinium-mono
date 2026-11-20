@@ -14,7 +14,7 @@ Two parallel tracks are maintained in this repository:
    - Coverage: `H O 0 Q g y c e s`, `space`, `nbspace`, `.notdef`.
    - Narrow faceted `0`, stepped `Q` tail, open-hook `g`, diagonal `y`, and analytic tangent curves on `c/e/s/g`.
 
-2. **Grid- and token-driven Bold study** (`studies/grid-token-bold/`, `parameters.json`)
+2. **Grid- and token-driven Bold study** (`studies/grid-token-bold/`, `studies/grid-token-bold/parameters.json`)
    - 1,000 UPM, **800-unit advance and cap height** (`1u = 80`), active drawing bounds `x = 80…720`, line metrics `920 / −200 / 0`, no overshoot.
    - Coverage: `A–Z` (26 uppercase), `0–9` (10 figures), `space`, `nbspace`, `.notdef` (39 glyphs total).
    - Shared tokens: `vertical_stem = 160` (`2u`), `outer_radius = 160` (`2u`), non-concentric tight inner fillets.
@@ -86,4 +86,4 @@ uv run python scripts/proof.py
   ```
 - **Inspect rendered output**: Always visually check Chromium captures (`verification/site-explorer.png`, `studies/grid-token-bold/verification/chromium.png`, etc.)—geometry and shaping checks do not guarantee optical quality.
 - **Preserve design history**: Do not delete or overwrite existing studies, UFOs, or verification archives without explicit approval.
-- **Scope & licensing**: Do not expand the character set, promote unapproved variants, invent an OFL rights-holder, or label current binaries as production-ready.
+- **Scope & licensing**: Do not promote unapproved variants, invent an OFL rights-holder, or label current binaries as production-ready.
