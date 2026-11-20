@@ -1,0 +1,20 @@
+test_corner_cubics_have_no_reversal_or_inflection (test_curves.CurveTests.test_corner_cubics_have_no_reversal_or_inflection) ... ok
+test_g_bowl_corners_are_concentric (test_curves.CurveTests.test_g_bowl_corners_are_concentric) ... ok
+test_tangents_match_except_terminal_cuts (test_curves.CurveTests.test_tangents_match_except_terminal_cuts) ... ok
+test_clear_counter_attachment_and_progressive_ink (test_diagonals.DiagonalTests.test_clear_counter_attachment_and_progressive_ink) ... ok
+test_normal_thickness_angles_and_fixed_alignment (test_diagonals.DiagonalTests.test_normal_thickness_angles_and_fixed_alignment) ... ok
+test_unrelated_outlines_metadata_and_shaping (test_diagonals.DiagonalTests.test_unrelated_outlines_metadata_and_shaping) ... ok
+test_grid_metrics_coverage_and_shaping (test_grid_token.GridTokenTests.test_grid_metrics_coverage_and_shaping) ... ok
+test_q45_alternative (test_grid_token.GridTokenTests.test_q45_alternative) ... ok
+test_resolved_contours_and_tangent_fillets (test_grid_token.GridTokenTests.test_resolved_contours_and_tangent_fillets) ... ok
+test_zero_counter_and_q_tail (test_grid_token.GridTokenTests.test_zero_counter_and_q_tail) ... ok
+test_hollow_cmap_advances_shaping_and_wireframe_ink (test_hollow.HollowTests.test_hollow_cmap_advances_shaping_and_wireframe_ink) ... ok
+test_axis_instances_and_static_match (test_pilot.PilotTests.test_axis_instances_and_static_match) ... ok
+test_coverage_metrics_and_bounds (test_pilot.PilotTests.test_coverage_metrics_and_bounds) ... ok
+test_progressive_ink (test_pilot.PilotTests.test_progressive_ink) ... ok
+test_shaping_and_intermediate_positions (test_pilot.PilotTests.test_shaping_and_intermediate_positions) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.542s
+
+OK

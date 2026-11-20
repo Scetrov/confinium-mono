@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Local handoff, release review and historical verification records.
+/HANDOFF.md
+/LEGAL-RELEASE-REVIEW.md
+/verification/curves-before.html
+/verification/curves-after.html
+/verification/curves-before-tests.txt

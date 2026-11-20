@@ -1,0 +1,12 @@
+test_corner_cubics_have_no_reversal_or_inflection (test_curves.CurveTests.test_corner_cubics_have_no_reversal_or_inflection) ... ok
+test_g_bowl_corners_are_concentric (test_curves.CurveTests.test_g_bowl_corners_are_concentric) ... ok
+test_tangents_match_except_terminal_cuts (test_curves.CurveTests.test_tangents_match_except_terminal_cuts) ... ok
+test_axis_instances_and_static_match (test_pilot.PilotTests.test_axis_instances_and_static_match) ... ok
+test_coverage_metrics_and_bounds (test_pilot.PilotTests.test_coverage_metrics_and_bounds) ... ok
+test_progressive_ink (test_pilot.PilotTests.test_progressive_ink) ... ok
+test_shaping_and_intermediate_positions (test_pilot.PilotTests.test_shaping_and_intermediate_positions) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.182s
+
+OK

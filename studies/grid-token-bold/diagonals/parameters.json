@@ -1,0 +1,12 @@
+{
+  "family": "Confinium Mono",
+  "normal_thicknesses": [128, 144, 160],
+  "angle_degrees": 45,
+  "q_centerline_x_plus_y": 532,
+  "q_top": 120,
+  "q_bottom": -120,
+  "y_outer_drop_y": 580,
+  "y_stem_join_y": 340,
+  "y_outer_left_intercept": 660,
+  "junction_taper": 0
+}

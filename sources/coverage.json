@@ -1,0 +1,100 @@
+{
+  "family": "Confinium Mono",
+  "stage": "nine-glyph pilot",
+  "glyphs": [
+    {
+      "name": ".notdef",
+      "codepoints": [],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "space",
+      "codepoints": [
+        "U+0020"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "nbspace",
+      "codepoints": [
+        "U+00A0"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "H",
+      "codepoints": [
+        "U+0048"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "O",
+      "codepoints": [
+        "U+004F"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "zero",
+      "codepoints": [
+        "U+0030"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "Q",
+      "codepoints": [
+        "U+0051"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "g",
+      "codepoints": [
+        "U+0067"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "y",
+      "codepoints": [
+        "U+0079"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "c",
+      "codepoints": [
+        "U+0063"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "e",
+      "codepoints": [
+        "U+0065"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    },
+    {
+      "name": "s",
+      "codepoints": [
+        "U+0073"
+      ],
+      "spacing": "single-cell",
+      "advance": 697
+    }
+  ]
+}

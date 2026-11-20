@@ -1,0 +1,12 @@
+[project]
+name = "confinium-mono-pilot"
+version = "0.1.0"
+description = "Original nine-glyph Confinium Mono design pilot"
+requires-python = ">=3.11"
+dependencies = [
+  "fontmake==3.12.2",
+  "ufoLib2==0.19.1",
+  "uharfbuzz==0.57.0",
+  "pillow==13.0.0",
+  "booleanOperations==0.10.0",
+]

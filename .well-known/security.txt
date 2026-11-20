@@ -1,0 +1,5 @@
+Contact: https://github.com/Scetrov/confinium-mono/security/advisories/new
+Expires: 2027-11-19T00:00:00Z
+Preferred-Languages: en
+Canonical: https://scetrov.github.io/confinium-mono/.well-known/security.txt
+Policy: https://github.com/Scetrov/confinium-mono/security/policy

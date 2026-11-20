@@ -1,0 +1,29 @@
+{
+  "family": "Confinium Mono",
+  "units_per_em": 1000,
+  "unit": 80,
+  "advance": 800,
+  "cap_height": 800,
+  "active_left": 80,
+  "active_right": 720,
+  "vertical_stem": 160,
+  "outer_radius": 160,
+  "horizontal_bar": 140,
+  "inner_radius": 32,
+  "aperture_extension": 80,
+  "q_tail_normal_thickness": 128,
+  "q_centerline_x_plus_y": 532,
+  "q_top": 120,
+  "tail_depth": 120,
+  "y_arm_normal_thickness": 144,
+  "y_outer_drop_y": 580,
+  "y_stem_join_y": 340,
+  "y_outer_left_intercept": 660,
+  "ascender": 920,
+  "descender": -200,
+  "variants": {
+    "Grid": {},
+    "Open": {"inner_radius": 40, "horizontal_bar": 136},
+    "Dense": {"inner_radius": 24, "horizontal_bar": 144}
+  }
+}
