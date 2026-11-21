@@ -1,0 +1,324 @@
+
+<h1>Confinium Mono Explorer</h1>
+<p class="lead">Original geometric monospace typeface under active development. Explore European Latin, Cyrillic, figures and symbols in Grid, Open, Dense and Hollow. Confinium Mono Variable covers the same characters at weights 100–700. All glyph previews use embedded Confinium Mono binaries.</p>
+<p><a href="studies/variable-repertoire/reading-proof.html">Compare Thin, Book, and Bold at reading sizes</a> · <a href="studies/grid-token-bold/av-knees/index.html">Compare the Midline Knees study</a> · <a href="studies/grid-token-bold/full-family/index.html">Full Family Proof</a></p>
+<p id="status">Loading fonts…</p>
+
+<section class="controls" aria-label="Explorer controls">
+  <div>
+    <label for="familySel">Typeface</label>
+    <select id="familySel">
+      <option value="exp_grid" selected data-wght="700" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 140 · Fillet 32 · Q 128 / Y 144">Confinium Mono Grid Bold</option>
+      <option value="exp_open" data-wght="700" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 136 · Fillet 40 · Q 128 / Y 144">Confinium Mono Open Bold</option>
+      <option value="exp_dense" data-wght="700" data-meta="Advance 800 · Cap 800 · Stem 160 · Bar 144 · Fillet 24 · Q 128 / Y 144">Confinium Mono Dense Bold</option>
+      <option value="exp_hollow" data-wght="700" data-meta="Advance 800 · Cap 800 · Display Wireframe · 28-unit wall inset from Grid">Confinium Mono Hollow Display</option>
+      <option value="exp_variable" data-wght="700" data-meta="Advance 800 · Cap 800 · x-height 560 · Full Grid Bold master · Variable wght 100–700">Confinium Mono Variable</option>
+    </select>
+  </div>
+  <div>
+    <label for="sampleInput">Sample text (editable below too)</label>
+    <input id="sampleInput" type="text" value="HO0QCESGY">
+    <div class="presets">
+      <button class="chip" type="button" data-text="HO0QCESGY">HO0QCESGY</button>
+      <button class="chip" type="button" data-text="ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789">A–Z 0–9</button>
+      <button class="chip" type="button" data-text="ABCDEFGHIJKLMNOPQRSTUVWXYZ">UPPERCASE</button>
+      <button class="chip" type="button" data-text="abcdefghijklmnopqrstuvwxyz">lowercase</button>
+      <button class="chip" type="button" data-text="0123456789">Numerals</button>
+      <button class="chip" type="button" data-text="O0O0 1I1I 2Z2Z 5S5S 8B8B QO0Q">Pairs</button>
+      <button class="chip" type="button" data-text="HO0Qgyces">9-glyph sample</button>
+      <button class="chip" type="button" data-text="QYQY HY">Q/Y Focus</button>
+    </div>
+  </div>
+  <div>
+    <label for="sizeRange">Size: <span id="sizeVal">96</span> px</label>
+    <input id="sizeRange" type="range" min="14" max="180" value="96">
+    <div class="presets">
+      <button class="chip size-chip" type="button" data-size="14">14</button>
+      <button class="chip size-chip" type="button" data-size="18">18</button>
+      <button class="chip size-chip" type="button" data-size="32">32</button>
+      <button class="chip size-chip" type="button" data-size="64">64</button>
+      <button class="chip size-chip" type="button" data-size="112">112</button>
+    </div>
+  </div>
+  <div id="weightWrap">
+    <label for="weightRange">Weight: <span id="weightVal">700</span></label>
+    <input id="weightRange" type="range" min="100" max="700" step="10" value="700" disabled>
+    <div class="meta" id="metaLine">Advance 800 · Cap 800 · Stem 160 · Bar 140 · Fillet 32 · Q 128 / Y 144</div>
+  </div>
+</section>
+
+<section class="appearance" aria-label="Preview appearance">
+  <div>
+    <label for="inkSel">Typeface colour</label>
+    <select id="inkSel">
+      <option value="default">Default (neutral)</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="yellow">Yellow</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+      <option value="custom">Custom</option>
+    </select>
+  </div>
+  <div>
+    <label for="customInk">Custom colour</label>
+    <input id="customInk" type="color" value="#007197">
+  </div>
+</section>
+
+<section class="stage">
+  <div id="specimen" class="specimen" contenteditable="true" spellcheck="false">HO0QCESGY</div>
+</section>
+
+<section class="character-sheet" aria-labelledby="sheetHeading">
+  <h2 id="sheetHeading">Character sheet</h2>
+  <p>Every typeface covers the entire sheet. Choose a character to append it to your sample.</p>
+  <div class="sheet-controls">
+    <label>Category <select id="sheetCategory"><option>All characters</option><option>Basic Latin</option><option>Belarusian</option><option>Combining marks</option><option>Currency</option><option>Cyrillic</option><option>Danish</option><option>Extended Latin</option><option>Faroese</option><option>Figures</option><option>Finnish</option><option>Icelandic</option><option>Latin</option><option>Lowercase</option><option>Nordic</option><option>Northern Sámi</option><option>Norwegian</option><option>Punctuation</option><option>Punctuation &amp; symbols</option><option>Russian</option><option>Spaces</option><option>Swedish</option><option>Symbols</option><option>Ukrainian</option><option>Uppercase</option></select></label>
+    <label>Filter characters <input type="search" id="sheetQuery" placeholder="e.g. Þ, breve, U+0416"></label>
+  </div>
+  <p id="sheetCount" role="status"></p>
+  <div class="glyph-bar" id="glyphBar" role="group" aria-label="Insert character"></div>
+</section>
+
+<section class="waterfall" aria-label="Size waterfall">
+  <div class="wf-row"><span class="wf-size">14 px</span><span class="wf-text" style="font-size:14px">HO0QCESGY O0O0 QO0Q</span></div>
+  <div class="wf-row"><span class="wf-size">18 px</span><span class="wf-text" style="font-size:18px">HO0QCESGY O0O0 QO0Q</span></div>
+  <div class="wf-row"><span class="wf-size">32 px</span><span class="wf-text" style="font-size:32px">HO0QCESGY O0O0 QO0Q</span></div>
+  <div class="wf-row"><span class="wf-size">64 px</span><span class="wf-text" style="font-size:64px">HO0QCESGY</span></div>
+</section>
+
+<section class="timeline">
+  <h2>Design Process</h2>
+  <div class="steps">
+    <article class="step">
+      <h3>1. 697-Unit Variable Experiment</h3>
+      <p>697-unit advance, 700 cap height, Thin/Book/Bold masters (100–700) for HO0Qgyces, plus analytic curve fixes.</p>
+      <a href="specimen/index.html">Open the Experiment →</a>
+    </article>
+    <article class="step">
+      <h3>2. Grid &amp; Token Bold</h3>
+      <p>800-unit cell (1u = 80), 160-unit stems, Grid / Open / Dense treatments for HO0QCESGY.</p>
+      <a href="studies/grid-token-bold/specimen/index.html">Open Grid &amp; Token Study →</a>
+    </article>
+    <article class="step">
+      <h3>3. Q-Tail Direction</h3>
+      <p>Evaluated centred tail versus 45° right-descending tail with horizontal end cut.</p>
+      <a href="studies/grid-token-bold/q-tail/index.html">Open Q-Tail Study →</a>
+    </article>
+    <article class="step">
+      <h3>4. Optical Diagonals</h3>
+      <p>Tested 128 / 144 / 160 normal units; promoted Q = 128 and Y = 144 to the Grid-Token baseline.</p>
+      <a href="studies/grid-token-bold/diagonals/index.html">Open Diagonals Study →</a>
+    </article>
+    <article class="step">
+      <h3>5. ASCII Punctuation</h3>
+      <p>All 32 ASCII punctuation and operator glyphs in an isolated Grid Bold study.</p>
+      <a href="studies/grid-token-bold/punctuation/index.html">Open Punctuation Study →</a>
+    </article>
+  </div>
+  <p style="margin-top:14px;font-size:14px"><a href="process.html" style="color:var(--accent);font-weight:600">Read full design process, curve corrections &amp; sketches →</a></p>
+</section>
+
+<script>
+const familySel = document.getElementById('familySel');
+const sampleInput = document.getElementById('sampleInput');
+const specimen = document.getElementById('specimen');
+const sizeRange = document.getElementById('sizeRange');
+const sizeVal = document.getElementById('sizeVal');
+const weightRange = document.getElementById('weightRange');
+const weightVal = document.getElementById('weightVal');
+const metaLine = document.getElementById('metaLine');
+const glyphBar = document.getElementById('glyphBar');
+const wfTexts = document.querySelectorAll('.wf-text');
+const inkSel = document.getElementById('inkSel');
+const customInk = document.getElementById('customInk');
+const root = document.documentElement;
+
+function applyInk() {
+  root.dataset.ink = inkSel.value;
+  if (inkSel.value === 'custom') root.style.setProperty('--ink', customInk.value);
+  else root.style.removeProperty('--ink');
+}
+
+inkSel.addEventListener('change', applyInk);
+customInk.addEventListener('input', () => {
+  inkSel.value = 'custom';
+  applyInk();
+});
+applyInk();
+
+const inventory = {"faces":{"exp_grid":[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,160,171,176,183,187,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,536,537,538,539,768,769,770,771,772,774,775,776,778,779,780,806,807,808,1025,1028,1030,1031,1038,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1077,1078,1079,1080,1081,1082,1083,1084,1085,1086,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1099,1100,1101,1102,1103,1105,1108,1110,1111,1118,1168,1169,7682,7683,7690,7691,7710,7711,7744,7745,7766,7767,7776,7777,7786,7787,7808,7809,7810,7811,7812,7813,7838,7922,7923,8211,8212,8216,8217,8220,8221,8222,8364,8722],"exp_open":[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,160,171,176,183,187,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,536,537,538,539,768,769,770,771,772,774,775,776,778,779,780,806,807,808,1025,1028,1030,1031,1038,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1077,1078,1079,1080,1081,1082,1083,1084,1085,1086,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1099,1100,1101,1102,1103,1105,1108,1110,1111,1118,1168,1169,7682,7683,7690,7691,7710,7711,7744,7745,7766,7767,7776,7777,7786,7787,7808,7809,7810,7811,7812,7813,7838,7922,7923,8211,8212,8216,8217,8220,8221,8222,8364,8722],"exp_dense":[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,160,171,176,183,187,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,536,537,538,539,768,769,770,771,772,774,775,776,778,779,780,806,807,808,1025,1028,1030,1031,1038,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1077,1078,1079,1080,1081,1082,1083,1084,1085,1086,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1099,1100,1101,1102,1103,1105,1108,1110,1111,1118,1168,1169,7682,7683,7690,7691,7710,7711,7744,7745,7766,7767,7776,7777,7786,7787,7808,7809,7810,7811,7812,7813,7838,7922,7923,8211,8212,8216,8217,8220,8221,8222,8364,8722],"exp_hollow":[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,160,171,176,183,187,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,536,537,538,539,768,769,770,771,772,774,775,776,778,779,780,806,807,808,1025,1028,1030,1031,1038,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1077,1078,1079,1080,1081,1082,1083,1084,1085,1086,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1099,1100,1101,1102,1103,1105,1108,1110,1111,1118,1168,1169,7682,7683,7690,7691,7710,7711,7744,7745,7766,7767,7776,7777,7786,7787,7808,7809,7810,7811,7812,7813,7838,7922,7923,8211,8212,8216,8217,8220,8221,8222,8364,8722],"exp_variable":[32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,160,171,176,183,187,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,536,537,538,539,768,769,770,771,772,774,775,776,778,779,780,806,807,808,1025,1028,1030,1031,1038,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1077,1078,1079,1080,1081,1082,1083,1084,1085,1086,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1099,1100,1101,1102,1103,1105,1108,1110,1111,1118,1168,1169,7682,7683,7690,7691,7710,7711,7744,7745,7766,7767,7776,7777,7786,7787,7808,7809,7810,7811,7812,7813,7838,7922,7923,8211,8212,8216,8217,8220,8221,8222,8364,8722]},"entries":{"32":["SPACE",["Spaces"]],"33":["EXCLAMATION MARK",["Punctuation & symbols","Punctuation"]],"34":["QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"35":["NUMBER SIGN",["Punctuation & symbols","Punctuation"]],"36":["DOLLAR SIGN",["Punctuation & symbols","Symbols","Currency"]],"37":["PERCENT SIGN",["Punctuation & symbols","Punctuation"]],"38":["AMPERSAND",["Punctuation & symbols","Punctuation"]],"39":["APOSTROPHE",["Punctuation & symbols","Punctuation"]],"40":["LEFT PARENTHESIS",["Punctuation & symbols","Punctuation"]],"41":["RIGHT PARENTHESIS",["Punctuation & symbols","Punctuation"]],"42":["ASTERISK",["Punctuation & symbols","Punctuation"]],"43":["PLUS SIGN",["Punctuation & symbols","Symbols"]],"44":["COMMA",["Punctuation & symbols","Punctuation"]],"45":["HYPHEN-MINUS",["Punctuation & symbols","Punctuation"]],"46":["FULL STOP",["Punctuation & symbols","Punctuation"]],"47":["SOLIDUS",["Punctuation & symbols","Punctuation"]],"48":["DIGIT ZERO",["Figures"]],"49":["DIGIT ONE",["Figures"]],"50":["DIGIT TWO",["Figures"]],"51":["DIGIT THREE",["Figures"]],"52":["DIGIT FOUR",["Figures"]],"53":["DIGIT FIVE",["Figures"]],"54":["DIGIT SIX",["Figures"]],"55":["DIGIT SEVEN",["Figures"]],"56":["DIGIT EIGHT",["Figures"]],"57":["DIGIT NINE",["Figures"]],"58":["COLON",["Punctuation & symbols","Punctuation"]],"59":["SEMICOLON",["Punctuation & symbols","Punctuation"]],"60":["LESS-THAN SIGN",["Punctuation & symbols","Symbols"]],"61":["EQUALS SIGN",["Punctuation & symbols","Symbols"]],"62":["GREATER-THAN SIGN",["Punctuation & symbols","Symbols"]],"63":["QUESTION MARK",["Punctuation & symbols","Punctuation"]],"64":["COMMERCIAL AT",["Punctuation & symbols","Punctuation"]],"65":["LATIN CAPITAL LETTER A",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"66":["LATIN CAPITAL LETTER B",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"67":["LATIN CAPITAL LETTER C",["Basic Latin","Latin","Uppercase","Nordic","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"68":["LATIN CAPITAL LETTER D",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"69":["LATIN CAPITAL LETTER E",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"70":["LATIN CAPITAL LETTER F",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"71":["LATIN CAPITAL LETTER G",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"72":["LATIN CAPITAL LETTER H",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"73":["LATIN CAPITAL LETTER I",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"74":["LATIN CAPITAL LETTER J",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"75":["LATIN CAPITAL LETTER K",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"76":["LATIN CAPITAL LETTER L",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"77":["LATIN CAPITAL LETTER M",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"78":["LATIN CAPITAL LETTER N",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"79":["LATIN CAPITAL LETTER O",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"80":["LATIN CAPITAL LETTER P",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"81":["LATIN CAPITAL LETTER Q",["Basic Latin","Latin","Uppercase","Nordic","Danish","Norwegian","Swedish","Finnish"]],"82":["LATIN CAPITAL LETTER R",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"83":["LATIN CAPITAL LETTER S",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"84":["LATIN CAPITAL LETTER T",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"85":["LATIN CAPITAL LETTER U",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"86":["LATIN CAPITAL LETTER V",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"87":["LATIN CAPITAL LETTER W",["Basic Latin","Latin","Uppercase","Nordic","Danish","Norwegian","Swedish","Finnish"]],"88":["LATIN CAPITAL LETTER X",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Danish","Norwegian","Swedish","Finnish"]],"89":["LATIN CAPITAL LETTER Y",["Basic Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish"]],"90":["LATIN CAPITAL LETTER Z",["Basic Latin","Latin","Uppercase","Nordic","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"91":["LEFT SQUARE BRACKET",["Punctuation & symbols","Punctuation"]],"92":["REVERSE SOLIDUS",["Punctuation & symbols","Punctuation"]],"93":["RIGHT SQUARE BRACKET",["Punctuation & symbols","Punctuation"]],"94":["CIRCUMFLEX ACCENT",["Punctuation & symbols","Symbols"]],"95":["LOW LINE",["Punctuation & symbols","Punctuation"]],"96":["GRAVE ACCENT",["Punctuation & symbols","Symbols"]],"97":["LATIN SMALL LETTER A",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"98":["LATIN SMALL LETTER B",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"99":["LATIN SMALL LETTER C",["Basic Latin","Latin","Lowercase","Nordic","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"100":["LATIN SMALL LETTER D",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"101":["LATIN SMALL LETTER E",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"102":["LATIN SMALL LETTER F",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"103":["LATIN SMALL LETTER G",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"104":["LATIN SMALL LETTER H",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"105":["LATIN SMALL LETTER I",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"106":["LATIN SMALL LETTER J",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"107":["LATIN SMALL LETTER K",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"108":["LATIN SMALL LETTER L",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"109":["LATIN SMALL LETTER M",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"110":["LATIN SMALL LETTER N",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"111":["LATIN SMALL LETTER O",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"112":["LATIN SMALL LETTER P",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"113":["LATIN SMALL LETTER Q",["Basic Latin","Latin","Lowercase","Nordic","Danish","Norwegian","Swedish","Finnish"]],"114":["LATIN SMALL LETTER R",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"115":["LATIN SMALL LETTER S",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"116":["LATIN SMALL LETTER T",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"117":["LATIN SMALL LETTER U",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"118":["LATIN SMALL LETTER V",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"119":["LATIN SMALL LETTER W",["Basic Latin","Latin","Lowercase","Nordic","Danish","Norwegian","Swedish","Finnish"]],"120":["LATIN SMALL LETTER X",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Danish","Norwegian","Swedish","Finnish"]],"121":["LATIN SMALL LETTER Y",["Basic Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian","Swedish","Finnish"]],"122":["LATIN SMALL LETTER Z",["Basic Latin","Latin","Lowercase","Nordic","Danish","Norwegian","Swedish","Finnish","Northern S\u00e1mi"]],"123":["LEFT CURLY BRACKET",["Punctuation & symbols","Punctuation"]],"124":["VERTICAL LINE",["Punctuation & symbols","Symbols"]],"125":["RIGHT CURLY BRACKET",["Punctuation & symbols","Punctuation"]],"126":["TILDE",["Punctuation & symbols","Symbols"]],"160":["NO-BREAK SPACE",["Spaces"]],"171":["LEFT-POINTING DOUBLE ANGLE QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"176":["DEGREE SIGN",["Punctuation & symbols","Symbols"]],"183":["MIDDLE DOT",["Punctuation & symbols","Punctuation"]],"187":["RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"192":["LATIN CAPITAL LETTER A WITH GRAVE",["Extended Latin","Latin","Uppercase"]],"193":["LATIN CAPITAL LETTER A WITH ACUTE",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Northern S\u00e1mi"]],"194":["LATIN CAPITAL LETTER A WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"195":["LATIN CAPITAL LETTER A WITH TILDE",["Extended Latin","Latin","Uppercase"]],"196":["LATIN CAPITAL LETTER A WITH DIAERESIS",["Extended Latin","Latin","Uppercase","Nordic","Swedish","Finnish"]],"197":["LATIN CAPITAL LETTER A WITH RING ABOVE",["Extended Latin","Latin","Uppercase","Nordic","Danish","Norwegian","Swedish","Finnish"]],"198":["LATIN CAPITAL LETTER AE",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Faroese","Danish","Norwegian"]],"199":["LATIN CAPITAL LETTER C WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"200":["LATIN CAPITAL LETTER E WITH GRAVE",["Extended Latin","Latin","Uppercase"]],"201":["LATIN CAPITAL LETTER E WITH ACUTE",["Extended Latin","Latin","Uppercase","Nordic","Icelandic"]],"202":["LATIN CAPITAL LETTER E WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"203":["LATIN CAPITAL LETTER E WITH DIAERESIS",["Extended Latin","Latin","Uppercase"]],"204":["LATIN CAPITAL LETTER I WITH GRAVE",["Extended Latin","Latin","Uppercase"]],"205":["LATIN CAPITAL LETTER I WITH ACUTE",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Faroese"]],"206":["LATIN CAPITAL LETTER I WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"207":["LATIN CAPITAL LETTER I WITH DIAERESIS",["Extended Latin","Latin","Uppercase"]],"208":["LATIN CAPITAL LETTER ETH",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Faroese"]],"209":["LATIN CAPITAL LETTER N WITH TILDE",["Extended Latin","Latin","Uppercase"]],"210":["LATIN CAPITAL LETTER O WITH GRAVE",["Extended Latin","Latin","Uppercase"]],"211":["LATIN CAPITAL LETTER O WITH ACUTE",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Faroese"]],"212":["LATIN CAPITAL LETTER O WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"213":["LATIN CAPITAL LETTER O WITH TILDE",["Extended Latin","Latin","Uppercase"]],"214":["LATIN CAPITAL LETTER O WITH DIAERESIS",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Swedish","Finnish"]],"216":["LATIN CAPITAL LETTER O WITH STROKE",["Extended Latin","Latin","Uppercase","Nordic","Faroese","Danish","Norwegian"]],"217":["LATIN CAPITAL LETTER U WITH GRAVE",["Extended Latin","Latin","Uppercase"]],"218":["LATIN CAPITAL LETTER U WITH ACUTE",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Faroese"]],"219":["LATIN CAPITAL LETTER U WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"220":["LATIN CAPITAL LETTER U WITH DIAERESIS",["Extended Latin","Latin","Uppercase"]],"221":["LATIN CAPITAL LETTER Y WITH ACUTE",["Extended Latin","Latin","Uppercase","Nordic","Icelandic","Faroese"]],"222":["LATIN CAPITAL LETTER THORN",["Extended Latin","Latin","Uppercase","Nordic","Icelandic"]],"223":["LATIN SMALL LETTER SHARP S",["Extended Latin","Latin","Lowercase"]],"224":["LATIN SMALL LETTER A WITH GRAVE",["Extended Latin","Latin","Lowercase"]],"225":["LATIN SMALL LETTER A WITH ACUTE",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Northern S\u00e1mi"]],"226":["LATIN SMALL LETTER A WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"227":["LATIN SMALL LETTER A WITH TILDE",["Extended Latin","Latin","Lowercase"]],"228":["LATIN SMALL LETTER A WITH DIAERESIS",["Extended Latin","Latin","Lowercase","Nordic","Swedish","Finnish"]],"229":["LATIN SMALL LETTER A WITH RING ABOVE",["Extended Latin","Latin","Lowercase","Nordic","Danish","Norwegian","Swedish","Finnish"]],"230":["LATIN SMALL LETTER AE",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Faroese","Danish","Norwegian"]],"231":["LATIN SMALL LETTER C WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"232":["LATIN SMALL LETTER E WITH GRAVE",["Extended Latin","Latin","Lowercase"]],"233":["LATIN SMALL LETTER E WITH ACUTE",["Extended Latin","Latin","Lowercase","Nordic","Icelandic"]],"234":["LATIN SMALL LETTER E WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"235":["LATIN SMALL LETTER E WITH DIAERESIS",["Extended Latin","Latin","Lowercase"]],"236":["LATIN SMALL LETTER I WITH GRAVE",["Extended Latin","Latin","Lowercase"]],"237":["LATIN SMALL LETTER I WITH ACUTE",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Faroese"]],"238":["LATIN SMALL LETTER I WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"239":["LATIN SMALL LETTER I WITH DIAERESIS",["Extended Latin","Latin","Lowercase"]],"240":["LATIN SMALL LETTER ETH",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Faroese"]],"241":["LATIN SMALL LETTER N WITH TILDE",["Extended Latin","Latin","Lowercase"]],"242":["LATIN SMALL LETTER O WITH GRAVE",["Extended Latin","Latin","Lowercase"]],"243":["LATIN SMALL LETTER O WITH ACUTE",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Faroese"]],"244":["LATIN SMALL LETTER O WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"245":["LATIN SMALL LETTER O WITH TILDE",["Extended Latin","Latin","Lowercase"]],"246":["LATIN SMALL LETTER O WITH DIAERESIS",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Swedish","Finnish"]],"248":["LATIN SMALL LETTER O WITH STROKE",["Extended Latin","Latin","Lowercase","Nordic","Faroese","Danish","Norwegian"]],"249":["LATIN SMALL LETTER U WITH GRAVE",["Extended Latin","Latin","Lowercase"]],"250":["LATIN SMALL LETTER U WITH ACUTE",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Faroese"]],"251":["LATIN SMALL LETTER U WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"252":["LATIN SMALL LETTER U WITH DIAERESIS",["Extended Latin","Latin","Lowercase"]],"253":["LATIN SMALL LETTER Y WITH ACUTE",["Extended Latin","Latin","Lowercase","Nordic","Icelandic","Faroese"]],"254":["LATIN SMALL LETTER THORN",["Extended Latin","Latin","Lowercase","Nordic","Icelandic"]],"255":["LATIN SMALL LETTER Y WITH DIAERESIS",["Extended Latin","Latin","Lowercase"]],"256":["LATIN CAPITAL LETTER A WITH MACRON",["Extended Latin","Latin","Uppercase"]],"257":["LATIN SMALL LETTER A WITH MACRON",["Extended Latin","Latin","Lowercase"]],"258":["LATIN CAPITAL LETTER A WITH BREVE",["Extended Latin","Latin","Uppercase"]],"259":["LATIN SMALL LETTER A WITH BREVE",["Extended Latin","Latin","Lowercase"]],"260":["LATIN CAPITAL LETTER A WITH OGONEK",["Extended Latin","Latin","Uppercase"]],"261":["LATIN SMALL LETTER A WITH OGONEK",["Extended Latin","Latin","Lowercase"]],"262":["LATIN CAPITAL LETTER C WITH ACUTE",["Extended Latin","Latin","Uppercase"]],"263":["LATIN SMALL LETTER C WITH ACUTE",["Extended Latin","Latin","Lowercase"]],"264":["LATIN CAPITAL LETTER C WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"265":["LATIN SMALL LETTER C WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"266":["LATIN CAPITAL LETTER C WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"267":["LATIN SMALL LETTER C WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"268":["LATIN CAPITAL LETTER C WITH CARON",["Extended Latin","Latin","Uppercase","Nordic","Northern S\u00e1mi"]],"269":["LATIN SMALL LETTER C WITH CARON",["Extended Latin","Latin","Lowercase","Nordic","Northern S\u00e1mi"]],"270":["LATIN CAPITAL LETTER D WITH CARON",["Extended Latin","Latin","Uppercase"]],"271":["LATIN SMALL LETTER D WITH CARON",["Extended Latin","Latin","Lowercase"]],"272":["LATIN CAPITAL LETTER D WITH STROKE",["Extended Latin","Latin","Uppercase","Nordic","Northern S\u00e1mi"]],"273":["LATIN SMALL LETTER D WITH STROKE",["Extended Latin","Latin","Lowercase","Nordic","Northern S\u00e1mi"]],"274":["LATIN CAPITAL LETTER E WITH MACRON",["Extended Latin","Latin","Uppercase"]],"275":["LATIN SMALL LETTER E WITH MACRON",["Extended Latin","Latin","Lowercase"]],"276":["LATIN CAPITAL LETTER E WITH BREVE",["Extended Latin","Latin","Uppercase"]],"277":["LATIN SMALL LETTER E WITH BREVE",["Extended Latin","Latin","Lowercase"]],"278":["LATIN CAPITAL LETTER E WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"279":["LATIN SMALL LETTER E WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"280":["LATIN CAPITAL LETTER E WITH OGONEK",["Extended Latin","Latin","Uppercase"]],"281":["LATIN SMALL LETTER E WITH OGONEK",["Extended Latin","Latin","Lowercase"]],"282":["LATIN CAPITAL LETTER E WITH CARON",["Extended Latin","Latin","Uppercase"]],"283":["LATIN SMALL LETTER E WITH CARON",["Extended Latin","Latin","Lowercase"]],"284":["LATIN CAPITAL LETTER G WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"285":["LATIN SMALL LETTER G WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"286":["LATIN CAPITAL LETTER G WITH BREVE",["Extended Latin","Latin","Uppercase"]],"287":["LATIN SMALL LETTER G WITH BREVE",["Extended Latin","Latin","Lowercase"]],"288":["LATIN CAPITAL LETTER G WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"289":["LATIN SMALL LETTER G WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"290":["LATIN CAPITAL LETTER G WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"291":["LATIN SMALL LETTER G WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"292":["LATIN CAPITAL LETTER H WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"293":["LATIN SMALL LETTER H WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"294":["LATIN CAPITAL LETTER H WITH STROKE",["Extended Latin","Latin","Uppercase"]],"295":["LATIN SMALL LETTER H WITH STROKE",["Extended Latin","Latin","Lowercase"]],"296":["LATIN CAPITAL LETTER I WITH TILDE",["Extended Latin","Latin","Uppercase"]],"297":["LATIN SMALL LETTER I WITH TILDE",["Extended Latin","Latin","Lowercase"]],"298":["LATIN CAPITAL LETTER I WITH MACRON",["Extended Latin","Latin","Uppercase"]],"299":["LATIN SMALL LETTER I WITH MACRON",["Extended Latin","Latin","Lowercase"]],"300":["LATIN CAPITAL LETTER I WITH BREVE",["Extended Latin","Latin","Uppercase"]],"301":["LATIN SMALL LETTER I WITH BREVE",["Extended Latin","Latin","Lowercase"]],"302":["LATIN CAPITAL LETTER I WITH OGONEK",["Extended Latin","Latin","Uppercase"]],"303":["LATIN SMALL LETTER I WITH OGONEK",["Extended Latin","Latin","Lowercase"]],"304":["LATIN CAPITAL LETTER I WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"305":["LATIN SMALL LETTER DOTLESS I",["Extended Latin","Latin","Lowercase"]],"306":["LATIN CAPITAL LIGATURE IJ",["Extended Latin","Latin","Uppercase"]],"307":["LATIN SMALL LIGATURE IJ",["Extended Latin","Latin","Lowercase"]],"308":["LATIN CAPITAL LETTER J WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"309":["LATIN SMALL LETTER J WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"310":["LATIN CAPITAL LETTER K WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"311":["LATIN SMALL LETTER K WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"312":["LATIN SMALL LETTER KRA",["Extended Latin","Latin","Lowercase"]],"313":["LATIN CAPITAL LETTER L WITH ACUTE",["Extended Latin","Latin","Uppercase"]],"314":["LATIN SMALL LETTER L WITH ACUTE",["Extended Latin","Latin","Lowercase"]],"315":["LATIN CAPITAL LETTER L WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"316":["LATIN SMALL LETTER L WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"317":["LATIN CAPITAL LETTER L WITH CARON",["Extended Latin","Latin","Uppercase"]],"318":["LATIN SMALL LETTER L WITH CARON",["Extended Latin","Latin","Lowercase"]],"319":["LATIN CAPITAL LETTER L WITH MIDDLE DOT",["Extended Latin","Latin","Uppercase"]],"320":["LATIN SMALL LETTER L WITH MIDDLE DOT",["Extended Latin","Latin","Lowercase"]],"321":["LATIN CAPITAL LETTER L WITH STROKE",["Extended Latin","Latin","Uppercase"]],"322":["LATIN SMALL LETTER L WITH STROKE",["Extended Latin","Latin","Lowercase"]],"323":["LATIN CAPITAL LETTER N WITH ACUTE",["Extended Latin","Latin","Uppercase"]],"324":["LATIN SMALL LETTER N WITH ACUTE",["Extended Latin","Latin","Lowercase"]],"325":["LATIN CAPITAL LETTER N WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"326":["LATIN SMALL LETTER N WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"327":["LATIN CAPITAL LETTER N WITH CARON",["Extended Latin","Latin","Uppercase"]],"328":["LATIN SMALL LETTER N WITH CARON",["Extended Latin","Latin","Lowercase"]],"329":["LATIN SMALL LETTER N PRECEDED BY APOSTROPHE",["Extended Latin","Latin","Lowercase"]],"330":["LATIN CAPITAL LETTER ENG",["Extended Latin","Latin","Uppercase","Nordic","Northern S\u00e1mi"]],"331":["LATIN SMALL LETTER ENG",["Extended Latin","Latin","Lowercase","Nordic","Northern S\u00e1mi"]],"332":["LATIN CAPITAL LETTER O WITH MACRON",["Extended Latin","Latin","Uppercase"]],"333":["LATIN SMALL LETTER O WITH MACRON",["Extended Latin","Latin","Lowercase"]],"334":["LATIN CAPITAL LETTER O WITH BREVE",["Extended Latin","Latin","Uppercase"]],"335":["LATIN SMALL LETTER O WITH BREVE",["Extended Latin","Latin","Lowercase"]],"336":["LATIN CAPITAL LETTER O WITH DOUBLE ACUTE",["Extended Latin","Latin","Uppercase"]],"337":["LATIN SMALL LETTER O WITH DOUBLE ACUTE",["Extended Latin","Latin","Lowercase"]],"338":["LATIN CAPITAL LIGATURE OE",["Extended Latin","Latin","Uppercase"]],"339":["LATIN SMALL LIGATURE OE",["Extended Latin","Latin","Lowercase"]],"340":["LATIN CAPITAL LETTER R WITH ACUTE",["Extended Latin","Latin","Uppercase"]],"341":["LATIN SMALL LETTER R WITH ACUTE",["Extended Latin","Latin","Lowercase"]],"342":["LATIN CAPITAL LETTER R WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"343":["LATIN SMALL LETTER R WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"344":["LATIN CAPITAL LETTER R WITH CARON",["Extended Latin","Latin","Uppercase"]],"345":["LATIN SMALL LETTER R WITH CARON",["Extended Latin","Latin","Lowercase"]],"346":["LATIN CAPITAL LETTER S WITH ACUTE",["Extended Latin","Latin","Uppercase"]],"347":["LATIN SMALL LETTER S WITH ACUTE",["Extended Latin","Latin","Lowercase"]],"348":["LATIN CAPITAL LETTER S WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"349":["LATIN SMALL LETTER S WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"350":["LATIN CAPITAL LETTER S WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"351":["LATIN SMALL LETTER S WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"352":["LATIN CAPITAL LETTER S WITH CARON",["Extended Latin","Latin","Uppercase","Nordic","Finnish","Northern S\u00e1mi"]],"353":["LATIN SMALL LETTER S WITH CARON",["Extended Latin","Latin","Lowercase","Nordic","Finnish","Northern S\u00e1mi"]],"354":["LATIN CAPITAL LETTER T WITH CEDILLA",["Extended Latin","Latin","Uppercase"]],"355":["LATIN SMALL LETTER T WITH CEDILLA",["Extended Latin","Latin","Lowercase"]],"356":["LATIN CAPITAL LETTER T WITH CARON",["Extended Latin","Latin","Uppercase"]],"357":["LATIN SMALL LETTER T WITH CARON",["Extended Latin","Latin","Lowercase"]],"358":["LATIN CAPITAL LETTER T WITH STROKE",["Extended Latin","Latin","Uppercase","Nordic","Northern S\u00e1mi"]],"359":["LATIN SMALL LETTER T WITH STROKE",["Extended Latin","Latin","Lowercase","Nordic","Northern S\u00e1mi"]],"360":["LATIN CAPITAL LETTER U WITH TILDE",["Extended Latin","Latin","Uppercase"]],"361":["LATIN SMALL LETTER U WITH TILDE",["Extended Latin","Latin","Lowercase"]],"362":["LATIN CAPITAL LETTER U WITH MACRON",["Extended Latin","Latin","Uppercase"]],"363":["LATIN SMALL LETTER U WITH MACRON",["Extended Latin","Latin","Lowercase"]],"364":["LATIN CAPITAL LETTER U WITH BREVE",["Extended Latin","Latin","Uppercase"]],"365":["LATIN SMALL LETTER U WITH BREVE",["Extended Latin","Latin","Lowercase"]],"366":["LATIN CAPITAL LETTER U WITH RING ABOVE",["Extended Latin","Latin","Uppercase"]],"367":["LATIN SMALL LETTER U WITH RING ABOVE",["Extended Latin","Latin","Lowercase"]],"368":["LATIN CAPITAL LETTER U WITH DOUBLE ACUTE",["Extended Latin","Latin","Uppercase"]],"369":["LATIN SMALL LETTER U WITH DOUBLE ACUTE",["Extended Latin","Latin","Lowercase"]],"370":["LATIN CAPITAL LETTER U WITH OGONEK",["Extended Latin","Latin","Uppercase"]],"371":["LATIN SMALL LETTER U WITH OGONEK",["Extended Latin","Latin","Lowercase"]],"372":["LATIN CAPITAL LETTER W WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"373":["LATIN SMALL LETTER W WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"374":["LATIN CAPITAL LETTER Y WITH CIRCUMFLEX",["Extended Latin","Latin","Uppercase"]],"375":["LATIN SMALL LETTER Y WITH CIRCUMFLEX",["Extended Latin","Latin","Lowercase"]],"376":["LATIN CAPITAL LETTER Y WITH DIAERESIS",["Extended Latin","Latin","Uppercase"]],"377":["LATIN CAPITAL LETTER Z WITH ACUTE",["Extended Latin","Latin","Uppercase"]],"378":["LATIN SMALL LETTER Z WITH ACUTE",["Extended Latin","Latin","Lowercase"]],"379":["LATIN CAPITAL LETTER Z WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"380":["LATIN SMALL LETTER Z WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"381":["LATIN CAPITAL LETTER Z WITH CARON",["Extended Latin","Latin","Uppercase","Nordic","Finnish","Northern S\u00e1mi"]],"382":["LATIN SMALL LETTER Z WITH CARON",["Extended Latin","Latin","Lowercase","Nordic","Finnish","Northern S\u00e1mi"]],"383":["LATIN SMALL LETTER LONG S",["Extended Latin","Latin","Lowercase"]],"536":["LATIN CAPITAL LETTER S WITH COMMA BELOW",["Extended Latin","Latin","Uppercase"]],"537":["LATIN SMALL LETTER S WITH COMMA BELOW",["Extended Latin","Latin","Lowercase"]],"538":["LATIN CAPITAL LETTER T WITH COMMA BELOW",["Extended Latin","Latin","Uppercase"]],"539":["LATIN SMALL LETTER T WITH COMMA BELOW",["Extended Latin","Latin","Lowercase"]],"768":["COMBINING GRAVE ACCENT",["Combining marks"]],"769":["COMBINING ACUTE ACCENT",["Combining marks"]],"770":["COMBINING CIRCUMFLEX ACCENT",["Combining marks"]],"771":["COMBINING TILDE",["Combining marks"]],"772":["COMBINING MACRON",["Combining marks"]],"774":["COMBINING BREVE",["Combining marks"]],"775":["COMBINING DOT ABOVE",["Combining marks"]],"776":["COMBINING DIAERESIS",["Combining marks"]],"778":["COMBINING RING ABOVE",["Combining marks"]],"779":["COMBINING DOUBLE ACUTE ACCENT",["Combining marks"]],"780":["COMBINING CARON",["Combining marks"]],"806":["COMBINING COMMA BELOW",["Combining marks"]],"807":["COMBINING CEDILLA",["Combining marks"]],"808":["COMBINING OGONEK",["Combining marks"]],"1025":["CYRILLIC CAPITAL LETTER IO",["Cyrillic","Uppercase","Russian","Belarusian"]],"1028":["CYRILLIC CAPITAL LETTER UKRAINIAN IE",["Cyrillic","Uppercase","Ukrainian"]],"1030":["CYRILLIC CAPITAL LETTER BYELORUSSIAN-UKRAINIAN I",["Cyrillic","Uppercase","Ukrainian","Belarusian"]],"1031":["CYRILLIC CAPITAL LETTER YI",["Cyrillic","Uppercase","Ukrainian"]],"1038":["CYRILLIC CAPITAL LETTER SHORT U",["Cyrillic","Uppercase","Belarusian"]],"1040":["CYRILLIC CAPITAL LETTER A",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1041":["CYRILLIC CAPITAL LETTER BE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1042":["CYRILLIC CAPITAL LETTER VE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1043":["CYRILLIC CAPITAL LETTER GHE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1044":["CYRILLIC CAPITAL LETTER DE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1045":["CYRILLIC CAPITAL LETTER IE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1046":["CYRILLIC CAPITAL LETTER ZHE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1047":["CYRILLIC CAPITAL LETTER ZE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1048":["CYRILLIC CAPITAL LETTER I",["Cyrillic","Uppercase","Russian","Ukrainian"]],"1049":["CYRILLIC CAPITAL LETTER SHORT I",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1050":["CYRILLIC CAPITAL LETTER KA",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1051":["CYRILLIC CAPITAL LETTER EL",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1052":["CYRILLIC CAPITAL LETTER EM",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1053":["CYRILLIC CAPITAL LETTER EN",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1054":["CYRILLIC CAPITAL LETTER O",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1055":["CYRILLIC CAPITAL LETTER PE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1056":["CYRILLIC CAPITAL LETTER ER",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1057":["CYRILLIC CAPITAL LETTER ES",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1058":["CYRILLIC CAPITAL LETTER TE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1059":["CYRILLIC CAPITAL LETTER U",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1060":["CYRILLIC CAPITAL LETTER EF",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1061":["CYRILLIC CAPITAL LETTER HA",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1062":["CYRILLIC CAPITAL LETTER TSE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1063":["CYRILLIC CAPITAL LETTER CHE",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1064":["CYRILLIC CAPITAL LETTER SHA",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1065":["CYRILLIC CAPITAL LETTER SHCHA",["Cyrillic","Uppercase","Russian","Ukrainian"]],"1066":["CYRILLIC CAPITAL LETTER HARD SIGN",["Cyrillic","Uppercase","Russian"]],"1067":["CYRILLIC CAPITAL LETTER YERU",["Cyrillic","Uppercase","Russian","Belarusian"]],"1068":["CYRILLIC CAPITAL LETTER SOFT SIGN",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1069":["CYRILLIC CAPITAL LETTER E",["Cyrillic","Uppercase","Russian","Belarusian"]],"1070":["CYRILLIC CAPITAL LETTER YU",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1071":["CYRILLIC CAPITAL LETTER YA",["Cyrillic","Uppercase","Russian","Ukrainian","Belarusian"]],"1072":["CYRILLIC SMALL LETTER A",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1073":["CYRILLIC SMALL LETTER BE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1074":["CYRILLIC SMALL LETTER VE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1075":["CYRILLIC SMALL LETTER GHE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1076":["CYRILLIC SMALL LETTER DE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1077":["CYRILLIC SMALL LETTER IE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1078":["CYRILLIC SMALL LETTER ZHE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1079":["CYRILLIC SMALL LETTER ZE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1080":["CYRILLIC SMALL LETTER I",["Cyrillic","Lowercase","Russian","Ukrainian"]],"1081":["CYRILLIC SMALL LETTER SHORT I",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1082":["CYRILLIC SMALL LETTER KA",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1083":["CYRILLIC SMALL LETTER EL",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1084":["CYRILLIC SMALL LETTER EM",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1085":["CYRILLIC SMALL LETTER EN",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1086":["CYRILLIC SMALL LETTER O",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1087":["CYRILLIC SMALL LETTER PE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1088":["CYRILLIC SMALL LETTER ER",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1089":["CYRILLIC SMALL LETTER ES",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1090":["CYRILLIC SMALL LETTER TE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1091":["CYRILLIC SMALL LETTER U",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1092":["CYRILLIC SMALL LETTER EF",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1093":["CYRILLIC SMALL LETTER HA",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1094":["CYRILLIC SMALL LETTER TSE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1095":["CYRILLIC SMALL LETTER CHE",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1096":["CYRILLIC SMALL LETTER SHA",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1097":["CYRILLIC SMALL LETTER SHCHA",["Cyrillic","Lowercase","Russian","Ukrainian"]],"1098":["CYRILLIC SMALL LETTER HARD SIGN",["Cyrillic","Lowercase","Russian"]],"1099":["CYRILLIC SMALL LETTER YERU",["Cyrillic","Lowercase","Russian","Belarusian"]],"1100":["CYRILLIC SMALL LETTER SOFT SIGN",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1101":["CYRILLIC SMALL LETTER E",["Cyrillic","Lowercase","Russian","Belarusian"]],"1102":["CYRILLIC SMALL LETTER YU",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1103":["CYRILLIC SMALL LETTER YA",["Cyrillic","Lowercase","Russian","Ukrainian","Belarusian"]],"1105":["CYRILLIC SMALL LETTER IO",["Cyrillic","Lowercase","Russian","Belarusian"]],"1108":["CYRILLIC SMALL LETTER UKRAINIAN IE",["Cyrillic","Lowercase","Ukrainian"]],"1110":["CYRILLIC SMALL LETTER BYELORUSSIAN-UKRAINIAN I",["Cyrillic","Lowercase","Ukrainian","Belarusian"]],"1111":["CYRILLIC SMALL LETTER YI",["Cyrillic","Lowercase","Ukrainian"]],"1118":["CYRILLIC SMALL LETTER SHORT U",["Cyrillic","Lowercase","Belarusian"]],"1168":["CYRILLIC CAPITAL LETTER GHE WITH UPTURN",["Cyrillic","Uppercase","Ukrainian"]],"1169":["CYRILLIC SMALL LETTER GHE WITH UPTURN",["Cyrillic","Lowercase","Ukrainian"]],"7682":["LATIN CAPITAL LETTER B WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"7683":["LATIN SMALL LETTER B WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"7690":["LATIN CAPITAL LETTER D WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"7691":["LATIN SMALL LETTER D WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"7710":["LATIN CAPITAL LETTER F WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"7711":["LATIN SMALL LETTER F WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"7744":["LATIN CAPITAL LETTER M WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"7745":["LATIN SMALL LETTER M WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"7766":["LATIN CAPITAL LETTER P WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"7767":["LATIN SMALL LETTER P WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"7776":["LATIN CAPITAL LETTER S WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"7777":["LATIN SMALL LETTER S WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"7786":["LATIN CAPITAL LETTER T WITH DOT ABOVE",["Extended Latin","Latin","Uppercase"]],"7787":["LATIN SMALL LETTER T WITH DOT ABOVE",["Extended Latin","Latin","Lowercase"]],"7808":["LATIN CAPITAL LETTER W WITH GRAVE",["Extended Latin","Latin","Uppercase"]],"7809":["LATIN SMALL LETTER W WITH GRAVE",["Extended Latin","Latin","Lowercase"]],"7810":["LATIN CAPITAL LETTER W WITH ACUTE",["Extended Latin","Latin","Uppercase"]],"7811":["LATIN SMALL LETTER W WITH ACUTE",["Extended Latin","Latin","Lowercase"]],"7812":["LATIN CAPITAL LETTER W WITH DIAERESIS",["Extended Latin","Latin","Uppercase"]],"7813":["LATIN SMALL LETTER W WITH DIAERESIS",["Extended Latin","Latin","Lowercase"]],"7838":["LATIN CAPITAL LETTER SHARP S",["Extended Latin","Latin","Uppercase"]],"7922":["LATIN CAPITAL LETTER Y WITH GRAVE",["Extended Latin","Latin","Uppercase"]],"7923":["LATIN SMALL LETTER Y WITH GRAVE",["Extended Latin","Latin","Lowercase"]],"8211":["EN DASH",["Punctuation & symbols","Punctuation"]],"8212":["EM DASH",["Punctuation & symbols","Punctuation"]],"8216":["LEFT SINGLE QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"8217":["RIGHT SINGLE QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"8220":["LEFT DOUBLE QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"8221":["RIGHT DOUBLE QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"8222":["DOUBLE LOW-9 QUOTATION MARK",["Punctuation & symbols","Punctuation"]],"8364":["EURO SIGN",["Punctuation & symbols","Symbols","Currency"]],"8722":["MINUS SIGN",["Punctuation & symbols","Symbols"]]}};
+const category = document.getElementById('sheetCategory');
+const query = document.getElementById('sheetQuery');
+function renderGlyphBar(fam, wght) {
+  const codes = inventory.faces[fam];
+  const filter = query.value.trim().toUpperCase();
+  const fragment = document.createDocumentFragment();
+  for (const cp of codes) {
+    const ch = String.fromCodePoint(cp), [title, groups] = inventory.entries[cp];
+    const code = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
+    if (category.value !== 'All characters' && !groups.includes(category.value)) continue;
+    if ([...query.value].length === 1 ? ch !== query.value :
+        filter && !title.includes(filter) && !code.startsWith(filter)) continue;
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'glyph-btn';
+    btn.style.fontFamily = fam; btn.style.fontWeight = wght;
+    btn.textContent = groups.includes('Spaces') ? (cp === 32 ? 'SP' : 'NB') : groups.includes('Combining marks') ? 'o' + ch : ch;
+    btn.title = code + ' · ' + title;
+    btn.setAttribute('aria-label', 'Insert ' + btn.title);
+    btn.onclick = () => syncText(sampleInput.value + ch);
+    fragment.appendChild(btn);
+  }
+  const count = fragment.childElementCount;
+  document.getElementById('sheetCount').textContent = count ? count + ' of ' + codes.length + ' characters' : 'No characters match this category and search. Try clearing the search.';
+  glyphBar.replaceChildren(fragment);
+  glyphBar.scrollTop = 0;
+}
+category.addEventListener('change', applyStyle);
+query.addEventListener('input', applyStyle);
+
+function syncText(text) {
+  if (specimen.textContent !== text) specimen.textContent = text;
+  if (sampleInput.value !== text) sampleInput.value = text;
+  wfTexts.forEach(el => el.textContent = text || 'HO0QCESGY');
+}
+
+function applyStyle() {
+  const opt = familySel.selectedOptions[0];
+  const fam = opt.value;
+  const isVar = fam === 'exp_variable';
+  weightRange.disabled = !isVar;
+  if (!isVar) {
+    weightRange.value = 700;
+    weightVal.textContent = '700';
+  }
+  const wght = weightRange.value;
+  specimen.style.fontFamily = fam;
+  specimen.style.fontWeight = wght;
+  wfTexts.forEach(el => {
+    el.style.fontFamily = fam;
+    el.style.fontWeight = wght;
+  });
+  metaLine.textContent = opt.dataset.meta;
+  renderGlyphBar(fam, wght);
+}
+
+familySel.addEventListener('change', applyStyle);
+sampleInput.addEventListener('input', e => syncText(e.target.value));
+specimen.addEventListener('input', () => syncText(specimen.textContent));
+sizeRange.addEventListener('input', e => {
+  sizeVal.textContent = e.target.value;
+  specimen.style.fontSize = e.target.value + 'px';
+});
+weightRange.addEventListener('input', e => {
+  weightVal.textContent = e.target.value;
+  applyStyle();
+});
+document.querySelectorAll('.chip[data-text]').forEach(b => b.onclick = () => syncText(b.dataset.text));
+document.querySelectorAll('.size-chip').forEach(b => b.onclick = () => {
+  sizeRange.value = b.dataset.size;
+  sizeVal.textContent = b.dataset.size;
+  specimen.style.fontSize = b.dataset.size + 'px';
+});
+
+applyStyle();
+Promise.all(['exp_grid','exp_open','exp_dense','exp_hollow','exp_variable'].map(f => document.fonts.load('700 48px ' + f, 'HO0Q')))
+  .then(r => document.getElementById('status').textContent = r.every(x => x.length) ? 'All explorer fonts loaded' : 'FONT LOAD FAILURE');
+</script>
+<details style="margin:2rem 5vw;font:14px/1.5 system-ui,sans-serif"><summary>Font licence — SIL Open Font License 1.1</summary><pre style="white-space:pre-wrap">Copyright 2026, Scetrov, All Rights Reserved, Licensed under the OFL 1.1
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://openfontlicense.org
+
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+&quot;Font Software&quot; refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+&quot;Reserved Font Name&quot; refers to any names specified as such after the
+copyright statement(s).
+
+&quot;Original Version&quot; refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+&quot;Modified Version&quot; refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+&quot;Author&quot; refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION &amp; CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+</pre></details>
+</html>

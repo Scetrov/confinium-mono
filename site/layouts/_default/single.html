@@ -1,0 +1,4 @@
+{{- $proof := .Params.proof -}}
+{{- (resources.Get (printf "%s.before.html" $proof)).Content | safeHTML -}}
+{{- partial "primary-nav.html" . -}}
+{{- (resources.Get (printf "%s.after.html" $proof)).Content | safeHTML -}}

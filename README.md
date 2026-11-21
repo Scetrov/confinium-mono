@@ -203,3 +203,7 @@ HTML proofs that embed fonts include a copy of the licence. Do not publish
 `verification/curves-before.html` or `verification/curves-after.html`: these
 historical proofs still embed pre-licence binaries. Archived checksums describe
 the historical builds, not the current fonts. The fonts remain review builds.
+
+[Programming arrows study](studies/programming-arrows/index.html): an isolated comparison of `->`, `<-`, `=>`, `<=`, and `>=` at four weights. Rebuild with `uv run python scripts/arrow_study.py`.
+
+For local site builds and GitHub Pages deployment, see the [Hugo site guide](site/README.md).

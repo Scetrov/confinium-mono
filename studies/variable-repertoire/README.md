@@ -64,3 +64,5 @@ were changed for this pass.
 Run `uv run python scripts/variable_repertoire.py` after building Full Grid.
 Then refresh the proof with `uv run python scripts/reading_proof.py` and the
 Explorer and site title font with `uv run python scripts/web.py`.
+
+[Programming arrows study](../programming-arrows/index.html) compares `->`, `<-`, `=>`, `<=`, and `>=` with discretionary ligatures on and off. These designs are not included in the family fonts.

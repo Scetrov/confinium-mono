@@ -23,14 +23,18 @@ class HomeTests(unittest.TestCase):
     def test_home_and_shared_navigation_links(self):
         home = ROOT / 'index.html'
         explorer = ROOT / 'explorer.html'
-        pages = [home, explorer, ROOT / 'process.html', *ROOT.glob('studies/**/*.html'),
-                 ROOT / 'specimen/index.html']
+        study = ROOT / 'studies/programming-arrows/index.html'
+        pages = [*ROOT.glob('*.html'), *ROOT.glob('studies/**/*.html'), ROOT / 'specimen/index.html']
+        pages = [page for page in pages if 'verification' not in page.relative_to(ROOT).parts]
         for page in pages:
             with self.subTest(page=page.relative_to(ROOT)):
                 html = page.read_text()
                 nav = Links(re.search(r'<nav class="site-nav".*?</nav>', html, re.S)[0]).links
                 self.assertEqual((page.parent / nav[0]['href']).resolve(), home)
                 self.assertEqual((page.parent / nav[1]['href']).resolve(), explorer)
+                ligature_links = [link for link in nav if (page.parent / link['href']).resolve() == study]
+                self.assertEqual(len(ligature_links), 1)
+                self.assertIn('>Programming Ligatures</a>', html)
                 if page == home:
                     self.assertEqual(nav[0]['aria-current'], 'page')
                     for link in Links(html).links:

@@ -1,0 +1,91 @@
+{
+  "primary": [
+    [
+      "explorer",
+      "Explorer",
+      "explorer.html"
+    ],
+    [
+      "process",
+      "Design Process",
+      "process.html"
+    ],
+    [
+      "install",
+      "Install",
+      "install.html"
+    ]
+  ],
+  "studies": [
+    [
+      "av-knees",
+      "Midline Knees",
+      "studies/grid-token-bold/av-knees/index.html"
+    ],
+    [
+      "programming-arrows",
+      "Programming Ligatures",
+      "studies/programming-arrows/index.html"
+    ],
+    [
+      "reading-proof",
+      "Reading-Size Proof",
+      "studies/variable-repertoire/reading-proof.html"
+    ],
+    [
+      "cyrillic",
+      "Cyrillic",
+      "studies/grid-token-bold/cyrillic/index.html"
+    ],
+    [
+      "european",
+      "European Latin",
+      "studies/grid-token-bold/european-latin/index.html"
+    ],
+    [
+      "mixed-text",
+      "Mixed Text · ASCII",
+      "studies/grid-token-bold/mixed-text/index.html"
+    ],
+    [
+      "grid-token",
+      "Grid & Token Bold",
+      "studies/grid-token-bold/specimen/index.html"
+    ],
+    [
+      "hollow",
+      "Hollow Display",
+      "studies/grid-token-bold/hollow/index.html"
+    ],
+    [
+      "diagonals",
+      "Optical Diagonals",
+      "studies/grid-token-bold/diagonals/index.html"
+    ],
+    [
+      "q-tail",
+      "Q-Tail Direction",
+      "studies/grid-token-bold/q-tail/index.html"
+    ],
+    [
+      "alphabet",
+      "Lowercase Alphabet",
+      "studies/grid-token-bold/lowercase-alphabet/index.html"
+    ],
+    [
+      "lowercase",
+      "Lowercase Foundations",
+      "studies/grid-token-bold/lowercase/index.html"
+    ],
+    [
+      "punctuation",
+      "ASCII Punctuation",
+      "studies/grid-token-bold/punctuation/index.html"
+    ],
+    [
+      "pilot",
+      "697-Unit Experiment",
+      "specimen/index.html"
+    ]
+  ]
+}

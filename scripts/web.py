@@ -21,35 +21,20 @@ def appearance_head(root_rel: str) -> str:
 
 def primary_nav(root_rel: str, active: str) -> str:
     """Return shared primary navigation HTML with relative links from root_rel."""
-    links = [
-        ('av-knees', 'Midline Knees', f'{root_rel}studies/grid-token-bold/av-knees/index.html'),
-        ('reading-proof', 'Reading-Size Proof', f'{root_rel}studies/variable-repertoire/reading-proof.html'),
-        ('cyrillic', 'Cyrillic', f'{root_rel}studies/grid-token-bold/cyrillic/index.html'),
-        ('european', 'European Latin', f'{root_rel}studies/grid-token-bold/european-latin/index.html'),
-        ('mixed-text', 'Mixed Text · ASCII', f'{root_rel}studies/grid-token-bold/mixed-text/index.html'),
-        ('grid-token', 'Grid & Token Bold', f'{root_rel}studies/grid-token-bold/specimen/index.html'),
-        ('hollow', 'Hollow Display', f'{root_rel}studies/grid-token-bold/hollow/index.html'),
-        ('diagonals', 'Optical Diagonals', f'{root_rel}studies/grid-token-bold/diagonals/index.html'),
-        ('q-tail', 'Q-Tail Direction', f'{root_rel}studies/grid-token-bold/q-tail/index.html'),
-        ('alphabet', 'Lowercase Alphabet', f'{root_rel}studies/grid-token-bold/lowercase-alphabet/index.html'),
-        ('lowercase', 'Lowercase Foundations', f'{root_rel}studies/grid-token-bold/lowercase/index.html'),
-        ('punctuation', 'ASCII Punctuation', f'{root_rel}studies/grid-token-bold/punctuation/index.html'),
-        ('pilot', '697-Unit Experiment', f'{root_rel}specimen/index.html'),
-    ]
+    nav = json.loads((ROOT / 'site/data/navigation.json').read_text(encoding='utf-8'))
+    links = nav['studies']
     def link(key, label, href):
         state = ' class="active" aria-current="page"' if active == key else ''
         return f'<a href="{href}"{state}>{label}</a>'
 
-    explorer = link('explorer', 'Explorer', f'{root_rel}explorer.html')
+    primary = ''.join(link(key, label, root_rel + href) for key, label, href in nav['primary'])
     home_state = ' aria-current="page"' if active == 'home' else ''
-    process = link('process', 'Design Process', f'{root_rel}process.html')
-    install = link('install', 'Install', f'{root_rel}install.html')
-    items = ''.join(link(*item) for item in links)
+    items = ''.join(link(key, label, root_rel + href) for key, label, href in links)
     section = ' class="active"' if any(key == active for key, _, _ in links) else ''
     return (
         '<nav class="site-nav" aria-label="Primary">'
         f'<a class="brand" href="{root_rel}index.html"{home_state}>Confinium <span class="brand-mono">Mono</span></a>'
-        f'<div class="nav-center">{explorer}{process}{install}<details><summary{section}>Studies</summary>'
+        f'<div class="nav-center">{primary}<details><summary{section}>Studies</summary>'
         f'<div class="study-links">{items}</div></details></div></nav>'
     )
 
@@ -634,6 +619,7 @@ a{{color:var(--accent)}}
 <h2 id="reading-review">10. Reading-Size Review <span class="tag">12–18 px · Thin / Book / Bold</span></h2>
 <p>Compared code and mixed Latin/Cyrillic text in light and dark. The first priorities are distinguishing <code>O</code> from <code>0</code> in Book and making Thin punctuation read more evenly.</p>
 <ul>
+  <li><a href="studies/programming-arrows/index.html">Programming ligatures: arrows and comparisons</a></li>
   <li><a href="studies/variable-repertoire/reading-proof.html">Reading-size proof</a></li>
 </ul>
 <h2 id="av-knees">11. Midline Knees <span class="tag">Isolated Grid Bold experiment</span></h2>

@@ -8,3 +8,9 @@ __pycache__/
 /verification/curves-before.html
 /verification/curves-after.html
 /verification/curves-before-tests.txt
+
+# Hugo build output
+/public/
+/site/public/
+/site/resources/_gen/
+/site/.hugo_build.lock

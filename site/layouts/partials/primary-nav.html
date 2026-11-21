@@ -1,0 +1,18 @@
+{{- $root := strings.Repeat (int .Params.depth) "../" -}}
+{{- $active := .Params.active -}}
+<nav class="site-nav" aria-label="Primary">
+  <a class="brand" href="{{ $root }}index.html"{{ if eq $active "home" }} aria-current="page"{{ end }}>Confinium <span class="brand-mono">Mono</span></a>
+  <div class="nav-center">
+    {{- range hugo.Data.navigation.primary }}
+      {{- partial "nav-link.html" (dict "root" $root "active" $active "entry" .) }}
+    {{- end }}
+    <details><summary{{ if in (apply hugo.Data.navigation.studies "index" "." 0) $active }} class="active"{{ end }}>Studies</summary>
+      <div class="study-links">
+        {{- range hugo.Data.navigation.studies }}
+          {{- partial "nav-link.html" (dict "root" $root "active" $active "entry" .) }}
+        {{- end }}
+      </div>
+    </details>
+  </div>
+</nav>
+{{- "" -}}

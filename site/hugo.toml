@@ -1,0 +1,37 @@
+baseURL = 'https://scetrov.github.io/confinium-mono/'
+title = 'Confinium Mono'
+disableKinds = ['home', 'section', 'taxonomy', 'term', 'RSS', 'sitemap', '404']
+
+[module]
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    source = '../assets'
+    target = 'static/assets'
+  [[module.mounts]]
+    source = '../studies'
+    target = 'static/studies'
+    files = ['!**.html', '**']
+  [[module.mounts]]
+    source = '../specimen'
+    target = 'static/specimen'
+    files = ['!**.html', '**']
+  [[module.mounts]]
+    source = '../fonts'
+    target = 'static/fonts'
+  [[module.mounts]]
+    source = '../.well-known'
+    target = 'static/.well-known'
+  [[module.mounts]]
+    source = '../OFL.txt'
+    target = 'static/OFL.txt'

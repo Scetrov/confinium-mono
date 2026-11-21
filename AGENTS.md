@@ -83,9 +83,9 @@ uv run python scripts/proof.py
 - Keep the public site on the shared `assets/appearance.css` layout: nearly full-width with responsive gutters, centered at a 2000 px maximum. Oversized specimens scroll locally. Titles use Full Grid Bold; the shared wordmark uses Bold “Confinium” and Light (300) “Mono,” scaled together by nav container width. Keep study names and links synced in the Studies menu and Design Process; put new comparisons where readers can find them from the existing study URL.
 - To preview locally:
   ```sh
-  python3 -m http.server 8000 --bind 127.0.0.1
+  hugo server --source site --bind 127.0.0.1 --port 1313
   ```
-  Then open `http://localhost:8000/`.
+  Then open `http://localhost:1313/`. Hugo and GitHub Pages setup: [site/README.md](site/README.md).
 
 ## Verification and repository guardrails
 
