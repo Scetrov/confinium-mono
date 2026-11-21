@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Install · Confinium Mono</title><script src="assets/appearance.js"></script><link rel="stylesheet" href="assets/appearance.css">
+<style>body{background:var(--paper);color:var(--text);font:1rem/1.55 system-ui,sans-serif}main{max-width:76ch}pre{overflow:auto}</style>
+<script defer src="assets/install.js"></script></head><body><nav class="site-nav" aria-label="Primary"><a class="brand" href="index.html">Confinium <span class="brand-mono">Mono</span></a><div class="nav-center"><a href="explorer.html">Explorer</a><a href="process.html">Design Process</a><a href="install.html" class="active" aria-current="page">Install</a><details><summary>Studies</summary><div class="study-links"><a href="studies/grid-token-bold/av-knees/index.html">Midline Knees</a><a href="studies/variable-repertoire/reading-proof.html">Reading-Size Proof</a><a href="studies/grid-token-bold/cyrillic/index.html">Cyrillic</a><a href="studies/grid-token-bold/european-latin/index.html">European Latin</a><a href="studies/grid-token-bold/mixed-text/index.html">Mixed Text · ASCII</a><a href="studies/grid-token-bold/specimen/index.html">Grid & Token Bold</a><a href="studies/grid-token-bold/hollow/index.html">Hollow Display</a><a href="studies/grid-token-bold/diagonals/index.html">Optical Diagonals</a><a href="studies/grid-token-bold/q-tail/index.html">Q-Tail Direction</a><a href="studies/grid-token-bold/lowercase-alphabet/index.html">Lowercase Alphabet</a><a href="studies/grid-token-bold/lowercase/index.html">Lowercase Foundations</a><a href="studies/grid-token-bold/punctuation/index.html">ASCII Punctuation</a><a href="specimen/index.html">697-Unit Experiment</a></div></details></div></nav>
+<main><h1>Install Confinium Mono</h1>
+<p id="release-status" aria-live="polite">Download the variable font package from GitHub Releases.</p>
+<p><a href="https://github.com/Scetrov/confinium-mono/releases">Browse releases, notes and checksums</a>.</p>
+<h2>Desktop</h2><p>Unzip <code>ConfiniumMono-Variable.zip</code> and open the <code>desktop</code> folder. One TTF covers weights 100–700. Remove any older copy before updating.</p>
+<ul><li><strong>Windows 10/11:</strong> Right-click the TTF and select Install (under Show more options if needed). Install for all users requires administrator access.</li>
+<li><strong>macOS:</strong> Double-click the TTF and choose Install in Font Book.</li>
+<li><strong>Linux (Fontconfig):</strong> From the root of the extracted package, run:</li></ul>
+<pre>mkdir -p ~/.local/share/fonts/confinium-mono
+cp desktop/ConfiniumMono-Variable.ttf ~/.local/share/fonts/confinium-mono/
+fc-cache -f ~/.local/share/fonts/confinium-mono</pre>
+<p>Reopen your editor or terminal. Select <strong>Confinium Mono Variable Repertoire</strong> and start at weight 400.</p>
+<h2>Self-host on the web</h2><p>Copy the WOFF2 from <code>web/</code> and the included <code>OFL.txt</code> to your site's fonts folder. Adjust the URL for your deployment:</p>
+<pre>@font-face {
+  font-family: "Confinium Mono Web";
+  src: url("/fonts/ConfiniumMono-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+}
+pre, code, kbd, samp { font-family: "Confinium Mono Web", monospace; }</pre>
+<p>Serve the file as <code>font/woff2</code> and enable CORS if hosting on a different origin. Inspect the rendered font at weights 400 and 700 in browser developer tools.</p>
+</main></body></html>

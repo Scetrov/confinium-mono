@@ -8,6 +8,8 @@ from fontTools.pens.basePen import BasePen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.ttLib import TTFont
 
+from midline_promotion import approved_outlines
+
 GRID = Path(__file__).resolve().parents[1] / 'studies/grid-token-bold'
 OUT = GRID / 'full-family/fonts'
 MASTER = GRID / 'cyrillic/fonts/ConfiniumMono-Cyrillic.ttf'
@@ -119,10 +121,12 @@ def build():
     for style in STYLES:
         path=(GRID/'hollow/ConfiniumMono-GridToken-Hollow.ttf' if style=='Hollow' else GRID/f'fonts/ConfiniumMono-GridToken-{style}.ttf')
         with TTFont(MASTER,recalcTimestamp=False) as f, TTFont(path) as archive:
+            promoted=approved_outlines(f)
+            archived=set(archive.getGlyphOrder())
             chars={n:chr(cp) for cp,n in f.getBestCmap().items()}
             for n in f.getGlyphOrder():
-                g=f['glyf'][n]
-                if n in archive.getGlyphOrder(): g=archive['glyf'][n]
+                g=promoted.get(n, f['glyf'][n])
+                if n in archived and n not in promoted: g=archive['glyf'][n]
                 elif style=='Hollow': g=hollow(g,f['glyf'])
                 elif style!='Grid' and g.numberOfContours>0:
                     tune(g,-4 if style=='Open' else 4,560 if chars.get(n,'').islower() else 800)

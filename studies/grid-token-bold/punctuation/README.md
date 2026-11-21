@@ -3,7 +3,7 @@
 [Open the embedded-font specimen](index.html). This isolated Bold build adds all
 32 printable ASCII punctuation and operator characters to a copy of the Grid
 UFO. Existing letters, figures, and spaces are unchanged. It is not promoted to
-Grid, Open, Dense, Hollow, or the variable pilot, and does not add lowercase.
+Grid, Open, Dense, Hollow, or the variable experiment, and does not add lowercase.
 `coverage.json` records the exact Unicode-to-glyph mapping (71 glyphs total,
 including unencoded `.notdef`).
 

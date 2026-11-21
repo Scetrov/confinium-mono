@@ -19,7 +19,7 @@ finally:
 
 class HollowTests(unittest.TestCase):
     def test_hollow_cmap_advances_shaping_and_wireframe_ink(self):
-        solid_path = module.STUDY / 'fonts/ConfiniumMono-GridToken-Grid.ttf'
+        solid_path = module.GRID_TTF
         hollow_path = module.FONT
         solid = TTFont(solid_path)
         hollow = TTFont(hollow_path)

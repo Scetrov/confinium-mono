@@ -1,7 +1,7 @@
 # Confinium Mono — grid- and token-driven Bold direction study
 
 A separate original design experiment, **not a replacement or rescaling of the
-existing mixed-case variable pilot**. Family name remains Confinium Mono;
+existing mixed-case variable experiment**. Family name remains Confinium Mono;
 `Grid-Token Grid Bold`, `Grid-Token Open Bold`, and `Grid-Token Dense Bold` are distinct
 study styles. They are not three weights and are not interpolation masters.
 
@@ -15,7 +15,7 @@ Or open `specimen/index.html` directly; its fonts are embedded to avoid local
 font-loading restrictions and cache confusion. Re-run `proof` after changing
 fonts: these HTML pages deliberately snapshot a build rather than hot-load it.
 
-- `specimen/index.html`: equal-cap-height comparison with the previous pilot,
+- `specimen/index.html`: equal-cap-height comparison with the previous experiment,
   three grid- and token-driven variants, repeated groups and 14 / 18 / 32 px samples.
 - `specimen/detail.html`: enlarged C/E/S/G for inspecting joins and fillets.
 - [Punctuation study](punctuation/index.html): isolated Grid Bold expansion with
@@ -28,7 +28,7 @@ fonts: these HTML pages deliberately snapshot a build rather than hot-load it.
 - `parameters.json`: explicit construction tokens in 1,000-UPM coordinates.
 - `coverage.json`: exact mapping; all 12 exported glyphs occupy one cell.
 
-All glyph samples use only the study fonts (or the existing Confinium Mono pilot
+All glyph samples use only the study fonts (or the existing Confinium Mono experiment
 in the labelled comparison). Descriptive interface text uses the system font.
 The SVG diagrams contain outlines, not substitute fonts.
 
@@ -50,17 +50,19 @@ stroke thickness is approximately 96 units (136 horizontally), intentionally
 lighter than the reference tail to avoid a dense join. Other glyphs are unchanged.
 
 The angled outline is editable in `q-tail/ConfiniumMono-GridToken-Q45.ufo`, with
-its compiled TTF, Chromium PNG and test report alongside it. Neither the centred
-reference nor Open/Dense is replaced. Reproduce from the repository root:
+its compiled TTF, Chromium PNG and test report alongside it. The original
+centred binary is not present in Git history. The page embeds a labelled
+160-unit centred-tail reconstruction on the archived bowl instead of using
+current Grid, whose Q is already diagonal. The original capture is preserved;
+see the [restored comparison capture](q-tail/chromium-restored.png).
 
+To regenerate the reconstruction and proof without editing the archive:
 ```sh
-# Optional: overwrites only the angled-tail source.
-uv run python scripts/q_tail_study.py draw
-uv run python scripts/q_tail_study.py build
+uv run python scripts/q_tail_study.py reconstruct
 uv run python scripts/q_tail_study.py proof
+uv run python scripts/q_tail_study.py capture
 uv run python -m unittest discover -s tests -v
 ```
-
 The comparison snapshots both fonts inside the HTML. Tests check the two sloping
 edges at exactly 45°, unchanged non-Q outlines, bowl attachment without ink
 cancellation, a clear counter, an off-centre tail and fixed shaping advances.
@@ -120,7 +122,7 @@ outlines need review; mathematically valid curves alone do not establish quality
 - **E:** square-ended rectilinear bars and a full left stem. Three horizontal bands
   are equal thickness; the two internal gaps are equal.
 - **S:** five-band architectural zigzag, with softened outside turns and small
-  inside fillets. Both mouths have flat returns, not the pilot's inclined cuts.
+  inside fillets. Both mouths have flat returns, unlike the 697-unit experiment’s inclined cuts.
 - **G:** C plus a half-active-width central spur and lower right closure. Its
   central bar spans cell x=400…720 (local x=4u…8u). Union is resolved before export.
 - **Y:** 2.75u outer vertical arm drops, 45-degree diagonals at 144 normal units,
@@ -132,11 +134,11 @@ and no-break space also advance 800 units. No pair kerning or ligatures are adde
 
 ## Metrics and scope changes
 
-This experiment adopts 800 cap height and advance, not the pilot's 700 / 697.
+This study uses 800-unit cap height and advance, rather than the earlier experiment’s 700 / 697.
 Its trial line metrics are 920 / −200 / 0 (hhea and typo; Windows 920 / 200),
 leaving headroom above capitals and below the Q tail. These are study metrics,
 not a proposal that the full multilingual family has passed accent-clearance tests.
-The comparison page renders the old pilot at 128 px and this study at 112 px,
+The comparison page renders the old experiment at 128 px and this study at 112 px,
 giving both an 89.6 px cap height so raw size does not bias the comparison.
 
 The original grid, inclined cuts, three distinctive tails and 100–700 range
@@ -154,7 +156,7 @@ uv sync --locked
 uv run python scripts/grid_token_study.py draw
 # Build from the existing editable UFOs; does not redraw them.
 uv run python scripts/grid_token_study.py build
-# Snapshot both study fonts and current pilot in HTML; capture Chromium PNGs.
+# Snapshot both study fonts and the 697-unit experiment in HTML; capture Chromium PNGs.
 uv run python scripts/grid_token_study.py proof
 uv run python -m unittest discover -s tests -v
 ```
@@ -169,7 +171,7 @@ pinned as a direct dependency. No new custom boolean geometry engine was added.
 Tests check mapping, all advances, every pen position, 80-cell rows (64,000 units),
 zero offsets with kerning on/off, fixed-pitch metadata, cap bounds without overshoot,
 resolved Q/G topology, a clear zero counter, tail visibility, tangent fillets and
-sampled contour crossings. The full suite also rechecks the previous pilot.
+sampled contour crossings. The full suite also rechecks the previous experiment.
 Repeated study builds are checked for identical hashes in this environment.
 These are not release certification or human readability tests.
 
@@ -184,4 +186,4 @@ Please judge:
 7. Is this direction worth developing beyond Bold capitals?
 
 This is private review material, with the same pending rights-holder / OFL release
-packaging status as the original pilot. No public release is claimed.
+packaging status as the original experiment. No public release is claimed.

@@ -8,18 +8,19 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 
 from booleanOperations.booleanGlyph import BooleanGlyph
 from fontTools.svgLib.path import parse_path
 from ufoLib2 import Font
 
+from study_reference import GRID_TTF, GRID_UFO
+from chromium_proof import capture_chromium
 from font_license import write_licensed_html
 from grid_token_study import STUDY, ccw_poly, diag_bar, rect, reverse
 from web import appearance_head, primary_nav
 
 OUT = STUDY / 'punctuation'
-BASE_UFO = STUDY / 'sources/ConfiniumMono-GridToken-Grid.ufo'
+BASE_UFO = GRID_UFO
 STEM = 'ConfiniumMono-GridToken-Punctuation'
 SOURCE = OUT / 'sources' / f'{STEM}.ufo'
 BINARY = OUT / 'fonts' / f'{STEM}.ttf'
@@ -205,15 +206,15 @@ def proof():
 {appearance_head('../../../')}
 <style>
 @font-face{{font-family:punctuation;src:url(data:font/ttf;base64,{data}) format("truetype");font-weight:700}}
-body{{margin:32px;background:var(--paper);color:var(--text);font:16px/1.45 system-ui}}
+body{{background:var(--paper);color:var(--text);font:16px/1.45 system-ui}}
 h1{{margin-bottom:0}} h2{{font-size:15px;color:var(--muted);margin:0}}
 section{{border-top:1px solid var(--border);padding:12px 0}}
 pre{{font:700 60px/1.32 punctuation;font-synthesis:none;margin:4px 0;overflow:auto}}
 .code-sample{{font-size:17px;line-height:1.55;background:var(--panel);border:1px solid var(--border);
   border-radius:6px;padding:12px 16px;margin-top:10px;tab-size:2}}
 .code-sample code{{font:inherit}}
-.tok-comment{{color:light-dark(#4f6258,#a4b5ab)}} .tok-string{{color:light-dark(#286343,#a0d9ae)}} .tok-number{{color:light-dark(#883e28,#f8b09a)}}
-.tok-property{{color:light-dark(#205c84,#97cbf1)}} .tok-operator{{color:light-dark(#743d78,#e0a8eb)}}
+.tok-comment{{color:var(--muted)}} .tok-string{{color:var(--green)}} .tok-number{{color:var(--orange)}}
+.tok-property{{color:var(--cyan)}} .tok-operator{{color:var(--violet)}}
 a{{color:inherit}}
 </style>
 {primary_nav('../../../', 'punctuation')}
@@ -233,15 +234,8 @@ a{{color:inherit}}
     write_licensed_html(page, html)
     archive = OUT / 'verification'
     archive.mkdir(exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='confinium-punctuation-') as profile:
-        run = subprocess.run(['chromium', '--headless', '--disable-gpu', '--no-first-run',
-                              f'--user-data-dir={profile}', '--virtual-time-budget=3000',
-                              '--window-size=1200,1560', f'--screenshot={archive / "chromium-code.png"}',
-                              '--dump-dom', page.as_uri()], check=True, text=True, capture_output=True)
-        if '<p id="status">Study font loaded</p>' not in run.stdout:
-            raise RuntimeError('Chromium did not load the study font')
-
-
+    capture_chromium(page, archive / 'chromium-code.png', '1200,1560',
+                     '<p id="status">Study font loaded</p>')
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=('draw', 'build', 'proof'))

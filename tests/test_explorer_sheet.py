@@ -10,7 +10,7 @@ from fontTools.ttLib import TTFont
 
 class ExplorerSheetTests(unittest.TestCase):
     def test_inventory_matches_embedded_fonts(self):
-        html = (Path(__file__).resolve().parents[1] / 'index.html').read_text()
+        html = (Path(__file__).resolve().parents[1] / 'explorer.html').read_text()
         data = json.loads(re.search(r'const inventory = (.*?);\n', html)[1])
         faces = dict(re.findall(r'@font-face\{font-family:(exp_\w+);src:url\(data:font/ttf;base64,([^)]*)\)', html))
         self.assertEqual(set(faces), set(data['faces']))

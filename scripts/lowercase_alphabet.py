@@ -74,7 +74,7 @@ def proof():
     write_licensed_html(OUT / 'index.html', f'''<!doctype html><html lang="en"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Lowercase Alphabet · Confinium Mono</title>
 {appearance_head('../../../')}<style>@font-face{{font-family:study;src:url(data:font/ttf;base64,{data})}}
-body{{margin:3vw auto;padding:0 4vw;max-width:70rem;font:1rem/1.5 system-ui}}.sample{{font-family:study,monospace;overflow-wrap:anywhere}}</style><body>
+body{{font:1rem/1.5 system-ui}}.sample{{font-family:study,monospace;overflow-wrap:anywhere}}</style><body>
 {primary_nav('../../../', 'alphabet')}<main><h1>Lowercase alphabet</h1><p>Grid Bold · 560 x-height · 800 advance. Extends the <a href="../lowercase/index.html">seven foundation glyphs</a>.</p>
 <p class="sample" style="font-size:clamp(36px,6vw,80px)">{ascii_lowercase}</p>
 <h2>Rhythm and recognition</h2><p class="sample" style="font-size:32px">minimum summer velvet<br>agape giggle sizzle<br>Il1 O0o rn m ij ft ky</p>

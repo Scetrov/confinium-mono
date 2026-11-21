@@ -2,7 +2,7 @@
 
 Compare the existing Q/Y against **128, 144 and 160 units of thickness measured
 perpendicular to the diagonal**. The angle remains 45 degrees. This is an
-isolated experiment: no reference font, original pilot, Grid/Open/Dense source,
+isolated experiment: no reference font, original experiment, Grid/Open/Dense source,
 or previous Q-tail font is replaced.
 
 ## Review
@@ -104,7 +104,7 @@ positions; and compare every non-Q/Y compiled outline against Grid. TrueType
 serialization rounds coordinates to integer units, so nominal construction
 thicknesses should not be confused with sub-unit raster measurements.
 
-The full test suite also covers the earlier pilot and study variants. Repeated
+The full test suite also covers the earlier experiment and study variants. Repeated
 build hashes and existing-reference hashes are checked in the current environment.
 These tests do not select a visual winner or establish human readability.
 OFL rights-holder / public-release packaging remains pending, as for the other

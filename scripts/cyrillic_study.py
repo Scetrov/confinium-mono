@@ -94,7 +94,7 @@ def proof():
         letters=''.join(chr(cp) for cp in sorted(f.getBestCmap()) if 0x400<=cp<0x500)
     sections=''.join(f'<section lang="{lang}"><h2>{label}</h2><p class="sample">{escape(SAMPLES[lang])}</p></section>' for lang,label in [('ru','Русский'),('uk','Українська'),('be','Беларуская')])
     write_licensed_html(OUT/'index.html',f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cyrillic · Confinium Mono</title>{appearance_head('../../../')}
-<style>@font-face{{font-family:study;src:url(data:font/ttf;base64,{data});font-weight:700}}body{{max-width:70rem;margin:3vw auto;padding:0 4vw;font:1rem/1.5 system-ui}}.sample{{font:700 clamp(20px,3vw,36px)/1.5 study;white-space:pre-wrap;overflow-wrap:anywhere}}</style><body>{primary_nav('../../../','cyrillic')}<main><h1>Cyrillic · East Slavic upright</h1><p>Russian, Ukrainian and Belarusian · 800-unit advance · built on European Latin</p>{sections}<h2>Mixed script</h2><p class="sample">Київ / Kyiv · Мінск / Minsk · Москва / Moskva</p><h2>Inventory</h2><p class="sample">{letters}</p></main></body></html>''')
+<style>@font-face{{font-family:study;src:url(data:font/ttf;base64,{data});font-weight:700}}body{{font:1rem/1.5 system-ui}}.sample{{font:700 clamp(20px,3vw,36px)/1.5 study;white-space:pre-wrap;overflow-wrap:anywhere}}</style><body>{primary_nav('../../../','cyrillic')}<main><h1>Cyrillic · East Slavic upright</h1><p>Russian, Ukrainian and Belarusian · 800-unit advance · built on European Latin</p>{sections}<h2>Mixed script</h2><p class="sample">Київ / Kyiv · Мінск / Minsk · Москва / Moskva</p><h2>Inventory</h2><p class="sample">{letters}</p></main></body></html>''')
 
 
 if __name__=='__main__':

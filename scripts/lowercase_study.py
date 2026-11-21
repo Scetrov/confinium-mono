@@ -9,6 +9,7 @@ from fontTools.pens.transformPen import TransformPen
 from fontTools.pens.reverseContourPen import ReverseContourPen
 from ufoLib2 import Font
 from ufo2ft import compileTTF
+from study_reference import GRID_UFO
 from font_license import write_licensed_html
 from web import appearance_head, primary_nav
 
@@ -23,7 +24,7 @@ ROUND = 'M240 0 Q80 0 80 160 V400 Q80 560 240 560 H560 Q720 560 720 400 V160 Q72
 
 
 def draw():
-    font = Font.open(GRID / 'sources/ConfiniumMono-GridToken-Grid.ufo')
+    font = Font.open(GRID_UFO)
     font.info.familyName = 'Confinium Mono Lowercase Study'
     font.info.styleName = 'Bold'
     font.info.xHeight = 560
@@ -58,7 +59,7 @@ def proof():
     write_licensed_html(OUT / 'index.html', f'''<!doctype html><html lang="en"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Lowercase Foundations · Confinium Mono</title>
 {appearance_head('../../../')}<style>@font-face{{font-family:study;src:url(data:font/ttf;base64,{data})}}
-body{{margin:3vw auto;padding:0 4vw;max-width:70rem;font:1rem/1.5 system-ui}}.sample{{font-family:study,monospace;overflow-wrap:anywhere}}</style><body>
+body{{font:1rem/1.5 system-ui}}.sample{{font-family:study,monospace;overflow-wrap:anywhere}}</style><body>
 {primary_nav('../../../', 'lowercase')}<main><h1>Lowercase foundations</h1><p>Grid Bold · 800-unit cell · 560 x-height · 160 stem · 140 bar · −200 descender</p>
 <p class="sample" style="font-size:clamp(36px,8vw,96px)">n o h p d b q</p>
 <h2>Shoulders and counters</h2><p class="sample" style="font-size:36px">non noon hoop bond pod<br>Hh Oo Bbd Ppq</p>

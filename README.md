@@ -1,18 +1,67 @@
 # Confinium Mono
 
-Original upright geometric monospace **nine-glyph review pilot**, not a finished family.
-No existing font outlines or reference typefaces were used as drawing inputs.
+Confinium Mono is an original upright geometric monospace under development.
+No third-party font outlines or font images were used as drawing inputs.
 
-## Grid- and token-driven Bold direction study
+## Current family: 800-unit Grid
 
-A separate grid-based experiment is available in
-**[studies/grid-token-bold/specimen/index.html](studies/grid-token-bold/specimen/index.html)**.
-It compares three treatments of `H O 0 Q C E S G Y`, with 800-unit advance and
-cap height, editable UFOs, grid overlays and enlarged Chromium proofs.
-See [the study notes](studies/grid-token-bold/README.md) for deliberate changes from
-the original brief. The original pilot below is preserved unchanged.
+Start with the **[typeface home page](index.html)** for a quick look at the family,
+or open the **[Explorer](explorer.html)** to try it yourself. Grid, Open,
+Dense, and Hollow each map 416 Unicode characters, including all printable
+ASCII, broad European Latin coverage, and the modern Russian, Ukrainian,
+and Belarusian alphabets. [Confinium Mono Variable](studies/variable-repertoire/)
+covers the same repertoire from weight 100 to 700, with Book at 400. At 700,
+its outlines and horizontal metrics match Full Grid. Thin and Book are
+generated constructions, not individually optically refined masters.
 
-## Review first
+See the [full-family fonts and proofs](studies/grid-token-bold/full-family/)
+and the [design process archive](process.html). These are review builds,
+not a production release.
+
+## Install the variable font
+
+Download **ConfiniumMono-Variable.zip** from the [Install page](https://scetrov.github.io/confinium-mono/install.html) or [GitHub Releases](https://github.com/Scetrov/confinium-mono/releases) and unzip it. Choose the font package, not GitHub’s source archive. One upright variable font covers weights 100–700. Remove any earlier copy of the same family before updating.
+
+- **Windows 10/11:** Right-click `desktop/ConfiniumMono-Variable.ttf` and select **Install** (on Windows 11 you may need **Show more options**). **Install for all users** requires administrator access.
+- **macOS:** Double-click the TTF, then click **Install** in Font Book.
+- **Linux (Fontconfig):** Run these commands from the extracted folder:
+
+  ```sh
+  mkdir -p ~/.local/share/fonts/confinium-mono
+  cp desktop/ConfiniumMono-Variable.ttf ~/.local/share/fonts/confinium-mono/
+  fc-cache -f ~/.local/share/fonts/confinium-mono
+  ```
+
+Reopen your editor or terminal, select **Confinium Mono Variable Repertoire**, and start at weight 400. Apps with variable-weight controls can also select intermediate weights such as 175.
+
+### Self-host the webfont
+
+Copy `web/ConfiniumMono-Variable.woff2` and `OFL.txt` into your site's `fonts/` directory. No desktop installation is needed. Adjust the URL for sites hosted under a subpath:
+
+```css
+@font-face {
+  font-family: "Confinium Mono Web";
+  src: url("/fonts/ConfiniumMono-Variable.woff2") format("woff2");
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+}
+pre, code, kbd, samp { font-family: "Confinium Mono Web", monospace; }
+```
+
+Serve the file as `font/woff2`. For a separate font origin enable CORS. Check the request in the browser’s Network panel and inspect the rendered font at weights 400 and 700.
+
+### Publishing (maintainers)
+
+Push a numeric `MAJOR.MINOR.PATCH` tag on the reviewed commit (for example, `git tag 0.1.0` then `git push origin 0.1.0`). The release workflow tests the tagged tree, packages the committed Full Grid variable TTF and a WOFF2 derived from it, and publishes the ZIP and its SHA-256 checksum to GitHub Releases. The tag versions the distribution; it does not rewrite the font’s internal metadata.
+
+## Archived experiment: 697-unit variable design
+
+This separate nine-glyph experiment tested curves and weight interpolation in
+a 697-unit cell. Its sources, fonts, and proofs are preserved below; it is
+not the basis for the current family's outlines.
+
+### Review the experiment
 
 **Curve revision 02:** c/e/s/g have been reconstructed after review found
 kinked curves and uneven bowl thickness. Compare the actual headless-Chromium
@@ -47,17 +96,18 @@ Please review:
 4. Are the c/e/s lower cuts too assertive, especially at Bold?
 5. Does Book have the right colour, and does Thin remain useful at display sizes?
 
-## Contents
+### Experiment files
 
 - `sources/ConfiniumMono-{Thin,Book,Bold}.ufo`: editable cubic-outline masters.
 - `sources/ConfiniumMono.designspace`: weight axis and seven named instances.
-- `sources/coverage.json`: exact pilot coverage and spacing classification.
+- `sources/coverage.json`: exact experiment coverage and spacing classification.
 - `fonts/ConfiniumMono[wght].ttf`: variable TrueType, default Book 400.
 - `fonts/ConfiniumMono-*.ttf`: seven static TrueType weights, 100–700.
 - `sketches/`: dated vector drawing sheet, Thin / Book / Bold.
 - `DESIGN-LOG.md`: decisions, revisions and remaining optical questions.
 - `scripts/`: original drawing construction, standard-tool build and proof rendering.
-- `tests/`: pilot-only metrics, shaping, matching and ink-progression checks.
+- `tests/test_pilot.py` and `tests/test_curves.py`: experiment metrics, shaping,
+  outline matching, ink progression, and curve geometry checks.
 
 All 12 exported glyphs (`.notdef`, space, no-break space, and nine drawn
 characters) advance exactly 697 units. UPM is 1,000. Ascender / descender /
@@ -65,7 +115,7 @@ line gap are 885 / −242 / 0, with matching hhea, typo and Windows metrics.
 Cap height metadata is 700; x-height metadata is 500. Curved glyphs overshoot.
 The lowercase x is not drawn yet, so its height cannot yet be verified.
 
-## Build and edit
+### Build and edit the experiment
 
 Requires Python 3.11+ and `uv`. `uv.lock` pins direct and transitive dependencies
 with artifact hashes; this cut was built with Python 3.13 on Linux. Package
@@ -88,12 +138,12 @@ Do not run it after manual outline edits unless you intend to discard those
 edits. The normal build never invokes it. UFOs can be edited in a UFO-capable
 font editor; preserve contour and point correspondence across masters.
 
-Build timestamps use `SOURCE_DATE_EPOCH`, defaulting to the pilot's date.
+Build timestamps use `SOURCE_DATE_EPOCH`, defaulting to the experiment’s date.
 Statics are instantiated from the same compiled variable font, with standard
 TrueType coordinate rounding. Two consecutive builds were checked for identical
 SHA-256 hashes in this environment; cross-platform binary identity is not claimed.
 
-## Verification scope
+### Experiment verification
 
 The automated suite exercises seven statics plus the variable font at all 13
 coordinates 100, 150, …, 700. It checks exported coverage, every glyph advance,
@@ -115,16 +165,16 @@ uv run python scripts/review_curves.py after
 This requires `chromium` on PATH. It verifies font loading and uses a fresh
 browser profile; visual inspection of the PNG remains a separate human task.
 
-These are **pilot gates**, not the complete brief's acceptance tests. All tests
+These are **experiment checks**, not the complete brief's acceptance tests. All tests
 use actual supported characters; missing letters are not silently substituted.
 FontTools' interpolatability report is also checked. Passing it does not certify
 optical quality or absence of every geometric defect.
 
-## Deliberately unfinished
+### Outside the experiment’s scope
 
 - Remaining Latin, Cyrillic, numerals, punctuation, symbols and box drawing.
 - Combining marks, canonical equivalence, language-specific forms and controls.
-- K/k, M and Ж/ж ink traps: those glyphs are not part of this nine-glyph pilot.
+- K/k, M and Ж/ж ink traps: those glyphs are not part of this nine-glyph experiment.
 - Full words such as `gypsy`, `easy access` and `minimum` cannot yet be proofed.
 - Full no-fallback acceptance matrix, wrapping and discretionary-hyphen tests.
 - Human O/0 transcription tests; thin small-size rendering needs particular review.

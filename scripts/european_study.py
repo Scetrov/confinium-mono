@@ -162,7 +162,7 @@ def proof():
     data=base64.b64encode(BINARY.read_bytes()).decode()
     sections=''.join(f'<section><h2>{title}</h2><p class="sample">{escape(sample)}</p></section>' for title,sample in groups.items())
     write_licensed_html(OUT/'index.html',f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>European Latin · Confinium Mono</title>{appearance_head('../../../')}
-<style>@font-face{{font-family:accent;src:url(data:font/ttf;base64,{data});font-weight:700}}body{{max-width:74rem;margin:3vw auto;padding:0 4vw;font:1rem/1.5 system-ui}}.sample{{white-space:pre-wrap;font:700 clamp(20px,3vw,34px)/1.5 accent}}</style><body>{primary_nav('../../../','european')}<main><h1>European Latin · Icelandic first</h1>{sections}</main></body></html>''')
+<style>@font-face{{font-family:accent;src:url(data:font/ttf;base64,{data});font-weight:700}}body{{font:1rem/1.5 system-ui}}.sample{{white-space:pre-wrap;font:700 clamp(20px,3vw,34px)/1.5 accent}}</style><body>{primary_nav('../../../','european')}<main><h1>European Latin · Icelandic first</h1>{sections}</main></body></html>''')
 
 
 if __name__=='__main__':

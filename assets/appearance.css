@@ -1,19 +1,46 @@
+@import url('./site-titles.css');
+
+h1, h2, h3, .site-nav .brand {
+  font-family: 'Confinium Site Titles', system-ui, sans-serif;
+  font-weight: 700;
+  font-synthesis: none;
+}
+
 :root {
+  --site-max-width: 2000px;
+  --site-gutter: clamp(16px, 2vw, 32px);
   color-scheme: light dark;
-  /* Preserve the warm light palette; use cooler Tokyo Night tones in dark mode. */
-  --paper: light-dark(#faf8f2, #1a1b26);
-  --panel: light-dark(#f4f1e8, #222436);
-  --surface: light-dark(#fffdf8, #292e42);
-  --text: light-dark(#172426, #c0caf5);
-  --secondary: light-dark(#3d4f4b, #a9b1d6);
-  --muted: light-dark(#586d67, #9aa5ce);
-  --border: light-dark(#bbc9c0, #555e80);
-  --accent: light-dark(#23695c, #7aa2f7);
+  /* Tokyo Night Day / Night, adapted from folke/tokyonight.nvim.
+     Day text and accents are deepened for contrast on tinted panels. */
+  --paper: light-dark(#e1e2e7, #1a1b26);
+  --panel: light-dark(#d0d5e3, #1f2335);
+  --surface: light-dark(#ebeef6, #292e42);
+  --text: light-dark(#243567, #c0caf5);
+  --secondary: light-dark(#35467b, #a9b1d6);
+  --muted: light-dark(#47588f, #9aa5ce);
+  --border: light-dark(#929bb9, #555e80);
+  --accent: light-dark(#2c50a7, #7aa2f7);
+  --violet: light-dark(#6935a0, #bb9af7);
+  --red: light-dark(#9e3046, #f7768e);
+  --orange: light-dark(#904800, #ff9e64);
+  --yellow: light-dark(#715019, #e0af68);
+  --green: light-dark(#435e2a, #9ece6a);
+  --cyan: light-dark(#005a79, #7dcfff);
+  --selection: light-dark(#b7c1e3, #3d59a1);
+  accent-color: var(--accent);
   background: var(--paper);
   color: var(--text);
 }
 :root[data-theme="light"] { color-scheme: light; }
 :root[data-theme="dark"] { color-scheme: dark; }
+a { color: var(--accent); }
+::selection { background: var(--selection); color: var(--text); }
+:focus-visible { outline-color: var(--accent); }
+body {
+  width: min(var(--site-max-width), calc(100% - 2 * var(--site-gutter)));
+  margin: var(--site-gutter) auto;
+}
+
 .site-nav {
   display: flex;
   flex-wrap: wrap;
@@ -24,7 +51,15 @@
   border-bottom: 1px solid var(--border);
   font: 14px/1.4 system-ui, sans-serif;
 }
-.site-nav .brand { font-weight: 700; color: var(--text); margin-right: auto; }
+.site-nav .brand {
+  font-size: 1.375rem;
+  font-size: clamp(1rem, 2.8cqi, 1.375rem);
+  font-weight: 700;
+  color: var(--text);
+  margin-right: auto;
+  white-space: nowrap;
+}
+.site-nav .brand-mono { font-weight: 300; }
 .site-nav a { color: var(--muted); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
 .site-nav a:hover, .site-nav a.active { color: var(--text); }
 .site-nav a.active { font-weight: 600; border-bottom-color: var(--accent); }
@@ -32,15 +67,16 @@
   color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 50%; cursor: pointer; }
 .site-nav .theme-control:hover { color: var(--accent); }
 .site-nav .theme-control:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.site-nav { display: grid; grid-template-columns: 1fr auto 1fr; }
+.site-nav { display: grid; grid-template-columns: 1fr auto 1fr; container-type: inline-size; }
 .site-nav .nav-center { display: flex; align-items: baseline; gap: 1rem; }
 .site-nav details { position: relative; }
 .site-nav summary { cursor: pointer; color: var(--muted); }
 .site-nav summary.active { color: var(--text); font-weight: 600; }
-.site-nav .study-links { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); z-index: 10; display: grid; width: max-content; padding: 8px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 4px; }
+.site-nav .study-links { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); z-index: 10; display: grid; width: max-content; padding: 8px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 4px; max-height: 65vh; overflow-y: auto; }
 .site-nav .theme-control { justify-self: end; }
 @media (max-width: 32rem) {
   .site-nav { grid-template-columns: 1fr auto; }
   .site-nav .nav-center { grid-row: 2; grid-column: 1 / -1; justify-self: center; }
   .site-nav .theme-control { grid-column: 2; grid-row: 1; }
+  .site-nav .study-links { left: auto; right: 0; transform: none; }
 }

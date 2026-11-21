@@ -4,7 +4,7 @@
 
 The study adds the modern Russian, Ukrainian and Belarusian alphabets (76
 letters across both cases) to the European Latin study binary, without changing
-that font or promoting the repertoire into the variable pilot. Forms are drawn
+that font or promoting the repertoire into the variable experiment. Forms are drawn
 from original paths and this family's existing outlines. Grid advance 800,
 cap 800, x-height 560; line metrics 1040/−200. No Bulgarian or Serbian
 localized alternates or extended non-Slavic Cyrillic alphabets are claimed.

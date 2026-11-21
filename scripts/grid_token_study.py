@@ -1,4 +1,4 @@
-"""Isolated, original grid- and token-driven Bold study. Does not alter the nine-glyph pilot.
+"""Isolated, original grid- and token-driven Bold study. Does not alter the nine-glyph experiment.
 
 Draw: regenerate editable UFOs + grid SVGs. Build: compile existing UFOs only.
 Proof: capture embedded-font study in Chromium. See study README.
@@ -10,13 +10,13 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-import tempfile
 from fontTools.svgLib.path import parse_path
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.recordingPen import RecordingPen
 from fontTools.pens.reverseContourPen import ReverseContourPen
 from ufoLib2 import Font
 from booleanOperations.booleanGlyph import BooleanGlyph
+from chromium_proof import capture_chromium
 from font_license import apply_ufo_license, write_licensed_html
 from web import appearance_head, primary_nav
 
@@ -214,7 +214,7 @@ def draw():
             svg.append('<path d="M 80,0 H 720 V 800 H 80 Z M 400,-120 V 880" fill="none" stroke="#c76b3d" stroke-width="2" stroke-dasharray="8 8"/></g>')
         (STUDY/f'specimen/grid-{variant}.svg').write_text(''.join(svg)+'</svg>')
     (STUDY/'coverage.json').write_text(json.dumps({'family':'Confinium Mono','stage':'isolated grid- and token-driven Bold study','advance':800,'spacing':'all exported glyphs single-cell','codepoints':{f'U+{cp:04X}':g.name for g in font for cp in g.unicodes}},indent=2)+'\n')
-    print('Drew three editable grid- and token-driven UFOs and grid overlays; original pilot untouched.')
+    print('Drew three editable grid- and token-driven UFOs and grid overlays; original experiment untouched.')
 
 
 def build():
@@ -234,18 +234,18 @@ def proof():
         rows+=f'<section><h2>{variant} / bar {p["horizontal_bar"]} / inner radius {p["inner_radius"]}</h2><div class="sample" style="font-family:study{variant};font-size:64px">ABCDEFGHIJKLM\nNOPQRSTUVWXYZ\n0123456789</div><div class="sample" style="font-family:study{variant};font-size:52px">O0O0 1I1I 2Z2Z 5S5S 8B8B QO0Q</div><div class="sizes" style="font-family:study{variant}">'+''.join(f'<div style="font-size:{px}px">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</div>' for px in [14,18,32])+'</div><p><a href="grid-'+variant+'.svg">Open grid overlay</a></p></section>'
     original=base64.b64encode((ROOT/'fonts/ConfiniumMono-Bold.ttf').read_bytes()).decode()
     css+=f'@font-face{{font-family:pilot;src:url(data:font/ttf;base64,{original});font-weight:700}}'
-    comparison='''<section><h2>Existing pilot versus Grid / equal cap height (89.6 px)</h2><div class="sample" style="font-family:pilot;font-size:128px">HO0Q</div><div class="sample" style="font-family:studyGrid;font-size:112px">HO0Q</div><p>Top: existing 697-advance Bold. Bottom: proposed 800-advance Grid. Both rows have the same rendered cap height; differences in width and spacing are intentional. This is not a weight-axis interpolation.</p></section>'''
+    comparison='''<section><h2>697-unit experiment versus Grid / equal cap height (89.6 px)</h2><div class="sample" style="font-family:pilot;font-size:128px">HO0Q</div><div class="sample" style="font-family:studyGrid;font-size:112px">HO0Q</div><p>Top: existing 697-advance Bold. Bottom: proposed 800-advance Grid. Both rows have the same rendered cap height; differences in width and spacing are intentional. This is not a weight-axis interpolation.</p></section>'''
     nav=primary_nav('../../../','grid-token')
-    html='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Confinium Mono — grid- and token-driven Bold study</title>'''+appearance_head('../../../')+'''<style>'''+css+'''body{margin:36px;background:var(--paper);color:var(--text);font:16px/1.5 system-ui}h1{margin:0;font-size:38px}h2{font-size:16px;font-weight:500;color:var(--muted)}section{border-top:1px solid var(--border);padding:10px 0 24px}.sample{font-size:clamp(40px,7.8vw,112px);font-weight:700;line-height:1.4;white-space:pre;letter-spacing:0;font-synthesis:none;overflow:auto}.sizes{font-weight:700;line-height:1.4;font-synthesis:none}.sizes div{margin:8px 0}p{max-width:1000px}a{color:inherit}#status{color:var(--accent)}</style>'''+nav+'''<h1>Confinium Mono / grid- and token-driven Bold</h1><p>Direction study: 800 advance · 800 cap height · 160 vertical stems · 160 outer radius. Three controlled variants; not a weight range. All glyph samples use only the new family. Interface labels use the system font.</p><p>Grid is the proposed baseline. Open and Dense vary only horizontal bar thickness and inner fillets. Zero remains unmarked and 80 units narrower; Q uses a 45° right-descending tail (128 normal units) and Y uses 144-normal-unit 45° arms. Coverage: uppercase A–Z and figures 0–9.</p><p><a href="../punctuation/index.html">ASCII punctuation study</a> · <a href="../diagonals/index.html">Optical Q/Y diagonal thickness: 128 / 144 / 160</a> · <a href="../q-tail/index.html">Q tail: centred versus 45° right</a> · <a href="detail.html">Enlarged C/E/S/G review</a> · <a href="../../../specimen/index.html">Original pilot</a></p><p id="status">Loading study fonts…</p>'''+comparison+rows+'''<script>Promise.all(['Grid','Open','Dense'].map(v=>document.fonts.load('700 112px study'+v,'HO0QCESGY'))).then(results=>document.querySelector('#status').textContent=results.every(r=>r.length)?'All three study fonts loaded':'FONT LOAD FAILURE')</script></html>'''
+    html='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Confinium Mono — grid- and token-driven Bold study</title>'''+appearance_head('../../../')+'''<style>'''+css+'''body{background:var(--paper);color:var(--text);font:16px/1.5 system-ui}h1{margin:0;font-size:38px}h2{font-size:16px;font-weight:500;color:var(--muted)}section{border-top:1px solid var(--border);padding:10px 0 24px}.sample{font-size:clamp(40px,7.8vw,112px);font-weight:700;line-height:1.4;white-space:pre;letter-spacing:0;font-synthesis:none;overflow:auto}.sizes{font-weight:700;line-height:1.4;font-synthesis:none;overflow-x:auto}.sizes div{margin:8px 0}p{max-width:1000px}a{color:inherit}#status{color:var(--accent)}</style>'''+nav+'''<h1>Confinium Mono / grid- and token-driven Bold</h1><p>Direction study: 800 advance · 800 cap height · 160 vertical stems · 160 outer radius. Three controlled variants; not a weight range. All glyph samples use only the new family. Interface labels use the system font.</p><p>Grid is the proposed baseline. Open and Dense vary only horizontal bar thickness and inner fillets. Zero remains unmarked and 80 units narrower; Q uses a 45° right-descending tail (128 normal units) and Y uses 144-normal-unit 45° arms. Coverage: uppercase A–Z and figures 0–9.</p><p><a href="../punctuation/index.html">ASCII punctuation study</a> · <a href="../diagonals/index.html">Optical Q/Y diagonal thickness: 128 / 144 / 160</a> · <a href="../q-tail/index.html">Q tail: centred versus 45° right</a> · <a href="detail.html">Enlarged C/E/S/G review</a> · <a href="../../../specimen/index.html">697-unit experiment</a></p><p id="status">Loading study fonts…</p>'''+comparison+rows+'''<script>Promise.all(['Grid','Open','Dense'].map(v=>document.fonts.load('700 112px study'+v,'HO0QCESGY'))).then(results=>document.querySelector('#status').textContent=results.every(r=>r.length)?'All three study fonts loaded':'FONT LOAD FAILURE')</script></html>'''
     page=STUDY/'specimen/index.html'; write_licensed_html(page, html)
     detail=STUDY/'specimen/detail.html'
-    write_licensed_html(detail, '<!doctype html><meta charset="utf-8"><title>Confinium Mono / enlarged grid- and token-driven curves</title>'+appearance_head('../../../')+'<style>'+css+'body{background:var(--paper);color:var(--text);margin:32px;font:16px system-ui}section{border-top:1px solid var(--border)}h1{font-size:28px}h2{font-size:16px;font-weight:500}</style>'+nav+'<h1>Confinium Mono / enlarged grid- and token-driven C E S G</h1>'+details)
-    with tempfile.TemporaryDirectory(prefix='confinium-grid-token-') as profile:
-        run=subprocess.run(['chromium','--headless','--disable-gpu','--no-first-run','--no-default-browser-check',f'--user-data-dir={profile}','--virtual-time-budget=3000','--window-size=1600,2500',f'--screenshot={STUDY / "verification/chromium.png"}','--dump-dom',page.as_uri()],check=True,text=True,capture_output=True)
-        assert '<p id="status">All three study fonts loaded</p>' in run.stdout
-        subprocess.run(['chromium','--headless','--disable-gpu','--no-first-run',f'--user-data-dir={profile}','--virtual-time-budget=3000','--window-size=1300,1700',f'--screenshot={STUDY / "verification/detail.png"}',detail.as_uri()],check=True,capture_output=True)
-    print('Rendered all three grid- and token-driven variants in Chromium; font loading verified.')
-
+    write_licensed_html(detail, '<!doctype html><meta charset="utf-8"><title>Confinium Mono / enlarged grid- and token-driven curves</title>'+appearance_head('../../../')+'<style>'+css+'body{background:var(--paper);color:var(--text);font:16px system-ui}section{border-top:1px solid var(--border);overflow-x:auto}h1{font-size:28px}h2{font-size:16px;font-weight:500}</style>'+nav+'<h1>Confinium Mono / enlarged grid- and token-driven C E S G</h1>'+details+'''<p id="status">Loading…</p>
+<script>Promise.all(['Grid','Open','Dense'].map(v=>document.fonts.load('700 320px study'+v,'CESG')))
+.then(faces=>document.getElementById('status').textContent=faces.every(f=>f.length)?'All detail fonts loaded':'FONT LOAD FAILURE');</script>''')
+    expected = '<p id="status">All three study fonts loaded</p>'
+    capture_chromium(page, STUDY / 'verification/chromium.png', '1600,2500', expected)
+    capture_chromium(detail, STUDY / 'verification/detail.png', '1300,1700',
+                     '<p id="status">All detail fonts loaded</p>')
 if __name__=='__main__':
     if len(sys.argv)!=2 or sys.argv[1] not in ('draw','build','proof'): raise SystemExit('Usage: grid_token_study.py draw|build|proof')
     globals()[sys.argv[1]]()

@@ -54,7 +54,7 @@ def proof():
     write_licensed_html(OUT / 'index.html', f'''<!doctype html><html lang="en"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Grid Bold · Mixed Text</title>
 {appearance_head('../../../')}<style>@font-face{{font-family:mixed;src:url(data:font/ttf;base64,{data});font-weight:700}}
-body{{margin:3vw auto;padding:0 4vw;max-width:70rem;font:1rem/1.5 system-ui}}pre{{font:700 20px/1.5 mixed;overflow-x:auto;padding:.8rem;background:var(--panel)}}
+body{{font:1rem/1.5 system-ui}}pre{{font:700 20px/1.5 mixed;overflow-x:auto;padding:.8rem;background:var(--panel)}}
 </style><body>{primary_nav('../../../', 'mixed-text')}<main><h1>Mixed text · Grid Bold</h1>
 <p>95 printable ASCII characters in one face · 800-unit advance. Compare rhythm, ambiguous forms, and punctuation clearance.</p>
 {sections}<h2>Complete printable ASCII</h2><pre>{chart}</pre></main></body></html>''')

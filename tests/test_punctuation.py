@@ -17,7 +17,7 @@ import punctuation_study as study
 
 class PunctuationTests(unittest.TestCase):
     def test_coverage_and_base_parity(self):
-        baseline = study.STUDY / 'fonts/ConfiniumMono-GridToken-Grid.ttf'
+        baseline = study.GRID_TTF
         with TTFont(baseline) as base, TTFont(study.BINARY) as font:
             base_cmap = base.getBestCmap()
             added = {ord(c): n for c, n in study.NAMES.items()}

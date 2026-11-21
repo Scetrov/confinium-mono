@@ -1,19 +1,21 @@
 """Capture the actual variable font in headless Chromium, without a font cache.
-Usage: uv run python scripts/review_curves.py before|after
-The HTML embeds the reviewed font so the evidence survives subsequent rebuilds.
+Usage: uv run python scripts/review_curves.py after
+Render the revised font from a temporary embedded-font page. Never replace the
+historical before/after captures.
 """
 import base64
 from pathlib import Path
-import subprocess
 import sys
 import tempfile
+
+from chromium_proof import capture_chromium
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def main():
-    phase = sys.argv[1]
-    if phase not in ('before', 'after'):
-        raise SystemExit('Expected before or after')
+    if sys.argv[1:] != ['after']:
+        raise SystemExit('Usage: review_curves.py after (the before font is not available)')
+    phase = 'after'
     font = base64.b64encode((ROOT/'fonts/ConfiniumMono[wght].ttf').read_bytes()).decode()
     rows = ''.join(f'<section><label>{w}</label><div class="glyphs" style="font-weight:{w}">sceg</div></section>' for w in (100, 400, 700))
     small = ''.join(f'<div><label>{w}</label>'+''.join(f'<span class="small" style="font-size:{px}px;font-weight:{w}">sceg cese egg </span>' for px in (14, 18, 32))+'</div>' for w in range(100,701,100))
@@ -22,11 +24,9 @@ def main():
 <h1>Confinium Mono / curves / {phase}</h1>{rows}<h2>14 / 18 / 32 px</h2>{small}<p id="status">Loading</p>
 <script>document.fonts.load('400 360px "Confinium Mono"','sceg').then(f=>document.getElementById('status').textContent=f.length?'FONT LOADED':'FONT FAILED')</script>'''
     out = ROOT/'verification'; out.mkdir(exist_ok=True)
-    page = out/f'curves-{phase}.html'; page.write_text(html)
-    with tempfile.TemporaryDirectory(prefix='confinium-chromium-') as profile:
-        result = subprocess.run(['chromium','--headless','--disable-gpu','--no-first-run','--no-default-browser-check',f'--user-data-dir={profile}','--virtual-time-budget=3000','--window-size=1200,1820',f'--screenshot={out / ("curves-"+phase+".png")}', '--dump-dom',page.as_uri()],capture_output=True,text=True,check=True)
-        if '<p id="status">FONT LOADED</p>' not in result.stdout:
-            raise RuntimeError('Chromium did not load the embedded review font')
-    print(f'Chromium rendered {page.name}; font load verified; PNG captured.')
-
+    with tempfile.TemporaryDirectory(prefix='confinium-curves-') as tmp:
+        page = Path(tmp) / 'curves-after.html'
+        page.write_text(html)
+        capture_chromium(page, out / 'curves-after.png', '1200,1820',
+                         '<p id="status">FONT LOADED</p>')
 if __name__ == '__main__': main()

@@ -8,12 +8,13 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-import tempfile
 import pyclipper
 from fontTools.pens.areaPen import AreaPen
 from fontTools.pens.recordingPen import RecordingPen
 from ufoLib2 import Font
 from grid_token_study import STUDY
+from study_reference import GRID_TTF, GRID_UFO
+from chromium_proof import capture_chromium
 from font_license import apply_ufo_license, write_licensed_html
 from web import appearance_head, primary_nav
 
@@ -55,7 +56,7 @@ def _signed_area(pts):
 
 def draw():
     OUT.mkdir(exist_ok=True)
-    font = Font.open(STUDY / 'sources/ConfiniumMono-GridToken-Grid.ufo')
+    font = Font.open(GRID_UFO)
     font.info.styleName = 'Grid-Token Hollow Bold'
     font.info.openTypeNameDescription = (
         f'Confinium Mono isolated Hollow display study: {WALL}-unit wall inset from Grid.'
@@ -101,7 +102,7 @@ def build():
 def proof():
     nav = primary_nav('../../../', 'hollow')
     variants = [
-        ('solid', 'Grid Bold (Solid baseline)', STUDY / 'fonts/ConfiniumMono-GridToken-Grid.ttf'),
+        ('solid', 'Pinned Grid Bold (Solid baseline)', GRID_TTF),
         ('hollow', f'Hollow Display ({WALL}-unit wall)', FONT),
     ]
     css = ''
@@ -114,7 +115,7 @@ def proof():
             f'<div class="hero" style="font-family:{key}">CONFINIUM 01</div>'
             f'<div class="sample" style="font-family:{key}">ABCDEFGHIJKLM\nNOPQRSTUVWXYZ\n0123456789</div>'
             f'<div class="sizes" style="font-family:{key}">'
-            + ''.join(f'<div style="font-size:{px}px">SECTOR 09 // PROTOCOL A–Z 0–9</div>' for px in [24, 36, 56])
+            + ''.join(f'<div style="font-size:{px}px">SECTOR 09  PROTOCOL AZ 09</div>' for px in [24, 36, 56])
             + '</div></section>'
         )
     page = OUT / 'index.html'
@@ -123,7 +124,7 @@ def proof():
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
         '<title>Confinium Mono / Hollow Display Study</title>'
         f"{appearance_head('../../../')}<style>{css}"
-        'body{margin:32px;background:var(--paper);color:var(--text);font:16px/1.5 system-ui}'
+        'body{background:var(--paper);color:var(--text);font:16px/1.5 system-ui}'
         'h1{font-size:30px;margin:0 0 8px}h2{font-size:16px;font-weight:600;color:var(--muted)}'
         'section{border-top:1px solid var(--border);padding:14px 0 24px}'
         '.hero{font-size:clamp(48px,8vw,112px);font-weight:700;font-synthesis:none;letter-spacing:0;font-kerning:none;white-space:pre;line-height:1.25;margin:10px 0}'
@@ -137,17 +138,8 @@ def proof():
         '<script>Promise.all(["solid","hollow"].map(f=>document.fonts.load("700 64px "+f,"HO0Q"))).'
         'then(r=>document.querySelector("#status").textContent=r.every(x=>x.length)?"Both fonts loaded":"FONT FAILURE")</script></html>'
     )
-    with tempfile.TemporaryDirectory(prefix='confinium-hollow-') as profile:
-        run = subprocess.run(
-            [
-                'chromium', '--headless', '--disable-gpu', '--no-first-run',
-                f'--user-data-dir={profile}', '--virtual-time-budget=3000',
-                '--window-size=1500,2200', f'--screenshot={OUT / "chromium.png"}',
-                '--dump-dom', page.as_uri(),
-            ],
-            check=True, capture_output=True, text=True,
-        )
-        assert '<p id="status">Both fonts loaded</p>' in run.stdout
+    capture_chromium(page, OUT / 'chromium.png', '1500,2200',
+                     '<p id="status">Both fonts loaded</p>')
     print('Rendered Solid vs Hollow in Chromium; both font loads verified.')
 
 

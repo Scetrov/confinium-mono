@@ -7,6 +7,15 @@ from fontTools.ttLib import TTFont, newTable
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
 
+from midline_promotion import REFERENCE_GRID, accented
+from variable_diagonals import thin_master
+from variable_extended import thin_extended
+from variable_lowercase import thin_lowercase, thin_v
+from unicodedata import normalize
+
+ALIGNED_BASES = "HhnmpqruwXabdgjzkxyiseMNTfUCOИи"
+SHARED_FIXES = {"uni0425": "X", "uni0440": "p", "uni0430": "a", "uni0445": "x", "uni0443": "y", "uni0456": "i", "uni0131": "i", "uni0435": "e", "uni0421": "C", "uni041E": "O"}
+
 ROOT = Path(__file__).resolve().parents[1]
 PILOT = ROOT / 'fonts/ConfiniumMono[wght].ttf'
 GRID = ROOT / 'studies/grid-token-bold/full-family/fonts/ConfiniumMono-FullGrid.ttf'
@@ -59,31 +68,65 @@ def inward_edges(points, ends):
     return shifts
 
 
-def masters(g):
+def masters(g, name=None, w_bold=None):
     bold=list(g.coordinates)
-    shifts=inward_edges(bold,g.endPtsOfContours)
-    light=[(round(x+dx),round(y+dy)) for (x,y),(dx,dy) in zip(bold,shifts)]
-    # Restore vertical alignment zones after thinning (including descenders).
-    lo,hi=min(y for x,y in bold),max(y for x,y in bold)
-    low,high=min(y for x,y in light),max(y for x,y in light)
-    if high>low: light=[(x,round(lo+(y-low)*(hi-lo)/(high-low))) for x,y in light]
+    light=thin_v(bold, w_bold) if name == 'v' else thin_master(name,bold)
+    shared = SHARED_FIXES.get(name, name)
+    if light is None:
+        light=thin_lowercase(shared,bold)
+    if light is None and shared is not None:
+        char = chr(int(shared[3:], 16)) if shared.startswith("uni") else shared
+        light=thin_extended(char,bold)
+    if light is None:
+        shifts=inward_edges(bold,g.endPtsOfContours)
+        light=[(round(x+dx),round(y+dy)) for (x,y),(dx,dy) in zip(bold,shifts)]
+        # Restore vertical alignment zones after thinning (including descenders).
+        lo,hi=min(y for x,y in bold),max(y for x,y in bold)
+        low,high=min(y for x,y in light),max(y for x,y in light)
+        if high>low: light=[(x,round(lo+(y-low)*(hi-lo)/(high-low))) for x,y in light]
     book=[(round(.52*x+.48*u),round(.52*y+.48*v)) for (x,y),(u,v) in zip(light,bold)]
     return light,book,bold
 
 
 def build():
-    with TTFont(GRID,recalcTimestamp=False) as f, TTFont(PILOT) as pilot:
+    with (TTFont(GRID,recalcTimestamp=False) as f, TTFont(PILOT) as pilot,
+          TTFont(REFERENCE_GRID) as reference):
         # Reuse axis definitions and their localized names, not the pilot outlines.
         for tag in ('fvar','STAT','name'):
             f[tag]=deepcopy(pilot[tag])
         f['gvar']=newTable('gvar'); f['gvar'].variations={}
         glyf=f['glyf']; variations=f['gvar'].variations
+        w_bold = list(glyf['w'].coordinates)
+        base_for = accented(f)
+        cmap = f.getBestCmap()
+        for cp, name in cmap.items():
+            text = normalize("NFD", chr(cp))
+            if len(text) == 2 and text[0] in ALIGNED_BASES:
+                base_for[name] = cmap[ord(text[0])]
+        base_for["uni045E"] = "y"
+        base_for["uni0451"] = "e"
+        base_masters = {base: masters(glyf[base], base, w_bold) for base in set(base_for.values())}
         for n in f.getGlyphOrder():
             g=glyf[n]; width=f['hmtx'][n][0]
             if not g.numberOfContours:
                 variations[n]=[]
                 continue
-            light,book,bold=masters(g)
+            if n in base_for:
+                base = base_for[n]
+                ref_base, ref_marked = reference['glyf'][base], reference['glyf'][n]
+                dotless = base in ('i', 'j') and n != 'uni012F'
+                count = ref_base.endPtsOfContours[0] + 1 if dotless else len(ref_base.coordinates)
+                scale = .9 if n in ('uni1E03', 'uni0125') else 1
+                expected = [(x, round(y * scale)) for x, y in ref_base.coordinates[:count]]
+                if list(ref_marked.coordinates[:count]) != expected:
+                    raise ValueError(f'Unexpected accent base: {n}')
+                marks = masters(ref_marked)
+                light,book,bold = [[(x, round(y * scale)) for x, y in points[:count if dotless else None]]
+                                   + mark[count:] for points, mark in zip(base_masters[base], marks)]
+                if bold != list(g.coordinates):
+                    raise ValueError(f'Promoted Bold composition differs from Full Grid: {n}')
+            else:
+                light,book,bold=masters(g,n,w_bold)
             g.coordinates=GlyphCoordinates(book); g.recalcBounds(glyf)
             f['hmtx'][n]=(width,g.xMin)
             variations[n]=[TupleVariation({'wght':support},[(x-u,y-v) for (x,y),(u,v) in zip(coords,book)]+[(0,0)]*4)
