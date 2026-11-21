@@ -21,17 +21,23 @@ jobs:
         run: |
           mkdir -p dist/{desktop,web}
           cp 'studies/variable-repertoire/fonts/ConfiniumMono-VariableRepertoire[wght].ttf' dist/desktop/ConfiniumMono-Variable.ttf
+          for cut in Grid Open Dense Hollow; do
+            cp "studies/grid-token-bold/full-family/fonts/ConfiniumMono-Full${cut}.ttf" dist/desktop/
+          done
           uv pip install 'brotli==1.1.0'
-          .venv/bin/fonttools ttLib.woff2 compress dist/desktop/*.ttf -o dist/web/ConfiniumMono-Variable.woff2
-          .venv/bin/fonttools ttLib.woff2 decompress dist/web/*.woff2 -o "$RUNNER_TEMP/check.ttf"
+          for font in dist/desktop/*.ttf; do
+            name=$(basename "$font" .ttf)
+            .venv/bin/fonttools ttLib.woff2 compress "$font" -o "dist/web/$name.woff2"
+            .venv/bin/fonttools ttLib.woff2 decompress "dist/web/$name.woff2" -o "$RUNNER_TEMP/$name.ttf"
+          done
           cp README.md OFL.txt dist/
-          (cd dist && zip -qr ../ConfiniumMono-Variable.zip .)
-          sha256sum ConfiniumMono-Variable.zip > SHA256SUMS
+          (cd dist && zip -qr ../ConfiniumMono-Family.zip .)
+          sha256sum ConfiniumMono-Family.zip > SHA256SUMS
       - uses: actions/upload-artifact@v4
         with:
           name: release-assets
           path: |
-            ConfiniumMono-Variable.zip
+            ConfiniumMono-Family.zip
             SHA256SUMS
   publish:
     needs: package
@@ -45,4 +51,4 @@ jobs:
       - name: Publish tagged release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes --title "Confinium Mono $GITHUB_REF_NAME" ConfiniumMono-Variable.zip SHA256SUMS
+        run: gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes --title "Confinium Mono $GITHUB_REF_NAME" ConfiniumMono-Family.zip SHA256SUMS

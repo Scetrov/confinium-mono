@@ -18,17 +18,17 @@ See the [full-family fonts and proofs](studies/grid-token-bold/full-family/)
 and the [design process archive](process.html). These are review builds,
 not a production release.
 
-## Install the variable font
+## Install the font family
 
-Download **ConfiniumMono-Variable.zip** from the [Install page](https://scetrov.github.io/confinium-mono/install.html) or [GitHub Releases](https://github.com/Scetrov/confinium-mono/releases) and unzip it. Choose the font package, not GitHub’s source archive. One upright variable font covers weights 100–700. Remove any earlier copy of the same family before updating.
+Download **ConfiniumMono-Family.zip** from the [Install page](https://scetrov.github.io/confinium-mono/install.html) or [GitHub Releases](https://github.com/Scetrov/confinium-mono/releases) and unzip it. Choose the font package, not GitHub’s source archive. Choose the variable font for Grid weights 100–700. For a fixed Bold, choose Full Grid; Full Open, Full Dense, and Full Hollow are alternative cuts, not weights on the slider. All five come as desktop TTFs and web WOFF2s. Older variable-only packages omit the static cuts. Remove any earlier copy of the same family before updating.
 
-- **Windows 10/11:** Right-click `desktop/ConfiniumMono-Variable.ttf` and select **Install** (on Windows 11 you may need **Show more options**). **Install for all users** requires administrator access.
-- **macOS:** Double-click the TTF, then click **Install** in Font Book.
+- **Windows 10/11:** Right-click the desired TTFs in `desktop/` and select **Install** (on Windows 11 you may need **Show more options**). **Install for all users** requires administrator access.
+- **macOS:** Double-click each desired TTF, then click **Install** in Font Book.
 - **Linux (Fontconfig):** Run these commands from the extracted folder:
 
   ```sh
   mkdir -p ~/.local/share/fonts/confinium-mono
-  cp desktop/ConfiniumMono-Variable.ttf ~/.local/share/fonts/confinium-mono/
+  cp desktop/*.ttf ~/.local/share/fonts/confinium-mono/
   fc-cache -f ~/.local/share/fonts/confinium-mono
   ```
 
@@ -49,11 +49,13 @@ Copy `web/ConfiniumMono-Variable.woff2` and `OFL.txt` into your site's `fonts/` 
 pre, code, kbd, samp { font-family: "Confinium Mono Web", monospace; }
 ```
 
+For a static cut, use a separate CSS family name, its matching file (for example `ConfiniumMono-FullDense.woff2`), and `font-weight: 700` instead of a range.
+
 Serve the file as `font/woff2`. For a separate font origin enable CORS. Check the request in the browser’s Network panel and inspect the rendered font at weights 400 and 700.
 
 ### Publishing (maintainers)
 
-Push a numeric `MAJOR.MINOR.PATCH` tag on the reviewed commit (for example, `git tag 0.1.0` then `git push origin 0.1.0`). The release workflow tests the tagged tree, packages the committed Full Grid variable TTF and a WOFF2 derived from it, and publishes the ZIP and its SHA-256 checksum to GitHub Releases. The tag versions the distribution; it does not rewrite the font’s internal metadata.
+Push a numeric `MAJOR.MINOR.PATCH` tag on the reviewed commit (for example, `git tag 0.1.0` then `git push origin 0.1.0`). The release workflow tests the tagged tree, packages the variable and four static family TTFs and their WOFF2 equivalents, and publishes the ZIP and its SHA-256 checksum to GitHub Releases. The tag versions the distribution; it does not rewrite the font’s internal metadata.
 
 ## Archived experiment: 697-unit variable design
 

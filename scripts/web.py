@@ -531,17 +531,17 @@ def build_install() -> None:
 <style>body{{background:var(--paper);color:var(--text);font:1rem/1.55 system-ui,sans-serif}}main{{max-width:76ch}}pre{{overflow:auto}}</style>
 <script defer src="assets/install.js"></script></head><body>{primary_nav('', 'install')}
 <main><h1>Install Confinium Mono</h1>
-<p id="release-status" aria-live="polite">Download the variable font package from GitHub Releases.</p>
+<p id="release-status" aria-live="polite">Download the font package from GitHub Releases.</p>
 <p><a href="https://github.com/Scetrov/confinium-mono/releases">Browse releases, notes and checksums</a>.</p>
-<h2>Desktop</h2><p>Unzip <code>ConfiniumMono-Variable.zip</code> and open the <code>desktop</code> folder. One TTF covers weights 100–700. Remove any older copy before updating.</p>
-<ul><li><strong>Windows 10/11:</strong> Right-click the TTF and select Install (under Show more options if needed). Install for all users requires administrator access.</li>
-<li><strong>macOS:</strong> Double-click the TTF and choose Install in Font Book.</li>
+<h2>Desktop</h2><p>Unzip <code>ConfiniumMono-Family.zip</code> and open the <code>desktop</code> folder. Choose the variable TTF for Grid weights 100–700, or Full Grid for a dedicated Bold. Full Open, Full Dense and Full Hollow are distinct static cuts, not slider settings. Older variable-only ZIPs omit these four cuts. Remove any older copy before updating.</p>
+<ul><li><strong>Windows 10/11:</strong> Right-click the desired TTFs and select Install (under Show more options if needed). Install for all users requires administrator access.</li>
+<li><strong>macOS:</strong> Double-click each desired TTF and choose Install in Font Book.</li>
 <li><strong>Linux (Fontconfig):</strong> From the root of the extracted package, run:</li></ul>
 <pre>mkdir -p ~/.local/share/fonts/confinium-mono
-cp desktop/ConfiniumMono-Variable.ttf ~/.local/share/fonts/confinium-mono/
+cp desktop/*.ttf ~/.local/share/fonts/confinium-mono/
 fc-cache -f ~/.local/share/fonts/confinium-mono</pre>
 <p>Reopen your editor or terminal. Select <strong>Confinium Mono Variable Repertoire</strong> and start at weight 400.</p>
-<h2>Self-host on the web</h2><p>Copy the WOFF2 from <code>web/</code> and the included <code>OFL.txt</code> to your site's fonts folder. Adjust the URL for your deployment:</p>
+<h2>Self-host on the web</h2><p>Copy the desired WOFF2 from <code>web/</code> and the included <code>OFL.txt</code> to your site's fonts folder. Adjust the URL for your deployment:</p>
 <pre>@font-face {{
   font-family: "Confinium Mono Web";
   src: url("/fonts/ConfiniumMono-Variable.woff2") format("woff2");
@@ -550,6 +550,7 @@ fc-cache -f ~/.local/share/fonts/confinium-mono</pre>
   font-display: swap;
 }}
 pre, code, kbd, samp {{ font-family: "Confinium Mono Web", monospace; }}</pre>
+<p>For a static cut, declare a separate CSS family with its matching WOFF2 (for example <code>ConfiniumMono-FullDense.woff2</code>) and <code>font-weight: 700</code>.</p>
 <p>Serve the file as <code>font/woff2</code> and enable CORS if hosting on a different origin. Inspect the rendered font at weights 400 and 700 in browser developer tools.</p>
 </main></body></html>'''
     (ROOT / 'install.html').write_text(html, encoding='utf-8')

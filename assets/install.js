@@ -9,15 +9,17 @@
     }
     if (!response.ok) throw new Error('Release lookup failed');
     const release = await response.json();
-    const name = 'ConfiniumMono-Variable.zip';
+    const name = ['ConfiniumMono-Family.zip', 'ConfiniumMono-Variable.zip']
+      .find(candidate => release.assets.some(asset => asset.name === candidate));
     const tag = release.tag_name;
-    if (!/^\d+\.\d+\.\d+$/.test(tag) || !release.assets.some(asset => asset.name === name)) {
+    if (!/^\d+\.\d+\.\d+$/.test(tag) || !name) {
       status.textContent = 'See the release notes for available downloads.';
       return;
     }
     const link = document.createElement('a');
     link.href = `https://github.com/Scetrov/confinium-mono/releases/download/${tag}/${name}`;
-    link.textContent = `Download Confinium Mono ${tag} (ZIP)`;
+    const contents = name === 'ConfiniumMono-Family.zip' ? 'full family' : 'variable font only';
+    link.textContent = `Download Confinium Mono ${tag} (${contents}, ZIP)`;
     status.replaceChildren(link);
   } catch {
     status.textContent = 'Could not check the latest version. Use the releases link below.';
