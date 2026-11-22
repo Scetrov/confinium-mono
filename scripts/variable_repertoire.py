@@ -8,6 +8,8 @@ from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
 
 from midline_promotion import REFERENCE_GRID, accented
+from spacing_balance import I_CONTROL
+from stroke_balance import equal_m, u_stem
 from variable_diagonals import thin_master
 from variable_extended import thin_extended
 from variable_lowercase import thin_lowercase, thin_v
@@ -90,7 +92,7 @@ def masters(g, name=None, w_bold=None):
 
 def build():
     with (TTFont(GRID,recalcTimestamp=False) as f, TTFont(PILOT) as pilot,
-          TTFont(REFERENCE_GRID) as reference):
+          TTFont(REFERENCE_GRID) as reference, TTFont(I_CONTROL) as spacing_control):
         # Reuse axis definitions and their localized names, not the pilot outlines.
         for tag in ('fvar','STAT','name'):
             f[tag]=deepcopy(pilot[tag])
@@ -105,7 +107,13 @@ def build():
                 base_for[name] = cmap[ord(text[0])]
         base_for["uni045E"] = "y"
         base_for["uni0451"] = "e"
-        base_masters = {base: masters(glyf[base], base, w_bold) for base in set(base_for.values())}
+        base_masters = {base: masters(glyf[base], base, w_bold)
+                        for base in set(base_for.values()) - {'m'}}
+        m_masters = [equal_m(m, u_stem(u)) for m, u in zip(
+            masters(spacing_control['glyf']['m'], 'm'), masters(glyf['U'], 'U'))]
+        if m_masters[-1] != list(glyf['m'].coordinates):
+            raise ValueError('Promoted Bold m differs from Full Grid')
+        base_masters['m'] = m_masters
         for n in f.getGlyphOrder():
             g=glyf[n]; width=f['hmtx'][n][0]
             if not g.numberOfContours:
@@ -125,6 +133,8 @@ def build():
                                    + mark[count:] for points, mark in zip(base_masters[base], marks)]
                 if bold != list(g.coordinates):
                     raise ValueError(f'Promoted Bold composition differs from Full Grid: {n}')
+            elif n == 'm':
+                light,book,bold=m_masters
             else:
                 light,book,bold=masters(g,n,w_bold)
             g.coordinates=GlyphCoordinates(book); g.recalcBounds(glyf)

@@ -53,6 +53,10 @@ For a static cut, use a separate CSS family name, its matching file (for example
 
 Serve the file as `font/woff2`. For a separate font origin enable CORS. Check the request in the browser’s Network panel and inspect the rendered font at weights 400 and 700.
 
+### 0.2.0 outline changes
+
+The 800-unit family rebalances `f–i`, extends `i` to match `n`’s ink bounds, and matches the three `m` stems to capital `U`. The monospace advance is unchanged. The archived [equal-width `i`](studies/variable-repertoire/i-width-study/index.html) and [equal-stroke `m`](studies/variable-repertoire/m-stroke-study/index.html) studies retain their pre-promotion font inputs under `reference/`.
+
 ### Publishing (maintainers)
 
 Push a numeric `MAJOR.MINOR.PATCH` tag on the reviewed commit (for example, `git tag 0.1.0` then `git push origin 0.1.0`). The release workflow tests the tagged tree, packages the variable and four static family TTFs and their WOFF2 equivalents, and publishes the ZIP and its SHA-256 checksum to GitHub Releases. The tag versions the distribution; it does not rewrite the font’s internal metadata.

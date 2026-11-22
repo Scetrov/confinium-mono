@@ -89,6 +89,7 @@ html:not([data-font-ready]) pre{{visibility:hidden}}
 <main>
 <h1>Reading-size proof</h1>
 <p>Full Grid variable · 800-unit cell · 100% browser zoom · use Appearance to compare light and dark.</p>
+<p><a href="m-stroke-study/">Archived equal-stroke m comparison</a> · <a href="i-width-study/">Archived equal-width i comparison</a></p>
 <p id="font-status" role="status">Loading proof font…</p>
 {''.join(rows)}
 </main>

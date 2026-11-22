@@ -1,6 +1,7 @@
 """Compatible Thin masters for selected European Latin and Cyrillic letters."""
 from math import hypot
 
+from spacing_balance import balance_f
 from variable_diagonals import thin_master
 from variable_lowercase import thin_lowercase
 
@@ -233,7 +234,7 @@ def thin_extended(c, p):
     elif c == 'T':
         q = T
     else:
-        q = F
+        q = balance_f(F)
     if len(q) != len(p):
         raise ValueError(f'{c}: review Thin master after changing Full Grid topology')
     return [(round(x),round(y)) for x,y in q]

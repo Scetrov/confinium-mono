@@ -1,6 +1,8 @@
 """Thin construction zones for lowercase shoulders, bowls and apertures."""
 from math import hypot
 
+from spacing_balance import balance_i, wide_i
+
 # Map each shared stem wall, bar and tangent control consistently. A
 # horizontal/vertical land remains straight, including across curve joins.
 WALLS = {
@@ -41,7 +43,7 @@ def thin_lowercase(name, bold):
         thin = [(200, 560), (468, 560), (468, 54), (632, 54), (632, 0),
                 (184, 0), (184, 54), (412, 54), (412, 506), (200, 506),
                 (412, 744), (412, 800), (468, 800), (468, 744)]
-        return thin[:len(bold)]
+        return wide_i(balance_i(thin[:len(bold)]), WALLS['n'][0][1], WALLS['n'][-1][1])
     if name == 'e':
         xs = ((80, 132), (240, 188), (560, 612), (680, 632), (720, 668))
         ys = ((0, 0), (136, 52), (226, 254), (348, 306), (428, 508), (560, 560))

@@ -26,7 +26,9 @@ class VariableDiagonalTests(unittest.TestCase):
                 g = instantiateVariableFont(font, {'wght': weight}, overlap=False)['glyf']
                 i, j, s, y = (g[n].coordinates for n in 'ijsy')
                 self.assertEqual(i[2][0]-i[7][0], j[2][0]-j[10][0])
-                self.assertEqual(i[10][0], j[12][0])
+                self.assertEqual(i[10][0], i[7][0])
+                self.assertEqual(j[12][0], j[10][0])
+                self.assertEqual(i[12][0]-i[10][0], j[14][0]-j[12][0])
                 self.assertEqual(i[10][1], j[12][1])
                 self.assertEqual(i[0][1]-i[9][1], j[0][1]-j[11][1])
                 self.assertEqual(s[0][1]-s[1][1], s[15][1]-s[14][1])

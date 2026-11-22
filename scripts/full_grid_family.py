@@ -8,7 +8,12 @@ from fontTools.pens.basePen import BasePen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.ttLib import TTFont
 
-from midline_promotion import approved_outlines
+from copy import deepcopy
+from unicodedata import normalize
+
+from midline_promotion import approved_outlines, marked_outline
+from spacing_balance import balanced_outlines
+from stroke_balance import equal_m, u_stem
 
 GRID = Path(__file__).resolve().parents[1] / 'studies/grid-token-bold'
 OUT = GRID / 'full-family/fonts'
@@ -122,6 +127,17 @@ def build():
         path=(GRID/'hollow/ConfiniumMono-GridToken-Hollow.ttf' if style=='Hollow' else GRID/f'fonts/ConfiniumMono-GridToken-{style}.ttf')
         with TTFont(MASTER,recalcTimestamp=False) as f, TTFont(path) as archive:
             promoted=approved_outlines(f)
+            promoted.update(balanced_outlines(f))
+            base_m = f['glyf']['m']
+            m = deepcopy(base_m)
+            m.coordinates[:] = equal_m(m.coordinates, u_stem(f['glyf']['U'].coordinates))
+            promoted['m'] = m
+            for cp, name in f.getBestCmap().items():
+                text = normalize('NFD', chr(cp))
+                if len(text) == 2 and text[0] == 'm':
+                    promoted[name] = marked_outline(m, base_m, f['glyf'][name])
+            for g in promoted.values():
+                g.recalcBounds(f['glyf'])
             archived=set(archive.getGlyphOrder())
             chars={n:chr(cp) for cp,n in f.getBestCmap().items()}
             for n in f.getGlyphOrder():
