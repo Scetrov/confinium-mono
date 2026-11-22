@@ -2,6 +2,9 @@ baseURL = 'https://scetrov.github.io/confinium-mono/'
 title = 'Confinium Mono'
 disableKinds = ['home', 'section', 'taxonomy', 'term', 'RSS', 'sitemap', '404']
 
+[params]
+  description = 'An original geometric monospace with variable weights, four static cuts, and Latin and Cyrillic coverage.'
+
 [module]
   [[module.mounts]]
     source = "content"
@@ -21,11 +24,32 @@ disableKinds = ['home', 'section', 'taxonomy', 'term', 'RSS', 'sitemap', '404']
   [[module.mounts]]
     source = '../studies'
     target = 'static/studies'
-    files = ['!**.html', '**']
+    # Hugo content owns these routes. Keep other standalone studies reachable.
+    files = [
+      '! grid-token-bold/av-knees/book.html',
+      '! grid-token-bold/av-knees/index.html',
+      '! grid-token-bold/av-knees/lowercase.html',
+      '! grid-token-bold/cyrillic/index.html',
+      '! grid-token-bold/diagonals/detail.html',
+      '! grid-token-bold/diagonals/index.html',
+      '! grid-token-bold/european-latin/index.html',
+      '! grid-token-bold/full-family/index.html',
+      '! grid-token-bold/hollow/index.html',
+      '! grid-token-bold/lowercase-alphabet/index.html',
+      '! grid-token-bold/lowercase/index.html',
+      '! grid-token-bold/mixed-text/index.html',
+      '! grid-token-bold/punctuation/index.html',
+      '! grid-token-bold/q-tail/index.html',
+      '! grid-token-bold/specimen/detail.html',
+      '! grid-token-bold/specimen/index.html',
+      '! programming-arrows/*.html',
+      '! variable-repertoire/reading-proof.html',
+      '**',
+    ]
   [[module.mounts]]
     source = '../specimen'
     target = 'static/specimen'
-    files = ['!**.html', '**']
+    files = ['! index.html', '**']
   [[module.mounts]]
     source = '../fonts'
     target = 'static/fonts'

@@ -1,0 +1,25 @@
+{{- $page := .page -}}
+{{- $title := .title | htmlUnescape -}}
+{{- $description := $page.Description | default site.Params.description -}}
+{{- $url := $page.Permalink -}}
+{{- if eq $page.Params.active "home" -}}
+  {{- $url = site.BaseURL -}}
+{{- end -}}
+{{- $image := "assets/social-banner.png" | absURL -}}
+{{- $alt := "Confinium Mono wordmark on a dark construction grid." -}}
+<link rel="icon" href="{{ strings.Repeat (int $page.Params.depth) "../" }}assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ $url }}">
+<meta property="og:image" content="{{ $image }}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ $alt }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ $image }}">
+<meta name="twitter:image:alt" content="{{ $alt }}">

@@ -11,7 +11,11 @@ and mounted assets. Use `hugo --source site` for a disk build in `site/public/`;
 its relative links also work when opening `site/public/index.html` directly.
 
 - `content/` defines the public routes and their page parameters.
-- `layouts/` and `data/navigation.json` define the shared navigation.
+- `layouts/` and `data/navigation.json` define the shared navigation. The
+  `social-head.html` partial adds the favicon and social sharing metadata to
+  each Hugo-rendered page.
+- Regenerate `../assets/favicon.svg` and `../assets/social-banner.png` from the
+  built family with `uv run --locked python scripts/social_assets.py`.
 - `assets/proofs/` holds page fragments around the shared navigation, including
   existing embedded fonts and CSS. No Python is needed to build or preview them.
 - `hugo.toml` mounts shared assets and downloads without copying them into the
@@ -25,8 +29,10 @@ python3 scripts/import_proof.py studies/programming-arrows/index.html
 ```
 
 The importer does not overwrite existing route metadata or alter the standalone
-proof. Commit the refreshed fragments. Edit Hugo layout and navigation changes
-in `site/` directly; don't re-import pages just for a menu change.
+proof. Commit the refreshed fragments. If the new Hugo route also exists in a
+static mount, exclude that HTML path in `hugo.toml` so it cannot overwrite the
+rendered page. Edit Hugo layout and navigation changes in `site/` directly;
+don't re-import pages just for a menu change.
 
 In GitHub, set **Settings → Pages → Build and deployment → Source** to
 **GitHub Actions**. Pull requests build with Hugo; pushes to `main` build and

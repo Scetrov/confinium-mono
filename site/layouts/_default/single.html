@@ -1,4 +1,12 @@
 {{- $proof := .Params.proof -}}
-{{- (resources.Get (printf "%s.before.html" $proof)).Content | safeHTML -}}
+{{- $before := (resources.Get (printf "%s.before.html" $proof)).Content -}}
+{{- $titles := findRESubmatch `(?i)<title>([^<]+)</title>` $before 1 -}}
+{{- if $titles -}}
+  {{- $match := index $titles 0 -}}
+  {{- $head := partial "social-head.html" (dict "page" . "title" (index $match 1)) -}}
+  {{- /* Some standalone inputs omit </head>; the title is in every fragment. */ -}}
+  {{- $before = replace $before (index $match 0) (printf "%s\n%s" (index $match 0) $head) 1 -}}
+{{- end -}}
+{{- $before | safeHTML -}}
 {{- partial "primary-nav.html" . -}}
 {{- (resources.Get (printf "%s.after.html" $proof)).Content | safeHTML -}}
