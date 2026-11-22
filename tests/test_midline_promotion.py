@@ -37,7 +37,7 @@ class MidlinePromotionTests(unittest.TestCase):
         with (TTFont(FAMILY / 'ConfiniumMono-FullGrid.ttf') as full,
               TTFont(STUDY / 'ConfiniumMono-GridToken-AVKnees152StraightAVW.ttf') as upper,
               TTFont(STUDY / 'ConfiniumMono-GridToken-LowercaseVWKnees144W.ttf') as lower):
-            for glyph in 'AVWw':
+            for glyph in 'AVw':
                 self.assertEqual(coords(full, glyph), coords(upper if glyph.isupper() else lower, glyph))
             v, old_v = coords(full, 'v')[0], coords(lower, 'v')[0]
             self.assertEqual(list(v[:2]) + list(v[5:]), list(old_v[:2]) + list(old_v[5:]))
@@ -74,7 +74,7 @@ class MidlinePromotionTests(unittest.TestCase):
                 control = instantiateVariableFont(approved, {'wght': weight}, overlap=False)
                 for cp, name in current.getBestCmap().items():
                     base = normalize('NFD', chr(cp))[0]
-                    if base in 'AVWw' and (base not in 'Ww' or weight == 700):
+                    if base in 'AV' or (base == 'w' and weight == 700):
                         self.assertEqual(coords(current, name), coords(control, name), (weight, name))
                 self.assertEqual(coords(current, 'uni0410'), coords(current, 'A'))
 

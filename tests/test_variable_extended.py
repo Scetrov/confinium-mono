@@ -34,7 +34,7 @@ class ExtendedThinTests(unittest.TestCase):
 
         for weight in self.faces:
             font.set_variations({'wght': weight})
-            for c in 'ÑŃŅŇȚṀḟЙйÛÜÇÖ':
+            for c in 'ÑŃŅŇȚṀḟЙйÛÜÇÖÝŶŸỲ':
                 with self.subTest(c=c, weight=weight):
                     nfd = normalize('NFD', c)
                     base = self.points(nfd[0], weight)
@@ -42,6 +42,21 @@ class ExtendedThinTests(unittest.TestCase):
                     expected = shape(c)
                     self.assertEqual(expected, shape(nfd))
                     self.assertEqual([advance for _, advance in expected], [800])
+
+    def test_y_fix_preserves_accents_and_plain_y(self):
+        root = FONT.parents[3]
+        with TTFont(root / 'studies/k-steeper/reference' / FONT.name) as control:
+            for weight in self.faces:
+                old = instantiateVariableFont(control, {'wght': weight}, overlap=False)['glyf']
+                base = self.points('Y', weight)
+                self.assertEqual(base, list(old['Y'].coordinates))
+                for char in 'ÝŶŸỲ':
+                    with self.subTest(char=char, weight=weight):
+                        name = self.faces[weight].getBestCmap()[ord(char)]
+                        actual = self.points(char, weight)
+                        self.assertEqual(actual[len(base):], list(old[name].coordinates[len(base):]))
+                        if weight == 700:
+                            self.assertEqual(actual, list(old[name].coordinates))
 
     def test_parallel_diagonals(self):
         # Measure normal to the first edge at both ends of the opposing edge.

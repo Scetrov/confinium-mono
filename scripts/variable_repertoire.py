@@ -6,17 +6,19 @@ from pathlib import Path
 from fontTools.ttLib import TTFont, newTable
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
+from fontTools.varLib.instancer import instantiateVariableFont
 
+from k_steeper_study import REFERENCE as FORK_REFERENCE, apply_candidate as steeper_forks
 from midline_promotion import REFERENCE_GRID, accented
 from spacing_balance import I_CONTROL
 from stroke_balance import equal_m, u_stem
+from structural_capitals_study import REFERENCE as CAPITALS_REFERENCE, base_for as structural_base_for, thin_alternatives
 from variable_diagonals import thin_master
 from variable_extended import thin_extended
 from variable_lowercase import thin_lowercase, thin_v
 from unicodedata import normalize
 
-ALIGNED_BASES = "HhnmpqruwXabdgjzkxyiseMNTfUCOИи"
-SHARED_FIXES = {"uni0425": "X", "uni0440": "p", "uni0430": "a", "uni0445": "x", "uni0443": "y", "uni0456": "i", "uni0131": "i", "uni0435": "e", "uni0421": "C", "uni041E": "O"}
+SHARED_FIXES = {"uni0422": "T", "uni0425": "X", "uni0440": "p", "uni0430": "a", "uni0445": "x", "uni0443": "y", "uni0456": "i", "uni0131": "i", "uni0435": "e", "uni0421": "C", "uni041E": "O"}
 
 ROOT = Path(__file__).resolve().parents[1]
 PILOT = ROOT / 'fonts/ConfiniumMono[wght].ttf'
@@ -90,9 +92,21 @@ def masters(g, name=None, w_bold=None):
     return light,book,bold
 
 
+def accent_prefix(base, name, glyph):
+    dotless = base in ('i', 'j') and name != 'uni012F'
+    count = glyph.endPtsOfContours[0] + 1 if dotless else len(glyph.coordinates)
+    scale = .9 if name in ('uni1E03', 'uni0125') else 1
+    return count, scale
+
+
+def scaled_prefix(points, scale):
+    return [(x, round(y * scale)) for x, y in points]
+
+
 def build():
     with (TTFont(GRID,recalcTimestamp=False) as f, TTFont(PILOT) as pilot,
-          TTFont(REFERENCE_GRID) as reference, TTFont(I_CONTROL) as spacing_control):
+          TTFont(REFERENCE_GRID) as reference, TTFont(I_CONTROL) as spacing_control,
+          TTFont(CAPITALS_REFERENCE) as capitals_reference, TTFont(FORK_REFERENCE) as fork_reference):
         # Reuse axis definitions and their localized names, not the pilot outlines.
         for tag in ('fvar','STAT','name'):
             f[tag]=deepcopy(pilot[tag])
@@ -103,12 +117,27 @@ def build():
         cmap = f.getBestCmap()
         for cp, name in cmap.items():
             text = normalize("NFD", chr(cp))
-            if len(text) == 2 and text[0] in ALIGNED_BASES:
-                base_for[name] = cmap[ord(text[0])]
+            if len(text) < 2 or ord(text[0]) not in cmap:
+                continue
+            base = cmap[ord(text[0])]
+            # Derive only if the original Bold actually contains that base.
+            # NFD alone is not enough: some glyphs are independently drawn.
+            ref_base, ref_marked = reference['glyf'][base], reference['glyf'][name]
+            count, scale = accent_prefix(base, name, ref_base)
+            if (len(ref_marked.coordinates) > count
+                    and count - 1 in ref_marked.endPtsOfContours
+                    and list(ref_marked.coordinates[:count]) == scaled_prefix(ref_base.coordinates[:count], scale)):
+                base_for[name] = base
         base_for["uni045E"] = "y"
         base_for["uni0451"] = "e"
+        structural_thin = thin_alternatives(capitals_reference)
+        structural_bold = {name: list(glyf[name].coordinates) for name in structural_thin}
+        structural_bases = {name: structural_base_for(chr(cp)) for cp, name in cmap.items()
+                            if structural_base_for(chr(cp)) in structural_thin}
+        forks = [steeper_forks(instantiateVariableFont(fork_reference, {'wght': weight}), weight,
+                               replace=False) for weight in (100, 400, 700)]
         base_masters = {base: masters(glyf[base], base, w_bold)
-                        for base in set(base_for.values()) - {'m'}}
+                        for base in set(base_for.values()) - {'m'} - structural_thin.keys() - forks[0].keys()}
         m_masters = [equal_m(m, u_stem(u)) for m, u in zip(
             masters(spacing_control['glyf']['m'], 'm'), masters(glyf['U'], 'U'))]
         if m_masters[-1] != list(glyf['m'].coordinates):
@@ -119,18 +148,32 @@ def build():
             if not g.numberOfContours:
                 variations[n]=[]
                 continue
-            if n in base_for:
+            if n in forks[0]:
+                light,book,bold = [list(fork[n].coordinates) for fork in forks]
+                if bold != list(g.coordinates):
+                    raise ValueError(f'Promoted Bold fork differs from Full Grid: {n}')
+            elif n in structural_bases:
+                base = structural_bases[n]
+                control = capitals_reference['glyf']
+                old_count = len(control[base].coordinates)
+                count = len(structural_thin[base])
+                bold = list(g.coordinates)
+                light = structural_thin[base] + masters(control[n])[0][old_count:]
+                book = [(round(.52*x+.48*u), round(.52*y+.48*v))
+                        for (x,y),(u,v) in zip(light, bold)]
+                if len(light) != len(bold) or bold[:count] != structural_bold[base]:
+                    raise ValueError(f'Unexpected structural capital topology: {n}')
+            elif n in base_for:
                 base = base_for[n]
                 ref_base, ref_marked = reference['glyf'][base], reference['glyf'][n]
-                dotless = base in ('i', 'j') and n != 'uni012F'
-                count = ref_base.endPtsOfContours[0] + 1 if dotless else len(ref_base.coordinates)
-                scale = .9 if n in ('uni1E03', 'uni0125') else 1
-                expected = [(x, round(y * scale)) for x, y in ref_base.coordinates[:count]]
+                count, scale = accent_prefix(base, n, ref_base)
+                expected = scaled_prefix(ref_base.coordinates[:count], scale)
                 if list(ref_marked.coordinates[:count]) != expected:
                     raise ValueError(f'Unexpected accent base: {n}')
                 marks = masters(ref_marked)
-                light,book,bold = [[(x, round(y * scale)) for x, y in points[:count if dotless else None]]
-                                   + mark[count:] for points, mark in zip(base_masters[base], marks)]
+                cut = count if count < len(ref_base.coordinates) else None
+                light,book,bold = [scaled_prefix(points[:cut], scale) + mark[count:]
+                                   for points, mark in zip(base_masters[base], marks)]
                 if bold != list(g.coordinates):
                     raise ValueError(f'Promoted Bold composition differs from Full Grid: {n}')
             elif n == 'm':

@@ -15,11 +15,13 @@ WEIGHTS = ((100, 'Thin'), (175, 'Intermediate'), (400, 'Book'), (700, 'Bold'))
 SAMPLES = (
     ("Cleft alignment", "v w vv w · wave · weave"),
     ("Stem and curve balance", "i j y s e · ijij · sys\nsissy · jigs · easy"),
-    ("Lowercase diagonals", "k x y · kick · axis\ntext · key · sky"),
+    ("Steeper forks and diagonals", "K k Ķ ķ · К к · КІК · клік\nk x y · kick · axis\ntext · key · sky"),
     ('Straight stems', 'h n ĥ · H Ĥ Н\nhigh · ninth'),
     ('Lower bowls and descenders', 'a b d z  g j\nbadge · jazz · adagio\njudge · zigzag'),
     ('Thin joins and counters', 'n m p q r u w X\nminimum · plump · quiet\nnew wave · XxX'),
-    ('Diagonal balance', 'M N W  MNW  MWN\nMINIMUM · NEW WAVE · WIN'),
+    ('Structural capitals', 'X Y · N M · I J L · W V\nMIX · MINIMUM · WIND\nХ М І Ї · МІНІМУМ · ІНІЙ'),
+    ('Accented Y', 'Y Ý Ŷ Ÿ Ỳ · ÝR · ŶN'),
+    ('Inherited outlines', 'È c ç o ô D Ď S Š Z Ž\nÉCOLE · garçon · Blöße\nЕ Ё · У Ў · T Т'),
     ('Extended Latin strokes', 'ÑŃŅŇŊ ṀȚ Łł ḟ\nØø Ææ Þþ ð · Ægir · Þór'),
     ('Rounded capitals and ligatures', 'UÛÜ CÇ DÐ OÖ Œœ Юю\nÜBER · ÇA · ÖL · cœur · Юлия'),
     ('Lower corners', 'UÛÜ CÇ\nDÛ · LÜCKE · ÇA · ÜBER'),
@@ -89,7 +91,7 @@ html:not([data-font-ready]) pre{{visibility:hidden}}
 <main>
 <h1>Reading-size proof</h1>
 <p>Full Grid variable · 800-unit cell · 100% browser zoom · use Appearance to compare light and dark.</p>
-<p><a href="m-stroke-study/">Archived equal-stroke m comparison</a> · <a href="i-width-study/">Archived equal-width i comparison</a></p>
+<p><a href="m-stroke-study/">Archived equal-stroke m comparison</a> · <a href="i-width-study/">Archived equal-width i comparison</a> · <a href="../structural-capitals/">Structural capitals study</a> · <a href="../k-steeper/">Steeper K/k and Y review</a></p>
 <p id="font-status" role="status">Loading proof font…</p>
 {''.join(rows)}
 </main>

@@ -53,6 +53,10 @@ For a static cut, use a separate CSS family name, its matching file (for example
 
 Serve the file as `font/woff2`. For a separate font origin enable CORS. Check the request in the browser’s Network panel and inspect the rendered font at weights 400 and 700.
 
+### 0.2.1 outline changes
+
+The current family adopts the [structural capitals](studies/structural-capitals/index.html), with a balanced midline crown on `W`, and the [steeper `K/k` forks](studies/k-steeper/index.html), including their accented and Cyrillic dependents. The variable build also fixes accented-base drift and keeps Cyrillic `Т` aligned with Latin `T`. The advance remains 800 units.
+
 ### 0.2.0 outline changes
 
 The 800-unit family rebalances `f–i`, extends `i` to match `n`’s ink bounds, and matches the three `m` stems to capital `U`. The monospace advance is unchanged. The archived [equal-width `i`](studies/variable-repertoire/i-width-study/index.html) and [equal-stroke `m`](studies/variable-repertoire/m-stroke-study/index.html) studies retain their pre-promotion font inputs under `reference/`.

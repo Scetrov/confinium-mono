@@ -53,15 +53,16 @@ class VariableDiagonalTests(unittest.TestCase):
                         if old[1] in (low, high):
                             self.assertEqual(new[1], old[1], (name, weight))
                 self.assertEqual(glyphs['x'].coordinates, glyphs['uni0445'].coordinates)
-                self.assertEqual(glyphs['k'].coordinates[:], glyphs['uni0137'].coordinates[:12])
                 k = glyphs['k'].coordinates
-                self.assertEqual(k[0][1], k[7][1])
-                self.assertEqual(k[7][1], k[8][1])
-                self.assertEqual(k[4][1], k[5][1])
+                self.assertEqual(k[:], glyphs['uni0137'].coordinates[:len(k)])
+                self.assertEqual(k[0][1], k[8][1])
+                self.assertEqual(k[8][1], k[9][1])
+                self.assertEqual(k[5][1], k[6][1])
                 if weight == 100:
+                    for width in (*stroke_widths(k, 6, 7, 4, 5), *stroke_widths(k, 7, 8, 9, 10)):
+                        self.assertAlmostEqual(width, 56, delta=1)
                     x = glyphs['x'].coordinates
-                    for width in [*stroke_widths(k, 3, 4, 5, 6), *stroke_widths(k, 6, 7, 8, 9),
-                                  *stroke_widths(x, 0, 11, 1, 2), *stroke_widths(x, 3, 2, 4, 5)]:
+                    for width in (*stroke_widths(x, 0, 11, 1, 2), *stroke_widths(x, 3, 2, 4, 5)):
                         self.assertAlmostEqual(width, 54, delta=1)
 
     def test_lowercase_h_shares_n_geometry_below_the_ascender(self):
@@ -112,7 +113,7 @@ class VariableDiagonalTests(unittest.TestCase):
                     self.assertEqual(glyph.yMax, 560)
                     self.assertEqual(glyph.yMin, -200 if name in 'pq' else 0)
                 for name, edges in {'w': [(15, 16, 2, 3), (4, 3, 13, 14)],
-                                    'X': [(0, 1, 10, 11), (2, 1, 3, 4)]}.items():
+                                    'X': [(1, 2, 5, 6)]}.items():
                     for edge in edges:
                         self.assertAlmostEqual(*stroke_widths(glyf[name].coordinates, *edge), delta=2.5,
                                                msg=f'{name} at {weight}')
@@ -145,7 +146,7 @@ class VariableDiagonalTests(unittest.TestCase):
                                        delta=1.5 if weight <= 400 else 3)
 
     def test_diagonals_thin_evenly_between_baseline_and_cap(self):
-        strokes = {'M': [(3, 4, 12, 13)], 'N': [(2, 3, 7, 8)],
+        strokes = {'M': [(3, 4, 12, 13)], 'N': [(2, 3, 8, 9)],
                    'W': [(15, 16, 2, 3), (4, 3, 13, 14)]}
         with TTFont(FONT) as font:
             previous = {}

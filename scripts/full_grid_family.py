@@ -11,9 +11,11 @@ from fontTools.ttLib import TTFont
 from copy import deepcopy
 from unicodedata import normalize
 
+from k_steeper_study import apply_candidate as steeper_forks
 from midline_promotion import approved_outlines, marked_outline
 from spacing_balance import balanced_outlines
 from stroke_balance import equal_m, u_stem
+from structural_capitals_study import REFERENCE as CAPITALS_REFERENCE, candidates as structural_capitals
 
 GRID = Path(__file__).resolve().parents[1] / 'studies/grid-token-bold'
 OUT = GRID / 'full-family/fonts'
@@ -125,9 +127,12 @@ def build():
     OUT.mkdir(parents=True,exist_ok=True)
     for style in STYLES:
         path=(GRID/'hollow/ConfiniumMono-GridToken-Hollow.ttf' if style=='Hollow' else GRID/f'fonts/ConfiniumMono-GridToken-{style}.ttf')
-        with TTFont(MASTER,recalcTimestamp=False) as f, TTFont(path) as archive:
+        with (TTFont(MASTER,recalcTimestamp=False) as f, TTFont(path) as archive,
+              TTFont(CAPITALS_REFERENCE) as capitals_reference):
             promoted=approved_outlines(f)
+            promoted.update(structural_capitals(f, capitals_reference, balance_crown=True))
             promoted.update(balanced_outlines(f))
+            promoted.update(steeper_forks(f, 700, replace=False))
             base_m = f['glyf']['m']
             m = deepcopy(base_m)
             m.coordinates[:] = equal_m(m.coordinates, u_stem(f['glyf']['U'].coordinates))
