@@ -13,11 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Configure Pages
         if: github.event_name != 'pull_request'
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.168.0'
@@ -32,7 +32,7 @@ jobs:
           fi
       - name: Upload site
         if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: site/public
   deploy:
@@ -51,4 +51,4 @@ jobs:
     steps:
       - name: Deploy site
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
