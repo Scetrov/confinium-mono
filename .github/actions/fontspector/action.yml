@@ -1,0 +1,12 @@
+name: Fetch pinned Linux Fontspector archive
+description: Stage the archive for SHA-256 verification by scripts/font_qa.py
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        archive=fontspector-1.9.1-x86_64-unknown-linux-gnu.tar.gz
+        curl --fail --silent --show-error --location --proto '=https' --proto-redir '=https' \
+          "https://github.com/fonttools/fontspector/releases/download/fontspector-v1.9.1/$archive" \
+          -o "$RUNNER_TEMP/$archive"
+        echo "FONTSPECTOR_ARCHIVE=$RUNNER_TEMP/$archive" >> "$GITHUB_ENV"

@@ -137,7 +137,7 @@ def build_home() -> None:
         ('Hollow', 'The Grid silhouette in outline, built for large display settings.')))
     weights = ''.join(f'''<div class="weight"><span>{label} / {value}</span>
       <p data-specimen style="font-weight:{value}">Signal</p></div>'''
-                      for label, value in (('Thin', 100), ('Book', 400), ('Bold', 700)))
+                      for label, value in (('Thin', 100), ('Regular', 400), ('Bold', 700)))
     write_licensed_html(ROOT / 'index.html', f'''<!doctype html>
 <html lang="en">
 <head>
@@ -278,7 +278,7 @@ button.chip:hover{{border-color:var(--accent)}}
 {nav}
 <h1>Confinium Mono Explorer</h1>
 <p class="lead">Original geometric monospace typeface under active development. Explore European Latin, Cyrillic, figures and symbols in Grid, Open, Dense and Hollow. Confinium Mono Variable covers the same characters at weights 100–700. All glyph previews use embedded Confinium Mono binaries.</p>
-<p><a href="studies/variable-repertoire/reading-proof.html">Compare Thin, Book, and Bold at reading sizes</a> · <a href="studies/grid-token-bold/av-knees/index.html">Compare the Midline Knees study</a> · <a href="studies/grid-token-bold/full-family/index.html">Full Family Proof</a></p>
+<p><a href="studies/variable-repertoire/reading-proof.html">Compare Thin, Regular, and Bold at reading sizes</a> · <a href="studies/grid-token-bold/av-knees/index.html">Compare the Midline Knees study</a> · <a href="studies/grid-token-bold/full-family/index.html">Full Family Proof</a></p>
 <p id="status">Loading fonts…</p>
 
 <section class="controls" aria-label="Explorer controls">
@@ -525,7 +525,7 @@ def build_install() -> None:
 <pre>mkdir -p ~/.local/share/fonts/confinium-mono
 cp desktop/*.ttf ~/.local/share/fonts/confinium-mono/
 fc-cache -f ~/.local/share/fonts/confinium-mono</pre>
-<p>Reopen your editor or terminal. Select <strong>Confinium Mono Variable Repertoire</strong> and start at weight 400.</p>
+<p>Reopen your editor or terminal. Select <strong>Confinium Mono VF</strong> and start at weight 400.</p>
 <h2>Self-host on the web</h2><p>Copy the desired WOFF2 from <code>web/</code> and the included <code>OFL.txt</code> to your site's fonts folder. Adjust the URL for your deployment:</p>
 <pre>@font-face {{
   font-family: "Confinium Mono Web";
@@ -612,7 +612,7 @@ a{{color:var(--accent)}}
   <li><a href="studies/grid-token-bold/european-latin/index.html">European Latin proof</a> · <a href="studies/grid-token-bold/cyrillic/index.html">East Slavic Cyrillic proof</a></li>
 </ul>
 <h2>9. Full Grid Family <span class="tag">416 mapped characters</span></h2>
-<p>Grid, Open, Dense, and Hollow share the expanded repertoire. The 800-unit variable font covers weights 100–700 and matches Full Grid at Bold. Thin and Book are generated constructions, not independently refined masters.</p>
+<p>Grid, Open, Dense, and Hollow share the expanded repertoire. The 800-unit variable font covers weights 100–700 and matches Full Grid at Bold. Thin and Regular are generated constructions, not independently refined masters.</p>
 <ul>
   <li><a href="studies/grid-token-bold/full-family/verification/styles.png">Four static styles</a> · <a href="studies/variable-repertoire/verification/full-grid-weights.png">Variable weight comparison</a> · <a href="index.html">Try the current family</a></li>
 </ul>

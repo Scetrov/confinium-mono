@@ -158,6 +158,8 @@ def build():
             for rec in f['name'].names:
                 text={1:family,3:ps+'-Study',4:family+' Bold',6:ps,10:'Full-repertoire Grid family study: '+style,16:family}.get(rec.nameID)
                 if text: rec.string=text.encode(rec.getEncoding())
+            f['OS/2'].panose.bFamilyType = 2  # Latin Text
+            f['OS/2'].panose.bProportion = 9  # Monospaced
             f.save(OUT/f'ConfiniumMono-Full{style}.ttf')
 
 

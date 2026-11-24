@@ -184,11 +184,25 @@ def build():
             f['hmtx'][n]=(width,g.xMin)
             variations[n]=[TupleVariation({'wght':support},[(x-u,y-v) for (x,y),(u,v) in zip(coords,book)]+[(0,0)]*4)
                            for coords,support in [(light,(-1.,-1.,0.)),(bold,(0.,1.,1.))]]
-        for rec in f['name'].names:
-            text={1:'Confinium Mono Variable Repertoire',3:'ConfiniumMono-VariableRepertoire-Book',
-                  4:'Confinium Mono Variable Repertoire Book',6:'ConfiniumMono-VariableRepertoire-Book',
-                  10:'Variable study of the current Full Grid glyph library.',16:'Confinium Mono Variable Repertoire'}.get(rec.nameID)
-            if text: rec.string=text.encode(rec.getEncoding())
+        names = f['name']
+        unicode_names = {(r.nameID, r.toUnicode()) for r in names.names if r.isUnicode()}
+        if any((r.nameID, r.toUnicode()) not in unicode_names
+               for r in names.names if r.platformID == 1):
+            raise ValueError('Cannot discard a unique Macintosh name')
+        names.names = [r for r in names.names if r.platformID != 1]
+        family, ps = 'Confinium Mono VF', 'ConfiniumMonoVF'
+        values = {1: family, 3: ps+'-Regular', 4: family+' Regular',
+                  5: f"Version {f['head'].fontRevision:.3f}", 6: ps+'-Regular',
+                  10: 'Variable study of the current Full Grid glyph library.', 16: family}
+        for rec in names.names:
+            value = values.get(rec.nameID)
+            if rec.toUnicode() == 'Book':
+                value = 'Regular'
+            if value:
+                rec.string = value.encode(rec.getEncoding())
+        for instance in f['fvar'].instances:
+            style = names.getDebugName(instance.subfamilyNameID)
+            instance.postscriptNameID = names.addName(ps+'-'+style, platforms=((3, 1, 0x409),))
         os2=f['OS/2']; os2.usWeightClass=400
         f['head'].macStyle=pilot['head'].macStyle; os2.fsSelection=pilot['OS/2'].fsSelection
         BINARY.parent.mkdir(parents=True,exist_ok=True); f.save(BINARY)

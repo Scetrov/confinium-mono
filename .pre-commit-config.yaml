@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: fontspector
+        name: Check staged release fonts
+        language: system
+        entry: uv run --locked python scripts/font_qa.py
+        files: '^studies/(grid-token-bold/full-family/fonts/ConfiniumMono-Full(Grid|Open|Dense|Hollow)|variable-repertoire/fonts/ConfiniumMono-VariableRepertoire\[wght\])\.ttf$'
+        require_serial: true

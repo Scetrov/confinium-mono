@@ -10,8 +10,8 @@ or open the **[Explorer](explorer.html)** to try it yourself. Grid, Open,
 Dense, and Hollow each map 416 Unicode characters, including all printable
 ASCII, broad European Latin coverage, and the modern Russian, Ukrainian,
 and Belarusian alphabets. [Confinium Mono Variable](studies/variable-repertoire/)
-covers the same repertoire from weight 100 to 700, with Book at 400. At 700,
-its outlines and horizontal metrics match Full Grid. Thin and Book are
+covers the same repertoire from weight 100 to 700, with Regular at 400. At 700,
+its outlines and horizontal metrics match Full Grid. Thin and Regular are
 generated constructions, not individually optically refined masters.
 
 See the [full-family fonts and proofs](studies/grid-token-bold/full-family/)
@@ -32,7 +32,7 @@ Download **ConfiniumMono-Family.zip** from the [Install page](https://scetrov.gi
   fc-cache -f ~/.local/share/fonts/confinium-mono
   ```
 
-Reopen your editor or terminal, select **Confinium Mono Variable Repertoire**, and start at weight 400. Apps with variable-weight controls can also select intermediate weights such as 175.
+Reopen your editor or terminal, select **Confinium Mono VF** (previously **Confinium Mono Variable Repertoire**), and start at weight 400. Apps with variable-weight controls can also select intermediate weights such as 175.
 
 ### Self-host the webfont
 

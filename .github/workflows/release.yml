@@ -17,6 +17,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
       - run: uv sync --locked
       - run: uv run --locked python -m unittest discover -s tests -v
+      - uses: ./.github/actions/fontspector
       - name: Package and verify webfont
         run: |
           mkdir -p dist/{desktop,web}
@@ -24,6 +25,7 @@ jobs:
           for cut in Grid Open Dense Hollow; do
             cp "studies/grid-token-bold/full-family/fonts/ConfiniumMono-Full${cut}.ttf" dist/desktop/
           done
+          uv run --locked python scripts/font_qa.py --desktop dist/desktop
           uv pip install 'brotli==1.1.0'
           for font in dist/desktop/*.ttf; do
             name=$(basename "$font" .ttf)

@@ -11,7 +11,7 @@ from web import ROOT, appearance_head, primary_nav
 STUDY = ROOT / 'studies/variable-repertoire'
 FONT = STUDY / 'fonts/ConfiniumMono-VariableRepertoire[wght].ttf'
 SIZES = (12, 14, 16, 18)
-WEIGHTS = ((100, 'Thin'), (175, 'Intermediate'), (400, 'Book'), (700, 'Bold'))
+WEIGHTS = ((100, 'Thin'), (175, 'Intermediate'), (400, 'Regular'), (700, 'Bold'))
 SAMPLES = (
     ("Cleft alignment", "v w vv w · wave · weave"),
     ("Stem and curve balance", "i j y s e · ijij · sys\nsissy · jigs · easy"),

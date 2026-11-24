@@ -16,11 +16,11 @@ STATUS = 'All five family fonts and the site title font loaded.'
 def proof():
     definitions, cards = [], []
     faces = [(style, OUT / f'fonts/ConfiniumMono-Full{style}.ttf', 700) for style in STYLES]
-    faces.append(('Book', BINARY, 400))
+    faces.append(('Regular', BINARY, 400))
     text = escape(SAMPLE)
     for name, path, weight in faces:
         definitions.append(f'@font-face{{font-family:proof{name};src:url(data:font/ttf;base64,{_b64(path)});font-weight:{weight}}}')
-        cards.append(f'<section><h2>{"Variable · Book 400" if name == "Book" else name + " · Bold"}</h2>'
+        cards.append(f'<section><h2>{"Variable · Regular 400" if name == "Regular" else name + " · Bold"}</h2>'
                      f'<div class="sample" style="font-family:proof{name};font-weight:{weight}">{text}</div></section>')
     loads = ','.join(f'document.fonts.load("{weight} 28px proof{name}", {SAMPLE!r})' for name, _, weight in faces)
     write_licensed_html(OUT / 'index.html', f'''<!doctype html>
